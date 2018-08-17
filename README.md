@@ -1,4 +1,4 @@
-# ui-plugin-find-user
+# ui-plugin-find-instance
 
 Copyright (C) 2017-2018 The Open Library Foundation
 
