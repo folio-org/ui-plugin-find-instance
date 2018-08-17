@@ -44,7 +44,7 @@ export default class InstanceSearch extends React.Component {
     return (
       <div className={this.getStyle()}>
         <Button
-          id="clickable-plugin-find-user"
+          id="clickable-plugin-find-instance"
           key="searchButton"
           buttonStyle={this.props.searchButtonStyle}
           onClick={this.openModal}
