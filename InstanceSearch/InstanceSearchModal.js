@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Instances from '@folio/inventory/src/Instances';
-import Modal from '@folio/stripes-components/lib/Modal';
+import { Modal } from '@folio/stripes/components';
 
 import css from './InstanceSearch.css';
 
