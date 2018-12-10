@@ -67,7 +67,7 @@ InstanceSearch.defaultProps = {
 };
 
 InstanceSearch.propTypes = {
-  searchLabel: PropTypes.string,
+  searchLabel: PropTypes.node,
   searchButtonStyle: PropTypes.string,
   marginBottom0: PropTypes.bool,
   marginTop0: PropTypes.bool,
