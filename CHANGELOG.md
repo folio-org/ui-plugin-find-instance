@@ -1,5 +1,10 @@
 # Change history for ui-plugin-find-instance
 
+## [1.2.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.2.0) (2018-12-10)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.1.0...v1.2.0)
+
+* Lenient prop-types for labels.
+
 ## [1.1.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.1.0) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.0.1...v1.1.0)
 
