@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## 1.3.0 (IN PROGRESS)
+## [1.3.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.3.0) (2019-01-25)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.2.0...v1.3.0)
 
 * Upgrade to stripes v2.0.0.
 
