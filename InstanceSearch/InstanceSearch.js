@@ -47,7 +47,6 @@ export default class InstanceSearch extends React.Component {
           key="searchButton"
           buttonStyle={this.props.searchButtonStyle}
           onClick={this.openModal}
-          title="Find Instance"
           tabIndex="-1"
         >
           {this.props.searchLabel ? this.props.searchLabel : <Icon icon="search" color="#fff" />}
