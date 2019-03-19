@@ -1,5 +1,10 @@
 # Change history for ui-plugin-find-instance
 
+## [1.4.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.4.0) (2019-03-19)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.3.0...v1.4.0)
+
+* Accessibility change. STCOM-396.
+
 ## [1.3.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.3.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.2.0...v1.3.0)
 
