@@ -1,3 +1,16 @@
 {
-  "meta.title": "Instance-finder (plugin)"
+  "meta.title": "Instance-finder (plugin)",
+  "noResults": "Choose a filter or enter a search query to show results.",
+  "searchFieldLabel": "Search",
+  "modal.label": "Select instance",
+  "modal.close": "Close",
+  "modal.save": "Save",
+  "modal.total": "Total selected: {count}",
+  "searchButton.title": "Find instance",
+
+  "active": "Active",
+  "information.title": "Title",
+  "information.contributors": "Contributors",
+  "information.publishers": "Publishers",
+  "information.relation": "Relation",
 }

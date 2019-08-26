@@ -1,4 +1,4 @@
 import React from 'react';
-import InstanceSearch from './InstanceSearch';
+import PluginFindInstance from './src/PluginFindInstance';
 
-export default props => <InstanceSearch {...props} />;
+export default props => <PluginFindInstance {...props} />;

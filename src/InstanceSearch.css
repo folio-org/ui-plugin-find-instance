@@ -1,0 +1,64 @@
+@import "@folio/stripes-components/lib/variables";
+
+.searchControl {
+  margin-left: -3px;
+  margin-top: 8px;
+  display: flex;
+
+  &.marginBottom0 {
+    margin-bottom: 0;
+  }
+
+  &.marginTop0 {
+    margin-top: 0;
+  }
+}
+
+.instanceError {
+  color: var(--error);
+}
+
+.modalContent {
+  padding: 0;
+  position: relative;
+  min-height: 500px;
+}
+
+.searchField {
+  margin-bottom: calc(var(--control-margin-bottom) / 2);
+}
+
+/* reset button wrap - minor alignment adjustment */
+.resetButtonWrap {
+  & [disabled] :global .stripes__icon {
+    fill: rgba(0, 0, 0, 0.62);
+  }
+
+  &.resetButton {
+    border-color: rgba(0, 0, 0, 0.62);
+    color: rgba(0, 0, 0, 0.62);
+  }
+}
+
+.searchGroupWrap {
+  margin-bottom: .5rem;
+}
+
+.InstanceSearchViewContent {
+  & [class^="paneset--"] {
+    height: calc(100% - 50px);
+  }
+}
+
+.InstanceSearchViewFooter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-top: 1px solid rgba(0,0,0,.1);
+}
