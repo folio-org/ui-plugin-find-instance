@@ -6,14 +6,14 @@ import { Icon } from '@folio/stripes/components';
 import {
   PluginFindRecord,
   PluginFindRecordModal,
-} from '@folio/stripes/smart-components';
+} from '../PluginFindRecord';
 
 import FindInstanceContainer from './FindInstanceContainer';
 
 const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => (
   <PluginFindRecord
     {...rest}
-    selectRecordsCb={selectInstance}
+    selectRecordsCb={(list) => (isMultiSelect ? selectInstance(list) : selectInstance(list[0]))}
   >
     {(modalProps) => (
       <FindInstanceContainer>

@@ -1,4 +1,7 @@
 {
   "modal.title": "Select instance",
-  "meta.title": "Instance-finder (plugin)"
+  "meta.title": "Instance-finder (plugin)",
+  "totalSelected": "Total selected: {count}",
+  "noSourceYet": "No source yet",
+  "resultsHeader": "Search results"
 }
