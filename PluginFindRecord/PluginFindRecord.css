@@ -1,5 +1,4 @@
 .searchControl {
-  margin-left: -3px;
   margin-top: 8px;
   display: flex;
 
@@ -10,12 +9,4 @@
   &.marginTop0 {
     margin-top: 0;
   }
-}
-
-.instanceSearchModal {
-  min-height: 400px;
-}
-
-.instanceError {
-  color: red
 }

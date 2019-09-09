@@ -1,6 +1,6 @@
 # ui-plugin-find-instance
 
-Copyright (C) 2017-2018 The Open Library Foundation
+Copyright (C) 2017-2019 The Open Library Foundation
 
 This software is distributed under the terms of the Apache License,
 Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
@@ -12,6 +12,19 @@ which can be included in Stripes modules by means of a `<Pluggable
 type="find-instance">` element. See [the *Plugins*
 section](https://github.com/folio-org/stripes-core/blob/master/doc/dev-guide.md#plugins)
 of the Module Developer's Guide.
+
+## Props
+
+| Name | Type | Description | Required |
+--- | --- | --- | --- |
+| `disabled` | boolean | Flag to control `disabled` property of plugin's button, since it's rendered inside the plugin | No |
+| `searchButtonStyle` | string | optional styling of plugin's button | No |
+| `searchLabel` | React.node | optional jsx for plugin's button label | No |
+| `isMultiSelect` | boolean | Flag to control if user can select several instances, default is `false` | No |
+| `selectInstance` | function | Callback with selected array of instances | No |
+| `renderNewBtn` | function | Render function for button `New` | No |
+
+This is a [Stripes](https://github.com/folio-org/stripes-core/) UI module to display, filter and select Inventory instance(s).
 
 ## Additional information
 
