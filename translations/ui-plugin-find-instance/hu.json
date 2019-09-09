@@ -1,3 +1,7 @@
 {
-    "meta.title": "Példánykereső (plugin)"
+    "meta.title": "Példánykereső (plugin)",
+    "modal.title": "Select instance",
+    "totalSelected": "Total selected: {count}",
+    "noSourceYet": "No source yet",
+    "resultsHeader": "Search results"
 }
