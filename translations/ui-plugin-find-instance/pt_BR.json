@@ -1,3 +1,7 @@
 {
-    "meta.title": "Localizador de Instância (plugin)"
+    "meta.title": "Localizador de Instância (plugin)",
+    "modal.title": "Selecionar instância",
+    "totalSelected": "Total selecionado: {count}",
+    "noSourceYet": "Nenhuma fonte ainda",
+    "resultsHeader": "Resultados da pesquisa"
 }
