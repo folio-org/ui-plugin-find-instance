@@ -1,5 +1,12 @@
 # Change history for ui-plugin-find-instance
 
+## [1.5.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.5.0) (2019-09-11)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.4.0...v1.5.0)
+
+* Update translation strings
+* Rewrite using `SearchAndSortQuery`. UIOR-345.
+* Don't use shared components. UIOR-345.
+
 ## [1.4.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.4.0) (2019-03-19)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.3.0...v1.4.0)
 
