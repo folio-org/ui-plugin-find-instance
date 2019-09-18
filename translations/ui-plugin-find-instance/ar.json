@@ -1,7 +1,7 @@
 {
     "meta.title": "باحث الوعاء (برنامج مساعد)",
-    "modal.title": "Select instance",
-    "totalSelected": "Total selected: {count}",
-    "noSourceYet": "No source yet",
-    "resultsHeader": "Search results"
+    "modal.title": "اختر وعاء",
+    "totalSelected": "إجمالي المحدد: {count}",
+    "noSourceYet": "لا يوجد مصدر بعد",
+    "resultsHeader": "نتائج البحث"
 }
