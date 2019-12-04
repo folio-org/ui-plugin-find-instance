@@ -1,5 +1,10 @@
 # Change history for ui-plugin-find-instance
 
+## [1.6.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.6.0) (2019-12-4)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.5.0...v1.6.0)
+
+* Update translation strings
+
 ## [1.5.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.5.0) (2019-09-11)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.4.0...v1.5.0)
 
