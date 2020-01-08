@@ -10,7 +10,7 @@ import {
 
 import css from './PluginFindRecord.css';
 
-const triggerId = 'find-record-trigger';
+const triggerId = 'find-instance-trigger';
 
 class PluginFindRecord extends React.Component {
   state = {
