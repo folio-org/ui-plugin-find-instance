@@ -1,5 +1,10 @@
 # Change history for ui-plugin-find-instance
 
+## (IN PROGRESS)
+
+### Bug Fixes
+* [UIPFI-7](https://issues.folio.org/browse/UIPFI-7) Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1
+
 ## [1.6.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v1.6.0) (2019-12-4)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.5.0...v1.6.0)
 
