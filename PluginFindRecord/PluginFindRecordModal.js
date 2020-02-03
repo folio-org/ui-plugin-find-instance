@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import pickBy from 'lodash/pickBy';
@@ -40,10 +40,13 @@ const reduceCheckedRecords = (records, isChecked = false) => {
 };
 
 class PluginFindRecordModal extends React.Component {
-  state = {
-    filterPaneIsVisible: true,
-    checkedMap: {},
-    isAllChecked: false,
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      filterPaneIsVisible: true,
+      checkedMap: {},
+      isAllChecked: false,
+    };
   }
 
   toggleFilterPane = () => {
@@ -203,7 +206,7 @@ class PluginFindRecordModal extends React.Component {
           <FormattedMessage id="stripes-core.button.close" />
         </Button>
         {isMultiSelect && (
-          <Fragment>
+          <>
             <div>
               <FormattedMessage
                 id="ui-plugin-find-instance.totalSelected"
@@ -219,7 +222,7 @@ class PluginFindRecordModal extends React.Component {
             >
               <FormattedMessage id="stripes-core.button.save" />
             </Button>
-          </Fragment>
+          </>
         )}
       </div>
     );
@@ -274,7 +277,8 @@ class PluginFindRecordModal extends React.Component {
 
                 return (
                   <Paneset id={`${idPrefix}-paneset`}>
-                    {this.state.filterPaneIsVisible &&
+                    {
+                      this.state.filterPaneIsVisible &&
                       <Pane
                         defaultWidth="22%"
                         paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
@@ -315,15 +319,16 @@ class PluginFindRecordModal extends React.Component {
                               </Icon>
                             </Button>
                           </div>
-                          {renderFilters
-                            ? renderFilters(activeFilters.state, getFilterHandlers())
-                            : (
-                              <Filters
-                                activeFilters={activeFilters}
-                                config={filterConfig}
-                                onChangeHandlers={getFilterHandlers()}
-                              />
-                            )
+                          {
+                            renderFilters
+                              ? renderFilters(activeFilters.state, getFilterHandlers())
+                              : (
+                                <Filters
+                                  activeFilters={activeFilters}
+                                  config={filterConfig}
+                                  onChangeHandlers={getFilterHandlers()}
+                                />
+                              )
                           }
                         </form>
                       </Pane>
@@ -367,7 +372,8 @@ class PluginFindRecordModal extends React.Component {
                     </Pane>
                   </Paneset>
                 );
-              }}
+              }
+            }
           </SearchAndSortQuery>
         </div>
       </Modal>
