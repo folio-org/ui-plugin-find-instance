@@ -13,8 +13,11 @@ import css from './PluginFindRecord.css';
 const triggerId = 'find-instance-trigger';
 
 class PluginFindRecord extends React.Component {
-  state = {
-    openModal: false,
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      openModal: false,
+    };
   }
 
   getStyle() {
