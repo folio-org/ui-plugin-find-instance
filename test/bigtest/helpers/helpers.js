@@ -4,12 +4,14 @@ import { setupStripesCore } from '@folio/stripes/core/test';
 
 import mirageOptions from '../network';
 import PluginHarness from './PluginHarness';
+import PluginHarnessMultiselect from './PluginHarnessMultiselect';
 
 mirageOptions.serverType = 'miragejs';
 
 export default function setupApplication({
-  scenarios,
   hasAllPerms = true,
+  isMultiSelect,
+  scenarios,
 } = {}) {
   setupStripesCore({
     mirageOptions,
@@ -22,7 +24,7 @@ export default function setupApplication({
       name: '@folio/ui-dummy',
       displayName: 'dummy.title',
       route: '/dummy',
-      module: PluginHarness,
+      module: isMultiSelect ? PluginHarnessMultiselect : PluginHarness,
     }],
 
     translations: {
