@@ -1,9 +1,10 @@
 # Change history for ui-plugin-find-instance
 
-## (IN PROGRESS)
+## 1.7.0 (IN PROGRESS)
 
 ### Stories
 * [UIPFI-2](https://issues.folio.org/browse/UIPFI-2) ui-plugin-find-instance | Build BigTest unit test code coverage above 80%
+* Update to `@folio/stripes` `v3.0.0`
 
 ### Bug fixes
 * [UIPFI-7](https://issues.folio.org/browse/UIPFI-7) Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1
