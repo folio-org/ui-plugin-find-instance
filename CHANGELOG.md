@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## 1.7.0 (IN PROGRESS)
+## [2.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v2.0.0) (2020-03-13)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.6.0...v2.0.0)
 
 ### Stories
 * [UIPFI-2](https://issues.folio.org/browse/UIPFI-2) ui-plugin-find-instance | Build BigTest unit test code coverage above 80%
