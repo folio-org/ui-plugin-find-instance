@@ -1,5 +1,9 @@
 # Change history for ui-plugin-find-instance
 
+## [3.0.0] IN PROGRESS
+
+* Purge `intlShape` in prep for `react-intl` `v4` migration. Update to `@folio/stripes` `v4.0.0`. Refs STRIPES-672.
+
 ## [2.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v2.0.0) (2020-03-13)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v1.6.0...v2.0.0)
 
