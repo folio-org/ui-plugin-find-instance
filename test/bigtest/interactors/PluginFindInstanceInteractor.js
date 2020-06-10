@@ -20,7 +20,7 @@ import ButtonInteractor from './ButtonInteractor';
 @interactor class PluginModalInteractor {
   static defaultScope = '[data-test-find-records-modal]';
 
-  instances = collection('[role=group] [role=row]', {
+  instances = collection('[role=rowgroup] [role=row]', {
     click: clickable(),
     selectLine: clickable('input[type="checkbox"]'),
   });
