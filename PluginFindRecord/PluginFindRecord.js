@@ -16,7 +16,7 @@ class PluginFindRecord extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      openModal: false,
+      openModal: !this.props.renderTrigger,
     };
   }
 
@@ -47,7 +47,7 @@ class PluginFindRecord extends React.Component {
     this.passRecordsOut([record]);
   }
 
-  renderDefaultTrigger() {
+  renderTriggerButton() {
     const { disabled, searchButtonStyle, searchLabel } = this.props;
 
     return (
@@ -64,25 +64,12 @@ class PluginFindRecord extends React.Component {
     );
   }
 
-  renderTriggerButton() {
-    const {
-      renderTrigger,
-    } = this.props;
-
-    return renderTrigger
-      ? renderTrigger({
-        id: triggerId,
-        onClick: this.openModal,
-      })
-      : this.renderDefaultTrigger();
-  }
-
   render() {
-    const { children } = this.props;
+    const { children, renderTrigger } = this.props;
 
     return (
       <div className={this.getStyle()}>
-        {this.renderTriggerButton()}
+        {renderTrigger && this.renderTriggerButton()}
         {this.state.openModal && children({
           onSaveMultiple: this.passRecordsOut,
           onSelectRow: this.passRecordOut,
