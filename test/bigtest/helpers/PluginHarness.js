@@ -14,6 +14,7 @@ function PluginHarness(props) {
       searchLabel="Look up instance"
       selectInstance={noop}
       type="find-instance"
+      withTrigger
       {...props}
     >
       <span data-test-no-plugin-available>No plugin available!</span>
