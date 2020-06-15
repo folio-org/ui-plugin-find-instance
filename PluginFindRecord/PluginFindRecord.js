@@ -34,9 +34,10 @@ class PluginFindRecord extends React.Component {
     openModal: true,
   });
 
-  closeModal = () => this.setState({
-    openModal: false,
-  });
+  closeModal = () => {
+    this.props.onClosePluggin();
+    this.setState({ openModal: false });
+  };
 
   passRecordsOut = records => {
     this.props.selectRecordsCb(records);
@@ -103,6 +104,7 @@ PluginFindRecord.propTypes = {
   searchButtonStyle: PropTypes.string,
   searchLabel: PropTypes.node,
   selectRecordsCb: PropTypes.func,
+  onClosePluggin: PropTypes.func,
 };
 
 PluginFindRecord.defaultProps = {
@@ -112,6 +114,7 @@ PluginFindRecord.defaultProps = {
   searchButtonStyle: 'primary',
   selectRecordsCb: noop,
   searchLabel: <Icon icon="search" color="#fff" />,
+  withTrigger: true,
 };
 
 export default PluginFindRecord;

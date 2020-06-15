@@ -57,4 +57,14 @@ describe('Find instance plugin with multiselect', function () {
       });
     });
   });
+
+  describe('close plugin', function () {
+    beforeEach(async function () {
+      await findInstance.modal.closeModal();
+    });
+
+    it('should close modal', function () {
+      expect(findInstance.modal.isPresent).to.be.false;
+    });
+  });
 });

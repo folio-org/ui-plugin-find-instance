@@ -202,6 +202,7 @@ class PluginFindRecordModal extends React.Component {
           marginBottom0
           onClick={closeModal}
           className="left"
+          data-test-find-records-modal-close
         >
           <FormattedMessage id="stripes-core.button.close" />
         </Button>

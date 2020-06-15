@@ -33,6 +33,8 @@ import ButtonInteractor from './ButtonInteractor';
   selectAll = scoped('[data-test-find-records-modal-select-all]', {
     click: clickable(),
   });
+
+  closeModal = clickable('[data-test-find-records-modal-close]')
 }
 
 @interactor class PluginFindInstanceInteractor {
