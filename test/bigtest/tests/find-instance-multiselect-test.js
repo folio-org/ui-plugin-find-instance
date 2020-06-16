@@ -1,4 +1,4 @@
-import { describe, beforeEach, it } from '@bigtest/mocha';
+import { describe, beforeEach, it, afterEach } from '@bigtest/mocha';
 import { expect } from 'chai';
 
 import setupApplication from '../helpers/helpers';
@@ -12,6 +12,10 @@ describe('Find instance plugin with multiselect', function () {
 
   setupApplication({
     isMultiSelect: true,
+  });
+
+  afterEach(() => {
+    onCloseSpy.resetHistory();
   });
 
   beforeEach(async function () {
