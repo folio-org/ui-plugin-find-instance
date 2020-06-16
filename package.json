@@ -51,7 +51,8 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "sinon": "^9.0.2"
   },
   "peerDependencies": {
     "@folio/stripes": "^4.0.0",

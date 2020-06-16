@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 import setupApplication from '../helpers/helpers';
 import PluginFindInstanceInteractor from '../interactors/PluginFindInstanceInteractor';
+import { onCloseSpy } from '../helpers/PluginHarnessMultiselect';
 
 const INSTANCES_COUNT = 15;
 
@@ -18,13 +19,24 @@ describe('Find instance plugin with multiselect', function () {
   });
 
   describe('Find instance button', () => {
-    it('should open a modal', function () {
-      expect(findInstance.modal.isPresent).to.be.true;
+    it('should be rendered', function () {
+      expect(findInstance.button.isPresent).to.be.true;
+    });
+
+    describe('click action', function () {
+      beforeEach(async function () {
+        await findInstance.button.click();
+      });
+
+      it('should open a modal', function () {
+        expect(findInstance.modal.isPresent).to.be.true;
+      });
     });
   });
 
   describe('modal list', function () {
     beforeEach(async function () {
+      await findInstance.button.click();
       await findInstance.filter.searchInput('TEST');
       await findInstance.filter.searchButton.click();
     });
@@ -56,15 +68,16 @@ describe('Find instance plugin with multiselect', function () {
         expect(findInstance.modal.save.isDisabled).to.be.false;
       });
     });
-  });
 
-  describe('close plugin', function () {
-    beforeEach(async function () {
-      await findInstance.modal.closeModal();
-    });
+    describe('close plugin', function () {
+      beforeEach(async function () {
+        await findInstance.modal.closeModal();
+      });
 
-    it('should close modal', function () {
-      expect(findInstance.modal.isPresent).to.be.false;
+      it('should close modal', function () {
+        expect(findInstance.modal.isPresent).to.be.false;
+        expect(onCloseSpy.calledOnce).to.be.true;
+      });
     });
   });
 });

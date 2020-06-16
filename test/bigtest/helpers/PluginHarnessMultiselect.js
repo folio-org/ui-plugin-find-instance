@@ -1,7 +1,10 @@
 import React from 'react';
 import noop from 'lodash/noop';
+import sinon from 'sinon';
 
 import { Pluggable } from '@folio/stripes/core';
+
+export const onCloseSpy = sinon.spy();
 
 const PluginHarnessMultiselect = (props) => (
   <Pluggable
@@ -14,8 +17,7 @@ const PluginHarnessMultiselect = (props) => (
     selectInstance={noop}
     type="find-instance"
     isMultiSelect
-    withTrigger={false}
-    onClosePluggin={() => {}}
+    onClose={onCloseSpy}
     {...props}
   >
     <span data-test-no-plugin-available>No plugin available!</span>

@@ -35,8 +35,9 @@ class PluginFindRecord extends React.Component {
   });
 
   closeModal = () => {
-    this.props.onClosePluggin();
+    const { onClose } = this.props;
     this.setState({ openModal: false });
+    if (onClose) onClose();
   };
 
   passRecordsOut = records => {
@@ -104,7 +105,7 @@ PluginFindRecord.propTypes = {
   searchButtonStyle: PropTypes.string,
   searchLabel: PropTypes.node,
   selectRecordsCb: PropTypes.func,
-  onClosePluggin: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 PluginFindRecord.defaultProps = {
