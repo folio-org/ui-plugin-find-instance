@@ -16,7 +16,7 @@ class PluginFindRecord extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      openModal: false,
+      openModal: !this.props.withTrigger,
     };
   }
 
@@ -34,9 +34,11 @@ class PluginFindRecord extends React.Component {
     openModal: true,
   });
 
-  closeModal = () => this.setState({
-    openModal: false,
-  });
+  closeModal = () => {
+    const { onClose } = this.props;
+    this.setState({ openModal: false });
+    if (onClose) onClose();
+  };
 
   passRecordsOut = records => {
     this.props.selectRecordsCb(records);
@@ -78,11 +80,11 @@ class PluginFindRecord extends React.Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, withTrigger } = this.props;
 
     return (
       <div className={this.getStyle()}>
-        {this.renderTriggerButton()}
+        {withTrigger && this.renderTriggerButton()}
         {this.state.openModal && children({
           onSaveMultiple: this.passRecordsOut,
           onSelectRow: this.passRecordOut,
@@ -99,9 +101,11 @@ PluginFindRecord.propTypes = {
   marginBottom0: PropTypes.bool,
   marginTop0: PropTypes.bool,
   renderTrigger: PropTypes.func,
+  withTrigger: PropTypes.bool,
   searchButtonStyle: PropTypes.string,
   searchLabel: PropTypes.node,
   selectRecordsCb: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 PluginFindRecord.defaultProps = {
@@ -111,6 +115,7 @@ PluginFindRecord.defaultProps = {
   searchButtonStyle: 'primary',
   selectRecordsCb: noop,
   searchLabel: <Icon icon="search" color="#fff" />,
+  withTrigger: true,
 };
 
 export default PluginFindRecord;
