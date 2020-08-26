@@ -43,7 +43,7 @@
     "mocha": "^5.2.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "react-intl": "^4.5.3",
+    "react-intl": "^5.7.0",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.3",
     "webpack": "^4.10.2"
@@ -58,6 +58,6 @@
     "@folio/stripes": "^5.0.0",
     "react": "*",
     "react-dom": "*",
-    "react-intl": "^4.5.3"
+    "react-intl": "^5.7.0"
   }
 }
