@@ -277,7 +277,10 @@ class PluginFindRecordModal extends React.Component {
                 };
 
                 return (
-                  <Paneset id={`${idPrefix}-paneset`}>
+                  <Paneset
+                    id={`${idPrefix}-paneset`}
+                    isRoot
+                  >
                     {
                       this.state.filterPaneIsVisible &&
                       <Pane
