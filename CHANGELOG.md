@@ -3,6 +3,7 @@
 ## 4.0.0 (IN PROGRESS)
 
 * Update `@folio/stripes` to `v5`, `react-router` to `v5.2`.
+* Fix UI Glitch When Opening plugin modal
 
 ## [3.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v3.0.0) (2020-06-10)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v2.0.0...v3.0.0)
