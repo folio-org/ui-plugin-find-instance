@@ -81,6 +81,7 @@ class FindInstanceContainer extends React.Component {
             '(title="%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}")',
             {},
             filterConfig,
+            2,
           ),
         },
         staticFallback: { params: {} },
