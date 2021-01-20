@@ -31,7 +31,7 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.0.0",
-    "@folio/stripes": "^5.0.0",
+    "@folio/stripes": "^6.0.0",
     "@folio/stripes-cli": "^1.18.0",
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
@@ -41,7 +41,7 @@
     "faker": "^4.1.0",
     "miragejs": "^0.1.33",
     "mocha": "^5.2.0",
-    "react": "^16.5.0",
+    "react": "^17.0.1",
     "react-dom": "^16.5.0",
     "react-intl": "^5.7.0",
     "react-router-dom": "^5.2.0",
@@ -55,7 +55,7 @@
     "sinon": "^9.0.2"
   },
   "peerDependencies": {
-    "@folio/stripes": "^5.0.0",
+    "@folio/stripes": "^6.0.0",
     "react": "*",
     "react-dom": "*",
     "react-intl": "^5.7.0"
