@@ -12,6 +12,29 @@ import FindInstanceContainer from './FindInstanceContainer';
 
 import DataProvider from '../Imports/imports/DataProvider';
 import DataContext from '../Imports/imports/DataContext';
+import { getFilterConfig } from '../Imports/imports/filterConfig';
+import { getCurrentFilters, parseFiltersToStr } from '../Imports/imports/utils';
+import withLocation from '../Imports/imports/withLocation';
+
+const segment = 'instances';
+const {
+  indexes,
+  renderer,
+} = getFilterConfig(segment);
+
+const data = {
+  contributorTypes: [],
+  instanceTypes: [],
+  locations: [],
+  instanceFormats: [],
+  modesOfIssuance: [],
+  natureOfContentTerms: [],
+  tagsRecords: [],
+};
+const query = {
+  query: '',
+  sort: 'title',
+};
 
 const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => (
   <DataProvider>
@@ -29,6 +52,7 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
                   {...modalProps}
                   isMultiSelect={isMultiSelect}
                   renderNewBtn={renderNewBtn}
+                  renderFilters={renderer({ ...data, query })}
                 />
               )}
             </FindInstanceContainer>
