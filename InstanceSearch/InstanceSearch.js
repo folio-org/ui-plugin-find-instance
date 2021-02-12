@@ -10,24 +10,33 @@ import {
 
 import FindInstanceContainer from './FindInstanceContainer';
 
+import DataProvider from '../Imports/imports/DataProvider';
+import DataContext from '../Imports/imports/DataContext';
+
 const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => (
-  <PluginFindRecord
-    {...rest}
-    selectRecordsCb={(list) => (isMultiSelect ? selectInstance(list) : selectInstance(list[0]))}
-  >
-    {(modalProps) => (
-      <FindInstanceContainer>
-        {(viewProps) => (
-          <PluginFindRecordModal
-            {...viewProps}
-            {...modalProps}
-            isMultiSelect={isMultiSelect}
-            renderNewBtn={renderNewBtn}
-          />
-        )}
-      </FindInstanceContainer>
-    )}
-  </PluginFindRecord>
+  <DataProvider>
+    <PluginFindRecord
+      {...rest}
+      selectRecordsCb={(list) => (isMultiSelect ? selectInstance(list) : selectInstance(list[0]))}
+    >
+      {(modalProps) => (
+        <DataContext.Consumer>
+          {data => (
+            <FindInstanceContainer>
+              {(viewProps) => (
+                <PluginFindRecordModal
+                  {...viewProps}
+                  {...modalProps}
+                  isMultiSelect={isMultiSelect}
+                  renderNewBtn={renderNewBtn}
+                />
+              )}
+            </FindInstanceContainer>
+          )}
+        </DataContext.Consumer>
+      )}
+    </PluginFindRecord>
+  </DataProvider>
 );
 
 InstanceSearch.defaultProps = {
