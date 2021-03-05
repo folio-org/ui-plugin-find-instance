@@ -1,8 +1,6 @@
 import React from 'react';
-import { get } from 'lodash';
 
 import InstanceFilters from './InstanceFilters';
-import { getCurrentFilters } from '../utils';
 
 // instanceFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
@@ -13,14 +11,19 @@ const instanceFilterRenderer = data => onChange => {
     instanceFormats,
     modesOfIssuance,
     natureOfContentTerms,
-    query,
     tags,
   } = data;
-  const activeFilters = getCurrentFilters(get(query, 'filters', ''));
+
+  let activeFiltersObj = onChange.activeFilters.state;
+
+  let onChangeHandler = (filterObj) => {
+    const newValue = { [filterObj.name]: filterObj.values } 
+    onChange.getFilterHandlers().state(newValue)
+  }
 
   return (
     <InstanceFilters
-      activeFilters={activeFilters}
+      activeFilters={activeFiltersObj}
       data={{
         locations,
         resourceTypes: instanceTypes,
@@ -29,8 +32,8 @@ const instanceFilterRenderer = data => onChange => {
         tagsRecords: tags,
         natureOfContentTerms
       }}
-      onChange={onChange}
-      onClear={(name) => onChange({ name, values: [] })}
+      onChange={onChangeHandler}
+      onClear={(name) => onChangeHandler({ name, values: [] })}
     />
   );
 };

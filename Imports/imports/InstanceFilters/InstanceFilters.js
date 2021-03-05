@@ -50,7 +50,7 @@ const InstanceFilters = props => {
     onChange,
     onClear,
   } = props;
-
+console.log("REndering filters with activeFilters", props.activeFilters)
   const effectiveLocationOptions = locations.map(({ name, id }) => ({
     label: name,
     value: id,
