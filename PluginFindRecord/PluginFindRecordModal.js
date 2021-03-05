@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import noop from 'lodash/noop';
-import pickBy from 'lodash/pickBy';
+import {
+  noop,
+  omit,
+  pickBy,
+} from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -23,6 +26,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import Filters from './Filters';
+import {parseFiltersToStr} from '../Imports/imports/utils'
 import css from './PluginFindRecordModal.css';
 
 const RESULTS_HEADER = <FormattedMessage id="ui-plugin-find-instance.resultsHeader" />;
@@ -133,6 +137,68 @@ class PluginFindRecordModal extends React.Component {
     if (!isMultiSelect) {
       onSelectRow(e, row);
     }
+  }
+
+  convertFilters = (filters) => {
+    // filters param is in the form, e.g.:
+    // {name: "effectiveLocation", values: ["53cf956f-c1df-410b-8bea-27f712cca7c0"]} 
+    // Want to get something like:
+    // {filters: "effectiveLocation.53cf956f-c1df-410b-8bea-27f712cca7c0"}
+    console.log("converting filters", filters)
+    const filterNames = Object.keys(filters)
+    let queryClauses = []
+    filterNames.forEach(filter => {
+      const values = filters[filter]
+      values.forEach(value => {
+        queryClauses.push(`${filter}.${value}`);
+      })
+
+    })
+    console.log("Returning filter string: ", queryClauses.join(','))
+    return { filters: queryClauses.join(',') }
+    
+    //return {filters: `${filters.name}.${filters.values}`}
+    
+  }
+
+  queryStateReducer = (state, nextState) => {
+    console.log("CSR: custom state reducer", state, nextState)
+    if (nextState.filterChanged) {
+      console.log("CSR: Filter has changed. Doing something about that.")
+      let newFilterFields = state.filterFields
+      let changedFilters = Object.keys(nextState.filterFields)
+      if (changedFilters.length == 0) { return nextState }
+      console.log("CSR: changed filters = ", changedFilters)
+
+      changedFilters.forEach(filter => {
+        if (newFilterFields[filter]) {
+          console.log("CSR: using new filter value for existing filter?", filter)
+          // Filter already exists; changing value(s)
+          if (nextState.filterFields[filter].length == 0) {
+            // Remove the filter
+            newFilterFields = omit(newFilterFields, filter)
+            console.log("CSR: omitting filter", filter, newFilterFields)
+
+          }
+          else {
+            console.log("CSR: yes, using new filter value", filter)
+
+            newFilterFields[filter] = nextState.filterFields[filter]
+          }
+        }
+        else {
+          // This is a filter that has been added to the filter set; go with the new values
+          console.log("CSR: Added filter", filter)
+          newFilterFields[filter] = nextState.filterFields[filter]
+        }
+      })
+      console.log("CSR: produced new filter obj", newFilterFields)
+      nextState.filterFields = newFilterFields
+
+    }
+    console.log("CSR: returning modified state", nextState)
+
+    return nextState;
   }
 
   render() {
@@ -254,7 +320,9 @@ class PluginFindRecordModal extends React.Component {
             onComponentWillUnmount={onComponentWillUnmount}
             queryGetter={queryGetter}
             querySetter={querySetter}
+           queryStateReducer={this.queryStateReducer}
             syncToLocationSearch={false}
+            filtersToParams={this.convertFilters}
           >
             {
               ({
@@ -325,7 +393,7 @@ class PluginFindRecordModal extends React.Component {
                           </div>
                           {
                             renderFilters
-                              ? renderFilters(activeFilters.state, getFilterHandlers())
+                              ? renderFilters({activeFilters, getFilterHandlers})
                               : (
                                 <Filters
                                   activeFilters={activeFilters}

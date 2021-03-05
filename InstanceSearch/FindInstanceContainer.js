@@ -12,7 +12,8 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 
-import filterConfig from './filterConfig';
+//import filterConfig from './filterConfig';
+import { getFilterConfig } from '../Imports/imports/filterConfig'
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -31,12 +32,15 @@ const columnMapping = {
 
 const idPrefix = 'uiPluginFindInstance-';
 const modalLabel = <FormattedMessage id="ui-plugin-find-instance.modal.title" />;
+const filterConfig = getFilterConfig().filters
 
 const setFilterValues = (resource, filterName, nameAttr, cqlAttr) => {
   const filterValues = get(resource, 'records') || [];
-
+  console.log("working on setFilterValues")
   if (filterValues.length) {
+    console.log("filterconfig", filterConfig)
     const filterConfigObj = filterConfig.find(group => group.name === filterName);
+    console.log("filterConfigObj", filterConfigObj)
 
     filterConfigObj.values = filterValues.map(rec => ({ name: rec[nameAttr], cql: rec[cqlAttr] }));
   }
@@ -137,10 +141,13 @@ class FindInstanceContainer extends React.Component {
   };
 
   querySetter = ({ nsValues, state }) => {
+    console.log("IN querySetter with nsValues", nsValues, state)
     if (/reset/.test(state.changeType)) {
       this.props.mutator.query.replace(nsValues);
     } else {
       this.props.mutator.query.update(nsValues);
+      console.log("QS updating query to new value", this.props.resources.query, this.props.resources.records)
+
     }
   }
 
