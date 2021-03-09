@@ -62,6 +62,7 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
                     renderFilters={renderer({ ...data, query })}
                     segment={segment}
                     setSegment={setSegment}
+                    searchIndexes={indexes}
                   />
                 )}
               </FindInstanceContainer>
