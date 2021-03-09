@@ -21,3 +21,9 @@ export const itemStatuses = [
   { label: 'ui-inventory.item.status.unknown', value: 'Unknown' },
   { label: 'ui-inventory.item.status.withdrawn', value: 'Withdrawn' },
 ];
+
+export const segments = {
+  instances: 'instances',
+  holdings: 'holdings',
+  items: 'items',
+};

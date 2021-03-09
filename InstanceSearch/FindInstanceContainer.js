@@ -141,13 +141,10 @@ class FindInstanceContainer extends React.Component {
   };
 
   querySetter = ({ nsValues, state }) => {
-    console.log("IN querySetter with nsValues", nsValues, state)
     if (/reset/.test(state.changeType)) {
       this.props.mutator.query.replace(nsValues);
     } else {
       this.props.mutator.query.update(nsValues);
-      console.log("QS updating query to new value", this.props.resources.query, this.props.resources.records)
-
     }
   }
 

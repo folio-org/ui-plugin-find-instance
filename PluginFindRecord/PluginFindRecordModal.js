@@ -26,8 +26,8 @@ import {
 } from '@folio/stripes/smart-components';
 
 import Filters from './Filters';
-import {parseFiltersToStr} from '../Imports/imports/utils'
 import css from './PluginFindRecordModal.css';
+import FilterNavigation from '../Imports/imports/FilterNavigation';
 
 const RESULTS_HEADER = <FormattedMessage id="ui-plugin-find-instance.resultsHeader" />;
 
@@ -144,7 +144,6 @@ class PluginFindRecordModal extends React.Component {
     // {name: "effectiveLocation", values: ["53cf956f-c1df-410b-8bea-27f712cca7c0"]} 
     // Want to get something like:
     // {filters: "effectiveLocation.53cf956f-c1df-410b-8bea-27f712cca7c0"}
-    console.log("converting filters", filters)
     const filterNames = Object.keys(filters)
     let queryClauses = []
     filterNames.forEach(filter => {
@@ -154,11 +153,7 @@ class PluginFindRecordModal extends React.Component {
       })
 
     })
-    console.log("Returning filter string: ", queryClauses.join(','))
     return { filters: queryClauses.join(',') }
-    
-    //return {filters: `${filters.name}.${filters.values}`}
-    
   }
 
   queryStateReducer = (state, nextState) => {
@@ -219,6 +214,8 @@ class PluginFindRecordModal extends React.Component {
       renderFilters,
       renderNewBtn,
       resultsFormatter,
+      segment,
+      setSegment,
       source,
       visibleColumns,
     } = this.props;
@@ -320,7 +317,7 @@ class PluginFindRecordModal extends React.Component {
             onComponentWillUnmount={onComponentWillUnmount}
             queryGetter={queryGetter}
             querySetter={querySetter}
-           queryStateReducer={this.queryStateReducer}
+            queryStateReducer={this.queryStateReducer}
             syncToLocationSearch={false}
             filtersToParams={this.convertFilters}
           >
@@ -355,6 +352,7 @@ class PluginFindRecordModal extends React.Component {
                         defaultWidth="22%"
                         paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                       >
+                        <FilterNavigation segment={segment} setSegment={setSegment} />
                         <form onSubmit={onSubmitSearch}>
                           <div className={css.searchGroupWrap}>
                             <SearchField
