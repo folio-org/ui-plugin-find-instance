@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## [5.0.0] IN PROGRESS
+## [5.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v5.0.0) (2021-03-10)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v4.0.0...v5.0.0)
 
 * Do not show results without performing a query. Fixes UIPFI-17.
 * Update to stripes v6. Refs UIPFI-21.
