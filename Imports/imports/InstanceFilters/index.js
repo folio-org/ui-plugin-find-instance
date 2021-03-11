@@ -1,1 +1,1 @@
-export { default } from './instanceFilterRenderer';
+export { default } from './InstanceFilters';

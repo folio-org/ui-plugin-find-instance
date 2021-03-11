@@ -1,1 +1,1 @@
-export { default } from './itemFilterRenderer';
+export { default } from './ItemFilters';

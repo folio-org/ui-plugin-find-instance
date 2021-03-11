@@ -1,6 +1,6 @@
-import instanceFilterRenderer from './InstanceFilters';
-import holdingsRecordFilterRenderer from './HoldingsFilters';
-import itemFilterRenderer from './ItemFilters';
+import instanceFilterRenderer from '../FilterRenderers/InstanceFilters';
+import holdingsRecordFilterRenderer from '../FilterRenderers/HoldingsFilters';
+import itemFilterRenderer from '../FilterRenderers/ItemFilters';
 
 import {
   buildDateRangeQuery,

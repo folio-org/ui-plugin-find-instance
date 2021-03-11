@@ -1,10 +1,19 @@
 import React from 'react';
 
-import HoldingsRecordFilters from './HoldingsRecordFilters';
+import InstanceFilters from '../../imports/InstanceFilters';
 
-// holdingsRecordFilterRenderer is a function that takes a single argument `data`
+// instanceFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
-const holdingsRecordFilterRenderer = ({ locations, tags }) => onChange => {
+const instanceFilterRenderer = data => onChange => {
+  const {
+    locations,
+    instanceTypes,
+    instanceFormats,
+    modesOfIssuance,
+    natureOfContentTerms,
+    tags,
+  } = data;
+
   const activeFiltersObj = onChange.activeFilters.state;
 
   const onChangeHandler = (filterObj) => {
@@ -13,11 +22,15 @@ const holdingsRecordFilterRenderer = ({ locations, tags }) => onChange => {
   };
 
   return (
-    <HoldingsRecordFilters
+    <InstanceFilters
       activeFilters={activeFiltersObj}
       data={{
         locations,
+        resourceTypes: instanceTypes,
+        instanceFormats,
+        modesOfIssuance,
         tagsRecords: tags,
+        natureOfContentTerms
       }}
       onChange={onChangeHandler}
       onClear={(name) => onChangeHandler({ name, values: [] })}
@@ -25,4 +38,4 @@ const holdingsRecordFilterRenderer = ({ locations, tags }) => onChange => {
   );
 };
 
-export default holdingsRecordFilterRenderer;
+export default instanceFilterRenderer;

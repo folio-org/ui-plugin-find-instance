@@ -1,17 +1,10 @@
 import React from 'react';
 
-import ItemFilters from './ItemFilters';
-import { itemStatuses } from '../constants';
+import HoldingsRecordFilters from '../../imports/HoldingsFilters';
 
-// itemFilterRenderer is a function that takes a single argument `data`
+// holdingsRecordFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
-const itemFilterRenderer = data => onChange => {
-  const {
-    materialTypes,
-    locations,
-    tags,
-  } = data;
-
+const holdingsRecordFilterRenderer = ({ locations, tags }) => onChange => {
   const activeFiltersObj = onChange.activeFilters.state;
 
   const onChangeHandler = (filterObj) => {
@@ -20,11 +13,9 @@ const itemFilterRenderer = data => onChange => {
   };
 
   return (
-    <ItemFilters
+    <HoldingsRecordFilters
       activeFilters={activeFiltersObj}
       data={{
-        materialTypes,
-        itemStatuses,
         locations,
         tagsRecords: tags,
       }}
@@ -34,4 +25,4 @@ const itemFilterRenderer = data => onChange => {
   );
 };
 
-export default itemFilterRenderer;
+export default holdingsRecordFilterRenderer;

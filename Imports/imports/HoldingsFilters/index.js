@@ -1,1 +1,1 @@
-export { default } from './holdingsRecordFilterRenderer';
+export { default } from './HoldingsRecordFilters';

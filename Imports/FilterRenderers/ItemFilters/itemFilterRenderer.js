@@ -1,16 +1,14 @@
 import React from 'react';
 
-import InstanceFilters from './InstanceFilters';
+import ItemFilters from '../../imports/ItemFilters';
+import { itemStatuses } from '../../imports/constants';
 
-// instanceFilterRenderer is a function that takes a single argument `data`
+// itemFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
-const instanceFilterRenderer = data => onChange => {
+const itemFilterRenderer = data => onChange => {
   const {
+    materialTypes,
     locations,
-    instanceTypes,
-    instanceFormats,
-    modesOfIssuance,
-    natureOfContentTerms,
     tags,
   } = data;
 
@@ -22,15 +20,13 @@ const instanceFilterRenderer = data => onChange => {
   };
 
   return (
-    <InstanceFilters
+    <ItemFilters
       activeFilters={activeFiltersObj}
       data={{
+        materialTypes,
+        itemStatuses,
         locations,
-        resourceTypes: instanceTypes,
-        instanceFormats,
-        modesOfIssuance,
         tagsRecords: tags,
-        natureOfContentTerms
       }}
       onChange={onChangeHandler}
       onClear={(name) => onChangeHandler({ name, values: [] })}
@@ -38,4 +34,4 @@ const instanceFilterRenderer = data => onChange => {
   );
 };
 
-export default instanceFilterRenderer;
+export default itemFilterRenderer;
