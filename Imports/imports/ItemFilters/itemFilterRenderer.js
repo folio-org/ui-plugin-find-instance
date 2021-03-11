@@ -12,12 +12,12 @@ const itemFilterRenderer = data => onChange => {
     tags,
   } = data;
 
-  let activeFiltersObj = onChange.activeFilters.state;
+  const activeFiltersObj = onChange.activeFilters.state;
 
-  let onChangeHandler = (filterObj) => {
-    const newValue = { [filterObj.name]: filterObj.values } 
-    onChange.getFilterHandlers().state(newValue)
-  }
+  const onChangeHandler = (filterObj) => {
+    const newValue = { [filterObj.name]: filterObj.values };
+    onChange.getFilterHandlers().state(newValue);
+  };
 
   return (
     <ItemFilters

@@ -51,6 +51,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
+    "moment": "^2.29.1",
     "prop-types": "^15.6.0",
     "sinon": "^9.0.2"
   },

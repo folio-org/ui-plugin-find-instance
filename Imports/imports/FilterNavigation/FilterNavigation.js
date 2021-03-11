@@ -8,7 +8,7 @@ import {
 
 import { segments } from '../constants';
 
-const FilterNavigation = ({ segment, setSegment }) => {console.log("seg, setseg", segment, setSegment); return (
+const FilterNavigation = ({ segment, setSegment }) => (
   <ButtonGroup
     fullWidth
     data-test-filters-navigation
@@ -26,10 +26,11 @@ const FilterNavigation = ({ segment, setSegment }) => {console.log("seg, setseg"
       ))
     }
   </ButtonGroup>
-)};
+);
 
 FilterNavigation.propTypes = {
   segment: PropTypes.string,
+  setSegment: PropTypes.func.isRequired,
 };
 
 FilterNavigation.defaultProps = {

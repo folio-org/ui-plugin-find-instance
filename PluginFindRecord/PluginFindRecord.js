@@ -80,7 +80,6 @@ class PluginFindRecord extends React.Component {
   }
 
   render() {
-    console.log("MCPRops", this.props)
     const { children, withTrigger } = this.props;
 
     return (

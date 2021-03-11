@@ -13,24 +13,7 @@ import FindInstanceContainer from './FindInstanceContainer';
 import DataProvider from '../Imports/imports/DataProvider';
 import DataContext from '../Imports/imports/DataContext';
 import { getFilterConfig } from '../Imports/imports/filterConfig';
-import { getCurrentFilters, parseFiltersToStr } from '../Imports/imports/utils';
-import withLocation from '../Imports/imports/withLocation';
 
-// const segment = 'holdings';
-// const {
-//   indexes,
-//   renderer,
-// } = getFilterConfig(segment);
-
-const data = {
-  contributorTypes: [],
-  instanceTypes: [],
-  locations: [],
-  instanceFormats: [],
-  modesOfIssuance: [],
-  natureOfContentTerms: [],
-  tagsRecords: [],
-};
 const query = {
   query: '',
   sort: 'title',
@@ -42,7 +25,7 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
     indexes,
     renderer,
   } = getFilterConfig(segment);
-  
+
   return (
     <DataProvider>
       <PluginFindRecord
@@ -72,7 +55,7 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
       </PluginFindRecord>
     </DataProvider>
   );
-}
+};
 
 InstanceSearch.defaultProps = {
   searchButtonStyle: 'primary noRightRadius',

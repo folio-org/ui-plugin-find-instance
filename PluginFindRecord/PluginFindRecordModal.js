@@ -139,59 +139,54 @@ class PluginFindRecordModal extends React.Component {
     }
   }
 
+  // filters param is in the form, e.g.:
+  // {name: "effectiveLocation", values: ["53cf956f-c1df-410b-8bea-27f712cca7c0"]}
+  // Want to get something like:
+  // {filters: "effectiveLocation.53cf956f-c1df-410b-8bea-27f712cca7c0"}
   convertFilters = (filters) => {
-    // filters param is in the form, e.g.:
-    // {name: "effectiveLocation", values: ["53cf956f-c1df-410b-8bea-27f712cca7c0"]} 
-    // Want to get something like:
-    // {filters: "effectiveLocation.53cf956f-c1df-410b-8bea-27f712cca7c0"}
-    const filterNames = Object.keys(filters)
-    let queryClauses = []
-    filterNames.forEach(filter => {
-      const values = filters[filter]
-      values.forEach(value => {
+    const queryClauses = [];
+    Object.keys(filters).forEach(filter => {
+      filters[filter].forEach(value => {
         queryClauses.push(`${filter}.${value}`);
-      })
+      });
+    });
 
-    })
-    return { filters: queryClauses.join(',') }
+    return { filters: queryClauses.join(',') };
   }
 
+  /**
+  This custom queryStateReducer function seems to be necessary because of the way
+  in which searchAndSortQuery favors simple checkbox filters (see, e.g., the
+  onFilterCheckboxChange function); without this, filter state is not set properly
+  for more complex arrangements.
+
+  The newState param contains a filterFields object that represents the *changed*
+  filters, which could mean that filter values have been added or removed, or a filter
+  has been cleared entirely. We have to be a bit careful in determining what the changes
+  are.
+  */
   queryStateReducer = (state, nextState) => {
-    console.log("CSR: custom state reducer", state, nextState)
     if (nextState.filterChanged) {
-      console.log("CSR: Filter has changed. Doing something about that.")
-      let newFilterFields = state.filterFields
-      let changedFilters = Object.keys(nextState.filterFields)
-      if (changedFilters.length == 0) { return nextState }
-      console.log("CSR: changed filters = ", changedFilters)
+      let newFilterFields = state.filterFields; // Begin with filters from previous state
+      const changedFilters = Object.keys(nextState.filterFields);
+      if (changedFilters.length === 0) { return nextState; }
 
       changedFilters.forEach(filter => {
         if (newFilterFields[filter]) {
-          console.log("CSR: using new filter value for existing filter?", filter)
           // Filter already exists; changing value(s)
-          if (nextState.filterFields[filter].length == 0) {
+          if (nextState.filterFields[filter].length === 0) {
             // Remove the filter
-            newFilterFields = omit(newFilterFields, filter)
-            console.log("CSR: omitting filter", filter, newFilterFields)
-
+            newFilterFields = omit(newFilterFields, filter);
+          } else {
+            newFilterFields[filter] = nextState.filterFields[filter];
           }
-          else {
-            console.log("CSR: yes, using new filter value", filter)
-
-            newFilterFields[filter] = nextState.filterFields[filter]
-          }
-        }
-        else {
+        } else {
           // This is a filter that has been added to the filter set; go with the new values
-          console.log("CSR: Added filter", filter)
-          newFilterFields[filter] = nextState.filterFields[filter]
+          newFilterFields[filter] = nextState.filterFields[filter];
         }
-      })
-      console.log("CSR: produced new filter obj", newFilterFields)
-      nextState.filterFields = newFilterFields
-
+      });
+      nextState.filterFields = newFilterFields;
     }
-    console.log("CSR: returning modified state", nextState)
 
     return nextState;
   }
@@ -393,7 +388,7 @@ class PluginFindRecordModal extends React.Component {
                           </div>
                           {
                             renderFilters
-                              ? renderFilters({activeFilters, getFilterHandlers})
+                              ? renderFilters({ activeFilters, getFilterHandlers })
                               : (
                                 <Filters
                                   activeFilters={activeFilters}
@@ -472,6 +467,9 @@ PluginFindRecordModal.propTypes = {
   renderFilters: PropTypes.func,
   renderNewBtn: PropTypes.func,
   resultsFormatter: PropTypes.object,
+  searchIndexes: PropTypes.arrayOf(PropTypes.string),
+  segment: PropTypes.string,
+  setSegment: PropTypes.object.isRequired,
   source: PropTypes.object,
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
@@ -486,6 +484,8 @@ PluginFindRecordModal.defaultProps = {
   onSaveMultiple: noop,
   renderNewBtn: noop,
   resultsFormatter: {},
+  searchIndexes: [],
+  segment: 'instances',
 };
 
 export default PluginFindRecordModal;
