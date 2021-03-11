@@ -65,37 +65,11 @@ export function filterItemsBy(name) {
   };
 }
 
-export function getCurrentFilters(filtersStr) {
-  if (!filtersStr) {
-    return undefined;
-  }
-
-  return filtersStr
-    .split(',')
-    .reduce((filters, filter) => {
-      const [name, value] = filter.split('.');
-      filters[name] = filters[name] || [];
-      filters[name].push(value);
-      return filters;
-    }, {});
-}
-
 export const makeDateRangeFilterString = (startDate, endDate) => {
   const endDateCorrected = moment.utc(endDate).add(1, 'days').format(DATE_FORMAT);
 
   return `${startDate}:${endDateCorrected}`;
 };
-
-export function parseFiltersToStr(filters) {
-  const newFilters = [];
-
-  forOwn(filters, (values, name) => {
-    const filter = values.map(value => `${name}.${value}`);
-    newFilters.push(filter);
-  });
-
-  return newFilters.join(',');
-}
 
 export const retrieveDatesFromDateRangeFilterString = filterValue => {
   let dateRange = {

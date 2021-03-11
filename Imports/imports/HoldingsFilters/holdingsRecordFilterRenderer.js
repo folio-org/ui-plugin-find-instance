@@ -4,7 +4,7 @@ import HoldingsRecordFilters from './HoldingsRecordFilters';
 
 // holdingsRecordFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
-const holdingsRecordFilterRenderer = ({ locations, query, tags }) => onChange => {
+const holdingsRecordFilterRenderer = ({ locations, tags }) => onChange => {
   const activeFiltersObj = onChange.activeFilters.state;
 
   const onChangeHandler = (filterObj) => {
