@@ -1,7 +1,4 @@
-import {
-  escapeRegExp,
-  forOwn,
-} from 'lodash';
+import { escapeRegExp } from 'lodash';
 import moment from 'moment';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
