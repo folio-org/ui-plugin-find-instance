@@ -345,7 +345,7 @@ class PluginFindRecordModal extends React.Component {
                     {
                       this.state.filterPaneIsVisible &&
                       <Pane
-                        defaultWidth="22%"
+                        defaultWidth="25%"
                         paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                       >
                         <FilterNavigation segment={segment} setSegment={setSegment} />
