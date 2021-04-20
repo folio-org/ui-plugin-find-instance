@@ -21,7 +21,11 @@ export default function config() {
   this.get('/instance-statuses');
   this.get('/instance-statuses/:id');
 
-  this.get('/identifier-types');
+  this.get('/identifier-types', {
+    identifierTypes: [],
+    totalRecords: 0
+  });
+
   this.get('/identifier-types/:id');
 
   this.get('/contributor-types');
@@ -87,6 +91,11 @@ export default function config() {
 
   this.get('/holdings-types', {
     holdingsTypes: [],
+    totalRecords: 0
+  });
+
+  this.get('/tags', {
+    tags: [],
     totalRecords: 0
   });
 
@@ -208,6 +217,4 @@ export default function config() {
     totalRecords: 5,
   });
   this.get('/locations/:id', {});
-
-
 }

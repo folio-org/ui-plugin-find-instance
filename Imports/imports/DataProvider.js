@@ -20,7 +20,6 @@ const DataProvider = ({
         return true;
       }
     }
-
     return false;
   }, [resources, manifest]);
 
