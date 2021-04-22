@@ -12,7 +12,7 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 
-import filterConfig from './filterConfig';
+import { getFilterConfig } from '../Imports/imports/filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -31,13 +31,12 @@ const columnMapping = {
 
 const idPrefix = 'uiPluginFindInstance-';
 const modalLabel = <FormattedMessage id="ui-plugin-find-instance.modal.title" />;
+const filterConfig = getFilterConfig().filters;
 
 const setFilterValues = (resource, filterName, nameAttr, cqlAttr) => {
   const filterValues = get(resource, 'records') || [];
-
   if (filterValues.length) {
     const filterConfigObj = filterConfig.find(group => group.name === filterName);
-
     filterConfigObj.values = filterValues.map(rec => ({ name: rec[nameAttr], cql: rec[cqlAttr] }));
   }
 };

@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import noop from 'lodash/noop';
-import pickBy from 'lodash/pickBy';
+import {
+  noop,
+  omit,
+  pickBy,
+} from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -24,6 +27,7 @@ import {
 
 import Filters from './Filters';
 import css from './PluginFindRecordModal.css';
+import FilterNavigation from '../Imports/imports/FilterNavigation';
 
 const RESULTS_HEADER = <FormattedMessage id="ui-plugin-find-instance.resultsHeader" />;
 
@@ -135,6 +139,58 @@ class PluginFindRecordModal extends React.Component {
     }
   }
 
+  // filters param is in the form, e.g.:
+  // {name: "effectiveLocation", values: ["53cf956f-c1df-410b-8bea-27f712cca7c0"]}
+  // Want to get something like:
+  // {filters: "effectiveLocation.53cf956f-c1df-410b-8bea-27f712cca7c0"}
+  convertFilters = (filters) => {
+    const queryClauses = [];
+    Object.keys(filters).forEach(filter => {
+      filters[filter].forEach(value => {
+        queryClauses.push(`${filter}.${value}`);
+      });
+    });
+
+    return { filters: queryClauses.join(',') };
+  }
+
+  /**
+  This custom queryStateReducer function seems to be necessary because of the way
+  in which searchAndSortQuery favors simple checkbox filters (see, e.g., the
+  onFilterCheckboxChange function); without this, filter state is not set properly
+  for more complex arrangements.
+
+  The newState param contains a filterFields object that represents the *changed*
+  filters, which could mean that filter values have been added or removed, or a filter
+  has been cleared entirely. We have to be a bit careful in determining what the changes
+  are.
+  */
+  queryStateReducer = (state, nextState) => {
+    if (nextState.filterChanged) {
+      let newFilterFields = state.filterFields; // Begin with filters from previous state
+      const changedFilters = Object.keys(nextState.filterFields);
+      if (changedFilters.length === 0) { return nextState; }
+
+      changedFilters.forEach(filter => {
+        if (newFilterFields[filter]) {
+          // Filter already exists; changing value(s)
+          if (nextState.filterFields[filter].length === 0) {
+            // Remove the filter
+            newFilterFields = omit(newFilterFields, filter);
+          } else {
+            newFilterFields[filter] = nextState.filterFields[filter];
+          }
+        } else {
+          // This is a filter that has been added to the filter set; go with the new values
+          newFilterFields[filter] = nextState.filterFields[filter];
+        }
+      });
+      nextState.filterFields = newFilterFields;
+    }
+
+    return nextState;
+  }
+
   render() {
     const {
       closeModal,
@@ -153,6 +209,9 @@ class PluginFindRecordModal extends React.Component {
       renderFilters,
       renderNewBtn,
       resultsFormatter,
+      searchIndexes,
+      segment,
+      setSegment,
       source,
       visibleColumns,
     } = this.props;
@@ -254,7 +313,9 @@ class PluginFindRecordModal extends React.Component {
             onComponentWillUnmount={onComponentWillUnmount}
             queryGetter={queryGetter}
             querySetter={querySetter}
+            queryStateReducer={this.queryStateReducer}
             syncToLocationSearch={false}
+            filtersToParams={this.convertFilters}
           >
             {
               ({
@@ -284,9 +345,10 @@ class PluginFindRecordModal extends React.Component {
                     {
                       this.state.filterPaneIsVisible &&
                       <Pane
-                        defaultWidth="22%"
+                        defaultWidth="25%"
                         paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                       >
+                        <FilterNavigation segment={segment} setSegment={setSegment} />
                         <form onSubmit={onSubmitSearch}>
                           <div className={css.searchGroupWrap}>
                             <SearchField
@@ -297,6 +359,7 @@ class PluginFindRecordModal extends React.Component {
                               name="query"
                               onChange={getSearchHandlers().query}
                               onClear={getSearchHandlers().reset}
+                              searchableIndexes={searchIndexes}
                               value={searchValue.query}
                             />
                             <Button
@@ -325,7 +388,7 @@ class PluginFindRecordModal extends React.Component {
                           </div>
                           {
                             renderFilters
-                              ? renderFilters(activeFilters.state, getFilterHandlers())
+                              ? renderFilters({ activeFilters, getFilterHandlers })
                               : (
                                 <Filters
                                   activeFilters={activeFilters}
@@ -404,6 +467,9 @@ PluginFindRecordModal.propTypes = {
   renderFilters: PropTypes.func,
   renderNewBtn: PropTypes.func,
   resultsFormatter: PropTypes.object,
+  searchIndexes: PropTypes.arrayOf(PropTypes.string),
+  segment: PropTypes.string,
+  setSegment: PropTypes.object.isRequired,
   source: PropTypes.object,
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
@@ -418,6 +484,8 @@ PluginFindRecordModal.defaultProps = {
   onSaveMultiple: noop,
   renderNewBtn: noop,
   resultsFormatter: {},
+  searchIndexes: [],
+  segment: 'instances',
 };
 
 export default PluginFindRecordModal;
