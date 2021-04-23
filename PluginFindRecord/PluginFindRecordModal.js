@@ -467,6 +467,7 @@ PluginFindRecordModal.propTypes = {
   filterConfig: PropTypes.arrayOf(PropTypes.object),
   idPrefix: PropTypes.string.isRequired,
   initialSearch: PropTypes.string,
+  intl: PropTypes.object.isRequired,
   isMultiSelect: PropTypes.bool.isRequired,
   modalLabel: PropTypes.node,
   onComponentWillUnmount: PropTypes.func,
