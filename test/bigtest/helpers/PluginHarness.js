@@ -18,6 +18,7 @@ function PluginHarness(props) {
       selectInstance={noop}
       type="find-instance"
       onClose={onCloseSpy}
+      disabled={false}
       {...props}
     >
       <span data-test-no-plugin-available>No plugin available!</span>

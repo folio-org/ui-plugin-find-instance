@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 
@@ -10,25 +10,52 @@ import {
 
 import FindInstanceContainer from './FindInstanceContainer';
 
-const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => (
-  <PluginFindRecord
-    {...rest}
-    selectRecordsCb={(list) => (isMultiSelect ? selectInstance(list) : selectInstance(list[0]))}
-  >
-    {(modalProps) => (
-      <FindInstanceContainer>
-        {(viewProps) => (
-          <PluginFindRecordModal
-            {...viewProps}
-            {...modalProps}
-            isMultiSelect={isMultiSelect}
-            renderNewBtn={renderNewBtn}
-          />
+import DataProvider from '../Imports/imports/DataProvider';
+import DataContext from '../Imports/imports/DataContext';
+import { getFilterConfig } from '../Imports/imports/filterConfig';
+
+const query = {
+  query: '',
+  sort: 'title',
+};
+
+const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => {
+  const [segment, setSegment] = useState('instances');
+  const {
+    indexes,
+    renderer,
+  } = getFilterConfig(segment);
+
+  return (
+    <DataProvider>
+      <PluginFindRecord
+        {...rest}
+        selectRecordsCb={(list) => (isMultiSelect ? selectInstance(list) : selectInstance(list[0]))}
+      >
+        {(modalProps) => (
+          <DataContext.Consumer>
+            {data => (
+              <FindInstanceContainer>
+                {(viewProps) => (
+                  <PluginFindRecordModal
+                    {...viewProps}
+                    {...modalProps}
+                    isMultiSelect={isMultiSelect}
+                    renderNewBtn={renderNewBtn}
+                    renderFilters={renderer({ ...data, query })}
+                    segment={segment}
+                    setSegment={setSegment}
+                    searchIndexes={indexes}
+                  />
+                )}
+              </FindInstanceContainer>
+            )}
+          </DataContext.Consumer>
         )}
-      </FindInstanceContainer>
-    )}
-  </PluginFindRecord>
-);
+      </PluginFindRecord>
+    </DataProvider>
+  );
+};
 
 InstanceSearch.defaultProps = {
   searchButtonStyle: 'primary noRightRadius',

@@ -3,7 +3,6 @@ import {
   render,
   cleanup,
 } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 
 import '../test/jest/__mock__';
 import PluginFindRecord from './PluginFindRecord';
