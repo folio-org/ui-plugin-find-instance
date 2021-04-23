@@ -4,6 +4,7 @@
 
 * Update the .gitignore file. Refs UIPFI-25.
 * Add pull request template. Refs UIPFI-26.
+* Add settings up for Jest/RTL tests. Refs UIPFI-27.
 
 ## [5.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v5.0.0) (2021-03-10)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v4.0.0...v5.0.0)
