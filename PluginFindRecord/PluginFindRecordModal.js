@@ -5,7 +5,10 @@ import {
   omit,
   pickBy,
 } from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 
 import {
   Button,
@@ -200,6 +203,7 @@ class PluginFindRecordModal extends React.Component {
       filterConfig,
       idPrefix,
       initialSearch,
+      intl,
       isMultiSelect,
       modalLabel,
       onComponentWillUnmount,
@@ -243,6 +247,13 @@ class PluginFindRecordModal extends React.Component {
     if (source && source.loaded()) {
       resultPaneSub = <FormattedMessage id="stripes-smart-components.searchResultsCountHeader" values={{ count }} />;
     }
+
+    const formattedSearchableIndexes = searchIndexes.map(index => {
+      const { prefix = '' } = index;
+      const label = prefix + intl.formatMessage({ id: index.label });
+
+      return { ...index, label };
+    });
 
     const mixedResultsFormatter = {
       isChecked: record => (
@@ -359,7 +370,7 @@ class PluginFindRecordModal extends React.Component {
                               name="query"
                               onChange={getSearchHandlers().query}
                               onClear={getSearchHandlers().reset}
-                              searchableIndexes={searchIndexes}
+                              searchableIndexes={formattedSearchableIndexes}
                               value={searchValue.query}
                             />
                             <Button
@@ -456,6 +467,7 @@ PluginFindRecordModal.propTypes = {
   filterConfig: PropTypes.arrayOf(PropTypes.object),
   idPrefix: PropTypes.string.isRequired,
   initialSearch: PropTypes.string,
+  intl: PropTypes.object.isRequired,
   isMultiSelect: PropTypes.bool.isRequired,
   modalLabel: PropTypes.node,
   onComponentWillUnmount: PropTypes.func,
@@ -488,4 +500,4 @@ PluginFindRecordModal.defaultProps = {
   segment: 'instances',
 };
 
-export default PluginFindRecordModal;
+export default injectIntl(PluginFindRecordModal);
