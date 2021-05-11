@@ -143,7 +143,7 @@ class FindInstanceContainer extends React.Component {
 
   querySetter = ({ nsValues, state }) => {
     const nsValuesWithIndex = {
-      query: nsValues.query,
+      ...nsValues,
       qindex: this.state.qindex,
     };
 
