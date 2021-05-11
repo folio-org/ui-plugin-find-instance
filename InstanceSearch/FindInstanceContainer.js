@@ -110,6 +110,12 @@ class FindInstanceContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.state = {
+      // The qindex param holds the search index to use for a query,
+      // if multiple indices are in play
+      qindex: '',
+    };
+
     this.logger = props.stripes.logger;
     this.log = this.logger.log.bind(this.logger);
   }
@@ -136,15 +142,25 @@ class FindInstanceContainer extends React.Component {
   };
 
   querySetter = ({ nsValues, state }) => {
+    const nsValuesWithIndex = {
+      query: nsValues.query,
+      qindex: this.state.qindex,
+    };
+
     if (/reset/.test(state.changeType)) {
-      this.props.mutator.query.replace(nsValues);
+      this.props.mutator.query.replace(nsValuesWithIndex);
     } else {
-      this.props.mutator.query.update(nsValues);
+      this.props.mutator.query.update(nsValuesWithIndex);
     }
   }
 
   queryGetter = () => {
     return get(this.props.resources, 'query', {});
+  }
+
+  // Handler for a change of search index in PluginFindRecordModal's <SearchField> component
+  setSearchIndex = (e) => {
+    this.setState({ qindex: e.target.value });
   }
 
   render() {
@@ -182,6 +198,7 @@ class FindInstanceContainer extends React.Component {
       queryGetter: this.queryGetter,
       querySetter: this.querySetter,
       resultsFormatter,
+      setSearchIndex: this.setSearchIndex,
       source: this.source,
       visibleColumns,
       data: {

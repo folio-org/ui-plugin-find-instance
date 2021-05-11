@@ -214,6 +214,7 @@ class PluginFindRecordModal extends React.Component {
       renderNewBtn,
       resultsFormatter,
       searchIndexes,
+      setSearchIndex,
       segment,
       setSegment,
       source,
@@ -371,6 +372,7 @@ class PluginFindRecordModal extends React.Component {
                               onChange={getSearchHandlers().query}
                               onClear={getSearchHandlers().reset}
                               searchableIndexes={formattedSearchableIndexes}
+                              onChangeIndex={setSearchIndex}
                               value={searchValue.query}
                             />
                             <Button
@@ -479,9 +481,10 @@ PluginFindRecordModal.propTypes = {
   renderFilters: PropTypes.func,
   renderNewBtn: PropTypes.func,
   resultsFormatter: PropTypes.object,
-  searchIndexes: PropTypes.arrayOf(PropTypes.string),
+  searchIndexes: PropTypes.arrayOf(PropTypes.object),
   segment: PropTypes.string,
-  setSegment: PropTypes.object.isRequired,
+  setSearchIndex: PropTypes.func.isRequired,
+  setSegment: PropTypes.func.isRequired,
   source: PropTypes.object,
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
