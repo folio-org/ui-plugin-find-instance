@@ -228,7 +228,7 @@ class PluginFindRecordModal extends React.Component {
 
     const query = queryGetter ? queryGetter() || {} : {};
     const count = source ? source.totalCount() : 0;
-    const sortOrder = query.sort || '';
+    const sortOrder = query.sort || 'title';
     const resultsStatusMessage = source
       ? (
         <div data-test-find-records-no-results-message>
@@ -322,6 +322,7 @@ class PluginFindRecordModal extends React.Component {
           <SearchAndSortQuery
             initialSearch={initialSearch}
             initialSearchState={{ qindex: '', query: '' }}
+            initialSortState={{ sort: 'title' }}
             onComponentWillUnmount={onComponentWillUnmount}
             queryGetter={queryGetter}
             querySetter={querySetter}
@@ -360,7 +361,7 @@ class PluginFindRecordModal extends React.Component {
                         defaultWidth="25%"
                         paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                       >
-                        <FilterNavigation segment={segment} setSegment={setSegment} />
+                        <FilterNavigation segment={segment} setSegment={setSegment} reset={resetAll} />
                         <form onSubmit={onSubmitSearch}>
                           <div className={css.searchGroupWrap}>
                             <SearchField

@@ -8,7 +8,7 @@ import {
 
 import { segments } from '../constants';
 
-const FilterNavigation = ({ segment, setSegment }) => (
+const FilterNavigation = ({ segment, setSegment, reset }) => (
   <ButtonGroup
     fullWidth
     data-test-filters-navigation
@@ -17,7 +17,7 @@ const FilterNavigation = ({ segment, setSegment }) => (
       Object.keys(segments).map(name => (
         <Button
           key={`${name}`}
-          onClick={() => setSegment(name)}
+          onClick={() => { setSegment(name); reset(); }}
           buttonStyle={`${segment === name ? 'primary' : 'default'}`}
           id={`segment-navigation-${name}`}
         >
@@ -29,6 +29,7 @@ const FilterNavigation = ({ segment, setSegment }) => (
 );
 
 FilterNavigation.propTypes = {
+  reset: PropTypes.func.isRequired,
   segment: PropTypes.string,
   setSegment: PropTypes.func.isRequired,
 };

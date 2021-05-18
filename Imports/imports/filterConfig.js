@@ -212,21 +212,23 @@ export const itemSortMap = {
   Contributors: 'contributors',
 };
 
+const allFilters = instanceFilterConfig.concat(holdingFilterConfig, itemFilterConfig);
+
 const config = {
   instances: {
-    filters: instanceFilterConfig,
+    filters: allFilters,
     indexes: instanceIndexes,
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
   },
   holdings: {
-    filters: holdingFilterConfig,
+    filters: allFilters,
     indexes: holdingIndexes,
     sortMap: holdingSortMap,
     renderer: holdingsRecordFilterRenderer,
   },
   items: {
-    filters: itemFilterConfig,
+    filters: allFilters,
     indexes: itemIndexes,
     sortMap: itemSortMap,
     renderer: itemFilterRenderer,
