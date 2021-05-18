@@ -14,8 +14,8 @@ import {
 
 import { getFilterConfig } from '../Imports/imports/filterConfig';
 
-const INITIAL_RESULT_COUNT = 30;
-const RESULT_COUNT_INCREMENT = 30;
+const INITIAL_RESULT_COUNT = 100;
+const RESULT_COUNT_INCREMENT = 100;
 const columnWidths = {
   isChecked: '8%',
   title: '40%',
@@ -76,7 +76,7 @@ class FindInstanceContainer extends React.Component {
       GET: {
         params: {
           query: makeQueryFunction(
-            'cql.allRecords=1',
+            'cql.allRecords=1 sortby title',
             '(title="%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}")',
             {},
             filterConfig,
