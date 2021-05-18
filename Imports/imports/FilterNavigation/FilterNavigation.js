@@ -29,6 +29,7 @@ const FilterNavigation = ({ segment, setSegment, reset }) => (
 );
 
 FilterNavigation.propTypes = {
+  reset: PropTypes.func.isRequired,
   segment: PropTypes.string,
   setSegment: PropTypes.func.isRequired,
 };
