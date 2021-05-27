@@ -14,8 +14,9 @@ const Filters = ({
 
   return (
     <FilterGroups
+      data-test-filters
       config={config}
-      filters={groupFilters}
+      filters={config}
       onChangeFilter={checkbox}
       onClearFilter={clearGroup}
     />

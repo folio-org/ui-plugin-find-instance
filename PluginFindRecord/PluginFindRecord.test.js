@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   render,
-  cleanup,
+  cleanup, screen,
 } from '@testing-library/react';
 
 import '../test/jest/__mock__';
@@ -10,12 +10,15 @@ import PluginFindRecord from './PluginFindRecord';
 const renderPluginFindRecord = ({
   selectRecordsCb = jest.fn(),
   onClose = jest.fn(),
+  children = jest.fn(),
 }) => render(
   <PluginFindRecord
     selectRecordsCb={selectRecordsCb}
     onClose={onClose}
     withTrigger
-  />
+  >
+    {children}
+  </PluginFindRecord>
 );
 
 describe('Plugin find record', () => {
