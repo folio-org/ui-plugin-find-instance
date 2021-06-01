@@ -65,6 +65,7 @@ const renderPluginFindRecordModal = ({
 describe('Plugin find record modal', () => {
   describe('With default props', () => {
     let pluginFindRecordModal;
+
     beforeEach(() => {
       pluginFindRecordModal = renderPluginFindRecordModal({
         filterConfig: config,
@@ -89,6 +90,7 @@ describe('Plugin find record modal', () => {
 
   describe('Records was not found', () => {
     let pluginFindRecordModal;
+
     beforeEach(() => {
       pluginFindRecordModal = renderPluginFindRecordModal({
         isMultiSelect: false,

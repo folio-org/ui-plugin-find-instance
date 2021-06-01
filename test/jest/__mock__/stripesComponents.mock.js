@@ -22,7 +22,7 @@ jest.mock('@folio/stripes/components', () => ({
     <div data-test-checkbox>
       <label
         tagName={label ? 'label' : 'span'}
-        htmlFor={label ? this.id : undefined}
+        htmlFor={label ? this.id : null}
         className={this.getLabelClasses()}
       >
         {(vertical && label) && this.renderLabelText()}

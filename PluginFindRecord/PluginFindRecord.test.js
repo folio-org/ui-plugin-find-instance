@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   render,
-  cleanup, screen,
+  cleanup,
 } from '@testing-library/react';
 
 import '../test/jest/__mock__';
@@ -23,6 +23,7 @@ const renderPluginFindRecord = ({
 
 describe('Plugin find record', () => {
   let pluginFindRecord;
+
   beforeEach(() => {
     pluginFindRecord = renderPluginFindRecord({});
   });

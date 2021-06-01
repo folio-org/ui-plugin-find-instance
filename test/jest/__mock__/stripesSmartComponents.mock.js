@@ -2,23 +2,25 @@ import React from 'react';
 
 jest.mock('@folio/stripes/smart-components', () => ({
   SearchAndSortQuery: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
-  SearchAndSortNoResultsMessage: jest.fn(({ label,
+  SearchAndSortNoResultsMessage: jest.fn(({
+    label,
     filterPaneIsVisible = true,
     toggleFilterPane = jest.fn(),
-    ...rest }) => (
-      <div {...rest}>
-        <div>
-          <span>{label}</span>
-        </div>
-        {!filterPaneIsVisible &&
-          <button
-            type="submit"
-            onClick={toggleFilterPane}
-          >
-            Show filters
-          </button>
-        }
+    ...rest
+  }) => (
+    <div {...rest}>
+      <div>
+        <span>{label}</span>
       </div>
+      {!filterPaneIsVisible &&
+        <button
+          type="submit"
+          onClick={toggleFilterPane}
+        >
+          Show filters
+        </button>
+      }
+    </div>
   )),
   SearchAndSortSearchButton: jest.fn(({
     label,
