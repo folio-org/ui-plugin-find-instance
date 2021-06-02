@@ -303,6 +303,7 @@ class PluginFindRecordModal extends React.Component {
       <Modal
         contentClass={css.pluginModalContent}
         data-test-find-records-modal
+        data-testid="data-test-find-records-modal"
         dismissible
         enforceFocus={false}
         footer={footer}
@@ -320,6 +321,7 @@ class PluginFindRecordModal extends React.Component {
           className={isMultiSelect ? css.showButtonsBar : ''}
         >
           <SearchAndSortQuery
+            data-testid="data-test-search-and-sort"
             initialSearch={initialSearch}
             initialSearchState={{ qindex: '', query: '' }}
             initialSortState={{ sort: 'title' }}
@@ -379,6 +381,7 @@ class PluginFindRecordModal extends React.Component {
                             <Button
                               buttonStyle="primary"
                               data-test-plugin-search-submit
+                              data-testid="data-test-plugin-search-submit"
                               disabled={(!searchValue.query || searchValue.query === '')}
                               fullWidth
                               marginBottom0

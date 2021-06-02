@@ -10,16 +10,20 @@ import PluginFindRecord from './PluginFindRecord';
 const renderPluginFindRecord = ({
   selectRecordsCb = jest.fn(),
   onClose = jest.fn(),
+  children = jest.fn(),
 }) => render(
   <PluginFindRecord
     selectRecordsCb={selectRecordsCb}
     onClose={onClose}
     withTrigger
-  />
+  >
+    {children}
+  </PluginFindRecord>
 );
 
 describe('Plugin find record', () => {
   let pluginFindRecord;
+
   beforeEach(() => {
     pluginFindRecord = renderPluginFindRecord({});
   });
