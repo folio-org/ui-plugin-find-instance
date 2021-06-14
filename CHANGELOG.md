@@ -7,6 +7,7 @@
 * Update search and filter pane to mirror `ui-inventory`. Refs UIPFI-6, UIPFI-18, UIPFI-19, UIPFI-20.
 * Add settings up for Jest/RTL tests. Refs UIPFI-27.
 * Add tests fot directory `PluginFindRecord`. Refs UIPFI-28.
+* Investigate will be build with error `Pattern ./test/bigtest/index.js does not match any file`. Refs UIPFI-35.
 
 ## [5.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v5.0.0) (2021-03-10)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v4.0.0...v5.0.0)
