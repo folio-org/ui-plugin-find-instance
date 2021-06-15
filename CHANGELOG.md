@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## [5.1.0] (IN PROGRESS)
+## [5.1.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v5.1.0) (2021-06-15)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v5.0.0...v5.1.0)
 
 * Update the .gitignore file. Refs UIPFI-25.
 * Add pull request template. Refs UIPFI-26.
