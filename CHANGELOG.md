@@ -2,7 +2,7 @@
 
 ## [5.1.1] IN PROGRESS
 
-* Fix default search index to align it with the `ui-inventory` module. Fixes UIPFI-36.
+* Change default search index to align it with the `ui-inventory` module. Fixes UIPFI-36.
 
 ## [5.1.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v5.1.0) (2021-06-15)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v5.0.0...v5.1.0)
