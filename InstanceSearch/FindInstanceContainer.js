@@ -77,7 +77,7 @@ class FindInstanceContainer extends React.Component {
         params: {
           query: makeQueryFunction(
             'cql.allRecords=1 sortby title',
-            '(title="%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}")',
+            'keyword all "%{query.query}"',
             {},
             filterConfig,
             2,
