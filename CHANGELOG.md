@@ -1,10 +1,11 @@
 # Change history for ui-plugin-find-instance
 
-## [5.1.1] IN PROGRESS
+## [5.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v5.1.1) (2021-08-05)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v5.1.0...v5.1.1)
 
 * Change default search index to align it with the `ui-inventory` module. Fixes UIPFI-36.
 
-## [5.1.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v5.1.0) (2021-06-15)
+## [5.1.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v5.1.0) (2021-06-15)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v5.0.0...v5.1.0)
 
 * Update the .gitignore file. Refs UIPFI-25.
