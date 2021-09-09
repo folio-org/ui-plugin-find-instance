@@ -70,7 +70,7 @@ class FindInstanceContainer extends React.Component {
       throwErrors: false,
       type: 'okapi',
       records: 'instances',
-      path: 'inventory/instances',
+      path: 'search/instances',
       recordsRequired: '%{resultCount}',
       perRequest: RESULT_COUNT_INCREMENT,
       GET: {
@@ -181,7 +181,7 @@ class FindInstanceContainer extends React.Component {
         </AppIcon>
       ),
       contributors: r => contributorsFormatter(r, contributorTypes),
-      publishers: r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
+      publishers: r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
     };
 
     if (this.source) {

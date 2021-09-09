@@ -19,7 +19,8 @@
     "okapiInterfaces": {
       "contributor-types": "2.0",
       "instance-types": "2.0",
-      "locations": "3.0"
+      "locations": "3.0",
+      "search": "0.5"
     }
   },
   "scripts": {
