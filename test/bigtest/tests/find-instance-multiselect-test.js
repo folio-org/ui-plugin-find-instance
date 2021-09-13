@@ -23,6 +23,10 @@ describe('Find instance plugin with multiselect', function () {
   });
 
   describe('Find instance button', () => {
+    beforeEach(async () => {
+      await findInstance.whenLoaded();
+    });
+
     it('should be rendered', function () {
       expect(findInstance.button.isPresent).to.be.true;
     });
@@ -40,6 +44,7 @@ describe('Find instance plugin with multiselect', function () {
 
   describe('modal list', function () {
     beforeEach(async function () {
+      await findInstance.whenLoaded();
       await findInstance.button.click();
       await findInstance.filter.searchInput('TEST');
       await findInstance.filter.searchButton.click();

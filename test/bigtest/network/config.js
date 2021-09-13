@@ -1,6 +1,13 @@
 // import CQLParser, { CQLBoolean } from './cql';
 
 export default function config() {
+  this.get('/search/instances', (schema) => {
+    const {
+      instances,
+    } = schema;
+
+    return instances.all();
+  });
   this.get('/inventory/instances', (schema) => {
     const {
       instances,
@@ -8,7 +15,6 @@ export default function config() {
 
     return instances.all();
   });
-
   this.get('/instance-types', ({ instanceTypes }) => {
     return instanceTypes.all();
   });

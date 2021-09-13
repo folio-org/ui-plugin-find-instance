@@ -4,6 +4,7 @@ import {
   fillable,
   interactor,
   is,
+  isPresent,
   property,
   scoped,
 } from '@bigtest/interactor';
@@ -42,6 +43,12 @@ import ButtonInteractor from './ButtonInteractor';
     click: clickable(),
     isFocused: is(':focus'),
   });
+
+  buttonIsLoaded = isPresent('[data-test-plugin-find-record-button]');
+
+  whenLoaded() {
+    return this.when(() => this.buttonIsLoaded, 5000);
+  }
 
   modal = new PluginModalInteractor();
   filter = new OrderLinesFilterInteractor();

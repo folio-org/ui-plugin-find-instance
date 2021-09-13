@@ -38,6 +38,7 @@ describe('Find instance plugin with single select option', function () {
 
   describe('modal list', function () {
     beforeEach(async function () {
+      await findInstance.whenLoaded();
       await findInstance.button.click();
       await findInstance.filter.searchInput('TEST');
       await findInstance.filter.searchButton.click();
