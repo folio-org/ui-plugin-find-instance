@@ -1,14 +1,14 @@
 // import CQLParser, { CQLBoolean } from './cql';
 
 export default function config() {
-  this.get('/search/instances', (schema) => {
+  this.get('/inventory/instances', (schema) => {
     const {
       instances,
     } = schema;
 
     return instances.all();
   });
-  this.get('/inventory/instances', (schema) => {
+  this.get('/search/instances', (schema) => {
     const {
       instances,
     } = schema;
