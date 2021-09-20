@@ -1,7 +1,26 @@
 {
   "parser": "babel-eslint",
   "extends": "@folio/eslint-config-stripes",
+  "plugins": [
+    "filenames",
+    "jest"
+  ],
+  "overrides": [
+    {
+      "files": ["*test.js", "test/**"],
+      "rules": {
+        "react/prop-types": "off",
+        "import/prefer-default-export": "off"
+      }
+    },
+    {
+      "files": [ "src/**"],
+      "rules": {
+        "react-hooks/exhaustive-deps": "off"
+      }
+    }
+  ],
   "env": {
-    "jest": true
+    "jest/globals": true
   }
 }

@@ -62,7 +62,7 @@ const renderPluginFindRecordModal = ({
   />
 );
 
-describe('Plugin find record modal', () => {
+describe('PluginFindRecordModal', () => {
   describe('With default props', () => {
     let pluginFindRecordModal;
 

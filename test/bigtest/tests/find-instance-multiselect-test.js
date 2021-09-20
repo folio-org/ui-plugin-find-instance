@@ -20,6 +20,7 @@ describe('Find instance plugin with multiselect', function () {
 
   beforeEach(async function () {
     this.server.createList('instance', INSTANCES_COUNT);
+    await findInstance.whenButtonReady();
   });
 
   describe('Find instance button', () => {
