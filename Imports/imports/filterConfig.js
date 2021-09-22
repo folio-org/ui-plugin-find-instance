@@ -1,101 +1,113 @@
-import instanceFilterRenderer from '../FilterRenderers/InstanceFilters';
-import holdingsRecordFilterRenderer from '../FilterRenderers/HoldingsFilters';
-import itemFilterRenderer from '../FilterRenderers/ItemFilters';
+import { instanceFilterRenderer } from './InstanceFilters';
+import { holdingsRecordFilterRenderer } from './HoldingsFilters';
+import { itemFilterRenderer } from './ItemFilters';
 
 import {
   buildDateRangeQuery,
   buildOptionalBooleanQuery,
 } from './utils';
+import {
+  FACETS,
+  FACETS_CQL
+} from './constants';
+import {
+  AND,
+  NOT,
+  OR
+} from './ElasticQueryField/constants';
 
 export const instanceFilterConfig = [
   {
-    name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'language',
-    cql: 'languages',
-    values: [],
-    operator: '=',
-  },
-  {
-    name: 'format',
-    cql: 'instanceFormatIds',
+    name: FACETS.LANGUAGE,
+    cql: FACETS_CQL.LANGUAGES,
     values: [],
   },
   {
-    name: 'resource',
-    cql: 'instanceTypeId',
+    name: FACETS.FORMAT,
+    cql: FACETS_CQL.INSTANCE_FORMAT,
     values: [],
   },
   {
-    name: 'mode',
-    cql: 'modeOfIssuanceId',
+    name: FACETS.RESOURCE,
+    cql: FACETS_CQL.INSTANCE_TYPE,
     values: [],
   },
   {
-    name: 'natureOfContent',
-    cql: 'natureOfContentTermIds',
+    name: FACETS.MODE,
+    cql: FACETS_CQL.MODE_OF_ISSUANCE,
+    values: [],
+  },
+  {
+    name: FACETS.NATURE_OF_CONTENT,
+    cql: FACETS_CQL.NATURE_OF_CONTENT,
     values: [],
   },
   {
     name: 'location',
-    cql: 'holdingsRecords.permanentLocationId',
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'staffSuppress',
-    cql: 'staffSuppress',
+    name: FACETS_CQL.STAFF_SUPPRESS,
+    cql: FACETS_CQL.STAFF_SUPPRESS,
     values: [],
-    parse: buildOptionalBooleanQuery('staffSuppress'),
+    parse: buildOptionalBooleanQuery(FACETS_CQL.STAFF_SUPPRESS),
   },
   {
-    name: 'discoverySuppress',
-    cql: 'discoverySuppress',
+    name: FACETS.INSTANCES_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS,
     values: [],
-    parse: buildOptionalBooleanQuery('discoverySuppress'),
+    parse: buildOptionalBooleanQuery(FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS),
   },
   {
-    name: 'createdDate',
-    cql: 'metadata.createdDate',
+    name: FACETS.CREATED_DATE,
+    cql: FACETS_CQL.CREATED_DATE,
     values: [],
-    parse: buildDateRangeQuery('createdDate'),
+    parse: buildDateRangeQuery(FACETS.CREATED_DATE),
   },
   {
-    name: 'updatedDate',
-    cql: 'metadata.updatedDate',
+    name: FACETS.UPDATED_DATE,
+    cql: FACETS_CQL.UPDATED_DATE,
     values: [],
-    parse: buildDateRangeQuery('updatedDate'),
+    parse: buildDateRangeQuery(FACETS.UPDATED_DATE),
   },
   {
-    name: 'source',
-    cql: 'source',
+    name: FACETS.SOURCE,
+    cql: FACETS_CQL.SOURCE,
     operator: '==',
     values: [],
   },
   {
-    name: 'tags',
-    cql: 'tags.tagList',
+    name: FACETS.INSTANCES_TAGS,
+    cql: FACETS_CQL.INSTANCES_TAGS,
     values: [],
-    operator: '=',
   },
 ];
 
 export const instanceIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
-  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
-  { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.isbnNormalized', prefix: '- ', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
-  // { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
-  { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-plugin-find-instance.search.all', value: 'all', queryTemplate: 'keyword all' },
+  { label: 'ui-plugin-find-instance.title', value: 'Title', queryTemplate: 'title all' },
+  { label: 'ui-plugin-find-instance.contributor', value: 'Contributor', queryTemplate: 'contributors=' },
+  { label: 'ui-plugin-find-instance.identifierAll', value: 'Identifier', queryTemplate: 'identifiers.value==' },
+  { label: 'ui-plugin-find-instance.issn', value: 'ISSN', queryTemplate: 'issn==' },
+  { label: 'ui-plugin-find-instance.isbn', value: 'ISBN', queryTemplate: 'isbn==' },
+  { label: 'ui-plugin-find-instance.subject', value: 'Subject', queryTemplate: 'subjects all' },
+  { label: 'ui-plugin-find-instance.instanceId', value: 'UUID', queryTemplate: 'id==' },
+  { label: 'ui-plugin-find-instance.instanceHrid', value: 'HRID', queryTemplate: 'hrid==' },
+  { label: 'ui-plugin-find-instance.electronicAccessAll', value: 'Electronic access (all)', queryTemplate: 'electronicAccess==' },
+  { label: 'ui-plugin-find-instance.electronicAccessURI', value: 'Electronic access (URI)', queryTemplate: 'electronicAccess.uri==' },
+  { label: 'ui-plugin-find-instance.electronicAccessPublicNote', value: 'Electronic access (Public Note)', queryTemplate: 'electronicAccess.publicNote all' },
+  { label: 'ui-plugin-find-instance.electronicAccessLinkText', value: 'Electronic access (Link text)', queryTemplate: 'electronicAccess.linkText all' },
+  { label: 'ui-plugin-find-instance.electronicAccessMaterialsSpecified', value: 'Electronic access (Materials specified)', queryTemplate: 'electronicAccess.materialsSpecification all' },
 ];
+
+export const advancedSearchIndex = { label: 'ui-plugin-find-instance.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' };
+
 
 export const instanceSortMap = {
   Title: 'title',
@@ -104,106 +116,101 @@ export const instanceSortMap = {
 };
 
 export const holdingIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.isbnNormalized', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.callNumberEyeReadable',
-    value: 'callNumberER',
-    queryTemplate: `
-      holdingsRecords.fullCallNumber=="%{query.query}"
-      OR holdingsRecords.callNumberAndSuffix=="%{query.query}"
-      OR holdingsRecords.callNumber=="%{query.query}"
-    ` },
-  { label: 'ui-inventory.callNumberNormalized',
-    value: 'callNumberNormalized',
-    queryTemplate: 'holdingsRecords.fullCallNumberNormalized="%{query.query}" OR holdingsRecords.callNumberAndSuffixNormalized="%{query.query}"' },
-  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdingsRecords.hrid=="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-plugin-find-instance.search.all', value: 'all', queryTemplate: 'keyword all' },
+  { label: 'ui-plugin-find-instance.issn', value: 'ISSN', queryTemplate: 'issn==' },
+  { label: 'ui-plugin-find-instance.isbn', value: 'ISBN', queryTemplate: 'isbn==' },
+  { label: 'ui-plugin-find-instance.callNumber', value: 'Call Number', queryTemplate: 'holdings.fullCallNumber==' },
+  { label: 'ui-plugin-find-instance.holdingsHrid', value: 'HRID', queryTemplate: 'holdings.hrid==' },
+  { label: 'ui-plugin-find-instance.electronicAccessAll', value: 'Electronic access (all)', queryTemplate: 'electronicAccess==' },
+  { label: 'ui-plugin-find-instance.electronicAccessURI', value: 'Electronic access (URI)', queryTemplate: 'electronicAccess.uri==' },
+  { label: 'ui-plugin-find-instance.electronicAccessPublicNote', value: 'Electronic access (Public Note)', queryTemplate: 'electronicAccess.publicNote all' },
+  { label: 'ui-plugin-find-instance.electronicAccessLinkText', value: 'Electronic access (Link text)', queryTemplate: 'electronicAccess.linkText all' },
+  { label: 'ui-plugin-find-instance.electronicAccessMaterialsSpecified', value: 'Electronic access (Materials specified)', queryTemplate: 'electronicAccess.materialsSpecification all' },
 ];
 
 export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
-    name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'holdingsPermanentLocation',
-    cql: 'holdingsRecords.permanentLocationId',
+    name: FACETS.HOLDINGS_PERMANENT_LOCATION,
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'discoverySuppress',
-    cql: 'holdingsRecords.discoverySuppress',
+    name: FACETS.HOLDINGS_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS,
     values: [],
-    parse: buildOptionalBooleanQuery('holdingsRecords.discoverySuppress'),
+    parse: buildOptionalBooleanQuery(FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS),
   },
   {
-    name: 'tags',
-    cql: 'holdingsRecords.tags.tagList',
+    name: FACETS.HOLDINGS_TAGS,
+    cql: FACETS_CQL.HOLDINGS_TAGS,
     values: [],
-    operator: '=',
   },
 ];
 
 export const itemIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.isbnNormalized', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
-    value: 'itemCallNumberER',
-    queryTemplate: `
-      item.fullCallNumber=="%{query.query}"
-      OR item.callNumberAndSuffix=="%{query.query}"
-      OR item.effectiveCallNumberComponents.callNumber=="%{query.query}"
-    ` },
-  { label: 'ui-inventory.itemEffectiveCallNumberNormalized',
-    value: 'itemCallNumberNorm',
-    queryTemplate: 'item.fullCallNumberNormalized="%{query.query}" OR item.callNumberAndSuffixNormalized="%{query.query}"' },
-  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'item.hrid=="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-
+  { label: 'ui-plugin-find-instance.search.all', value: 'all', queryTemplate: 'keyword all' },
+  { label: 'ui-plugin-find-instance.barcode', value: 'Barcode', queryTemplate: 'items.barcode==' },
+  { label: 'ui-plugin-find-instance.issn', value: 'ISSN', queryTemplate: 'issn==' },
+  { label: 'ui-plugin-find-instance.isbn', value: 'ISBN', queryTemplate: 'isbn==' },
+  { label: 'ui-plugin-find-instance.callNumber', value: 'Call Number', queryTemplate: 'items.effectiveCallNumberComponents==' },
+  { label: 'ui-plugin-find-instance.itemHrid', value: 'Item HRID', queryTemplate: 'items.hrid==' },
+  { label: 'ui-plugin-find-instance.electronicAccessAll', value: 'Electronic access (all)', queryTemplate: 'electronicAccess==' },
+  { label: 'ui-plugin-find-instance.electronicAccessURI', value: 'Electronic access (URI)', queryTemplate: 'electronicAccess.uri==' },
+  { label: 'ui-plugin-find-instance.electronicAccessPublicNote', value: 'Electronic access (Public Note)', queryTemplate: 'electronicAccess.publicNote all' },
+  { label: 'ui-plugin-find-instance.electronicAccessLinkText', value: 'Electronic access (Link text)', queryTemplate: 'electronicAccess.linkText all' },
+  { label: 'ui-plugin-find-instance.electronicAccessMaterialsSpecified', value: 'Electronic access (Materials specified)', queryTemplate: 'electronicAccess.materialsSpecification all' },
 ];
 
 export const itemFilterConfig = [
   {
-    name: 'materialType',
-    cql: 'item.materialTypeId',
+    name: FACETS.MATERIAL_TYPE,
+    cql: FACETS_CQL.MATERIAL_TYPES,
     values: [],
   },
   {
-    name: 'itemStatus',
-    cql: 'item.status.name',
+    name: FACETS.ITEM_STATUS,
+    cql: FACETS_CQL.ITEMS_STATUSES,
     operator: '==',
     values: [],
   },
   {
-    name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'holdingsPermanentLocation',
-    cql: 'holdingsRecords.permanentLocationId',
+    name: FACETS.HOLDINGS_PERMANENT_LOCATION,
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'discoverySuppress',
-    cql: 'item.discoverySuppress',
+    name: FACETS.ITEMS_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS,
     values: [],
-    parse: buildOptionalBooleanQuery('item.discoverySuppress'),
+    parse: buildOptionalBooleanQuery(FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS),
   },
   {
-    name: 'tags',
-    cql: 'item.tags.tagList',
+    name: FACETS.ITEMS_TAGS,
+    cql: FACETS_CQL.ITEMS_TAGS,
     values: [],
-    operator: '=',
   },
+];
+
+export const operators = [
+  { label: '=', queryTemplate: '' },
+];
+
+export const booleanOperators = [
+  { label: AND },
+  { label: OR },
+  { label: NOT },
 ];
 
 export const itemSortMap = {
@@ -212,26 +219,30 @@ export const itemSortMap = {
   Contributors: 'contributors',
 };
 
-const allFilters = instanceFilterConfig.concat(holdingFilterConfig, itemFilterConfig);
-
 const config = {
   instances: {
-    filters: allFilters,
+    filters: instanceFilterConfig,
     indexes: instanceIndexes,
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
+    operators,
+    booleanOperators,
   },
   holdings: {
-    filters: allFilters,
+    filters: holdingFilterConfig,
     indexes: holdingIndexes,
     sortMap: holdingSortMap,
     renderer: holdingsRecordFilterRenderer,
+    operators,
+    booleanOperators,
   },
   items: {
-    filters: allFilters,
+    filters: itemFilterConfig,
     indexes: itemIndexes,
     sortMap: itemSortMap,
     renderer: itemFilterRenderer,
+    operators,
+    booleanOperators,
   }
 };
 

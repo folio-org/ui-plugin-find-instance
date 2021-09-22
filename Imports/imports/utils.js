@@ -1,4 +1,4 @@
-import { escapeRegExp } from 'lodash';
+import { escapeRegExp, get, template } from 'lodash';
 import moment from 'moment';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
@@ -24,6 +24,41 @@ export const buildOptionalBooleanQuery = name => values => {
 
     return `${name}==${joinedValues}`;
   }
+};
+
+export function getCurrentFilters(filtersStr) {
+  if (!filtersStr) {
+    return undefined;
+  }
+
+  return filtersStr
+    .split(',')
+    .reduce((filters, filter) => {
+      const [name, value] = filter.split('.');
+      filters[name] = filters[name] || [];
+      filters[name].push(value);
+      return filters;
+    }, {});
+}
+
+export function getQueryTemplate(queryIndex, indexes) {
+  const searchableIndex = indexes.find(({ value }) => value === queryIndex);
+
+  return get(searchableIndex, 'queryTemplate');
+}
+
+export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) {
+  const identifierType = identifierTypes
+    .find(({ name }) => name.toLowerCase() === queryIndex);
+  const identifierTypeId = get(identifierType, 'id', 'identifier-type-not-found');
+
+  return template(queryTemplate)({ identifierTypeId });
+}
+
+export const makeDateRangeFilterString = (startDate, endDate) => {
+  const endDateCorrected = moment.utc(endDate).add(1, 'days').format(DATE_FORMAT);
+
+  return `${startDate}:${endDateCorrected}`;
 };
 
 // A closure function which takes the name of the attribute used
@@ -62,12 +97,6 @@ export function filterItemsBy(name) {
   };
 }
 
-export const makeDateRangeFilterString = (startDate, endDate) => {
-  const endDateCorrected = moment.utc(endDate).add(1, 'days').format(DATE_FORMAT);
-
-  return `${startDate}:${endDateCorrected}`;
-};
-
 export const retrieveDatesFromDateRangeFilterString = filterValue => {
   let dateRange = {
     startDate: '',
@@ -92,3 +121,13 @@ export const retrieveDatesFromDateRangeFilterString = filterValue => {
   return dateRange;
 };
 
+/**
+ * Accent Fold
+ *
+ * For example:
+ * LÒpez => Lopez
+ *
+ * Link:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+*/
+export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');

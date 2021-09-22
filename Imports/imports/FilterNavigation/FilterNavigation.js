@@ -21,7 +21,7 @@ const FilterNavigation = ({ segment, setSegment, reset }) => (
           buttonStyle={`${segment === name ? 'primary' : 'default'}`}
           id={`segment-navigation-${name}`}
         >
-          <FormattedMessage id={`ui-inventory.filters.${name}`} />
+          <FormattedMessage id={`ui-plugin-find-instance.filters.${name}`} />
         </Button>
       ))
     }

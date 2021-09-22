@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 
@@ -20,11 +21,17 @@ const query = {
 };
 
 const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => {
+  const intl = useIntl();
   const [segment, setSegment] = useState('instances');
   const {
     indexes,
     renderer,
   } = getFilterConfig(segment);
+  const searchIndexes = indexes.map(index => {
+    const { prefix = '' } = index;
+    const label = `${prefix}${intl.formatMessage({ id: index.label })}`;
+    return { ...index, label };
+  });
 
   return (
     <DataProvider>
@@ -35,17 +42,20 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
         {(modalProps) => (
           <DataContext.Consumer>
             {data => (
-              <FindInstanceContainer>
+              <FindInstanceContainer searchIndexes={searchIndexes} segment={segment}>
                 {(viewProps) => (
                   <PluginFindRecordModal
                     {...viewProps}
                     {...modalProps}
                     isMultiSelect={isMultiSelect}
                     renderNewBtn={renderNewBtn}
-                    renderFilters={renderer({ ...data, query })}
-                    segment={segment}
+                    renderFilters={renderer({
+                      ...data,
+                      query,
+                      onFetchFacets: viewProps.fetchFacets(data),
+                      parentResources: viewProps.resources,
+                    })}
                     setSegment={setSegment}
-                    searchIndexes={indexes}
                   />
                 )}
               </FindInstanceContainer>

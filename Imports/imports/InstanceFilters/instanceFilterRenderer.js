@@ -1,10 +1,9 @@
 import React from 'react';
-
-import InstanceFilters from '../../imports/InstanceFilters';
+import InstanceFilters from './InstanceFilters';
 
 // instanceFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
-const instanceFilterRenderer = data => onChange => {
+const instanceFilterRenderer = data => props => {
   const {
     locations,
     instanceTypes,
@@ -12,28 +11,36 @@ const instanceFilterRenderer = data => onChange => {
     modesOfIssuance,
     natureOfContentTerms,
     tags,
+    onFetchFacets,
+    parentResources,
   } = data;
+  const {
+    activeFilters,
+    getFilterHandlers,
+  } = props;
+  const { query } = parentResources;
 
-  const activeFiltersObj = onChange.activeFilters.state;
-
-  const onChangeHandler = (filterObj) => {
+  const onChange = (filterObj) => {
     const newValue = { [filterObj.name]: filterObj.values };
-    onChange.getFilterHandlers().state(newValue);
+    getFilterHandlers().state(newValue);
   };
 
   return (
     <InstanceFilters
-      activeFilters={activeFiltersObj}
+      activeFilters={activeFilters.state}
       data={{
         locations,
         resourceTypes: instanceTypes,
         instanceFormats,
         modesOfIssuance,
         tagsRecords: tags,
-        natureOfContentTerms
+        natureOfContentTerms,
+        query,
+        onFetchFacets,
+        parentResources,
       }}
-      onChange={onChangeHandler}
-      onClear={(name) => onChangeHandler({ name, values: [] })}
+      onChange={onChange}
+      onClear={(name) => onChange({ name, values: [] })}
     />
   );
 };
