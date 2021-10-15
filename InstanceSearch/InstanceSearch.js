@@ -44,7 +44,10 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
                     renderNewBtn={renderNewBtn}
                     renderFilters={renderer({ ...data, query })}
                     segment={segment}
-                    setSegment={setSegment}
+                    setSegment={newSegment => {
+                      viewProps.setSegment(newSegment);
+                      setSegment(newSegment);
+                    }}
                     searchIndexes={indexes}
                   />
                 )}

@@ -1,5 +1,7 @@
 # Change history for ui-plugin-find-instance
 
+* Search doesn't work properly. Fixes UIPFI-79.
+
 ## [5.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v5.1.1) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v5.1.0...v5.1.1)
 

@@ -4,7 +4,6 @@ import get from 'lodash/get';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  makeQueryFunction,
   StripesConnectedSource,
 } from '@folio/stripes/smart-components';
 import {
@@ -13,6 +12,7 @@ import {
 } from '@folio/stripes/core';
 
 import { getFilterConfig } from '../Imports/imports/filterConfig';
+import { buildQuery } from './utils';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -73,16 +73,9 @@ class FindInstanceContainer extends React.Component {
       path: 'inventory/instances',
       recordsRequired: '%{resultCount}',
       perRequest: RESULT_COUNT_INCREMENT,
+      resultDensity: 'sparse',
       GET: {
-        params: {
-          query: makeQueryFunction(
-            'cql.allRecords=1 sortby title',
-            'keyword all "%{query.query}"',
-            {},
-            filterConfig,
-            2,
-          ),
-        },
+        params: { query: buildQuery },
         staticFallback: { params: {} },
       },
     },
@@ -105,6 +98,11 @@ class FindInstanceContainer extends React.Component {
       records: 'contributorTypes',
       path: 'contributor-types?limit=400&query=cql.allRecords=1 sortby name',
     },
+    identifierTypes: {
+      type: 'okapi',
+      records: 'identifierTypes',
+      path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
+    },
   });
 
   constructor(props, context) {
@@ -113,7 +111,8 @@ class FindInstanceContainer extends React.Component {
     this.state = {
       // The qindex param holds the search index to use for a query,
       // if multiple indices are in play
-      qindex: '',
+      qindex: 'all',
+      segment: 'instances',
     };
 
     this.logger = props.stripes.logger;
@@ -145,6 +144,7 @@ class FindInstanceContainer extends React.Component {
     const nsValuesWithIndex = {
       ...nsValues,
       qindex: this.state.qindex,
+      segment: this.state.segment,
     };
 
     if (/reset/.test(state.changeType)) {
@@ -161,6 +161,11 @@ class FindInstanceContainer extends React.Component {
   // Handler for a change of search index in PluginFindRecordModal's <SearchField> component
   setSearchIndex = (e) => {
     this.setState({ qindex: e.target.value });
+  }
+
+  // Handler for a change of segment in PluginFindRecordModal's <SearchField> component
+  setSegment = (segment) => {
+    this.setState({ segment, qindex: 'all' });
   }
 
   render() {
@@ -198,7 +203,9 @@ class FindInstanceContainer extends React.Component {
       queryGetter: this.queryGetter,
       querySetter: this.querySetter,
       resultsFormatter,
+      searchIndex: this.state.qindex,
       setSearchIndex: this.setSearchIndex,
+      setSegment: this.setSegment,
       source: this.source,
       visibleColumns,
       data: {
