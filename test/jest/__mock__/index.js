@@ -5,3 +5,4 @@ import './stripesIcon.mock';
 import './currencyData.mock';
 import './stripesComponents.mock';
 import './stripesSmartComponents.mock';
+import './stripesCore.mock';

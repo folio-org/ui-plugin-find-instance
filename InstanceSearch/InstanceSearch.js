@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
@@ -14,6 +14,7 @@ import FindInstanceContainer from './FindInstanceContainer';
 import DataProvider from '../Imports/imports/DataProvider';
 import DataContext from '../Imports/imports/DataContext';
 import { getFilterConfig } from '../Imports/imports/filterConfig';
+import useInstancesQuery from '../hooks/useInstancesQuery';
 
 const query = {
   query: '',
@@ -23,6 +24,7 @@ const query = {
 const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => {
   const intl = useIntl();
   const [segment, setSegment] = useState('instances');
+  const [instances, setInstances] = useState([]);
   const {
     indexes,
     renderer,
@@ -33,11 +35,22 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
     return { ...index, label };
   });
 
+  const results = useInstancesQuery(instances.map(inst => inst.id));
+  const isLoading = results.some(result => result.isLoading);
+
+  useEffect(() => {
+    if (!isLoading && results.length) {
+      const result = isMultiSelect ? results.map(r => r.data) : results?.[0]?.data;
+      selectInstance(result);
+      setInstances([]);
+    }
+  }, [isLoading, results, isMultiSelect, selectInstance]);
+
   return (
     <DataProvider>
       <PluginFindRecord
         {...rest}
-        selectRecordsCb={(list) => (isMultiSelect ? selectInstance(list) : selectInstance(list[0]))}
+        selectRecordsCb={list => setInstances(list)}
       >
         {(modalProps) => (
           <DataContext.Consumer>

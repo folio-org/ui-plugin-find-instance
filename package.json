@@ -76,7 +76,8 @@
     "lodash": "^4.17.11",
     "moment": "^2.29.1",
     "prop-types": "^15.6.0",
-    "sinon": "^9.0.2"
+    "sinon": "^9.0.2",
+    "react-query": "^3.6.0"
   },
   "peerDependencies": {
     "@folio/stripes": "^7.0.0",
