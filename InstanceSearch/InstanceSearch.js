@@ -35,7 +35,8 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
     return { ...index, label };
   });
 
-  const results = useInstancesQuery(instances.map(inst => inst.id));
+  const instantceIds = instances.filter(inst => inst).map(inst => inst.id);
+  const results = useInstancesQuery(instantceIds);
   const isLoading = results.some(result => result.isLoading);
 
   useEffect(() => {
