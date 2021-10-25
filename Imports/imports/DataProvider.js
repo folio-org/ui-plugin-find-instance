@@ -32,12 +32,9 @@ const DataProvider = ({
 
     const {
       locations,
-      identifierTypes,
     } = loadedData;
 
     loadedData.locationsById = keyBy(locations, 'id');
-    loadedData.identifierTypesById = keyBy(identifierTypes, 'id');
-    loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
 
     return loadedData;
   }, [resources, manifest]);
