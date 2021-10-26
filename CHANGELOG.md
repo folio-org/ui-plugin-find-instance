@@ -4,6 +4,10 @@
 
 * Lookup instances by ids after they are returned from `mod-search`. Fixes UIPFI-83.
 
+## [6.0.1] (IN PROGRESS)
+
+* Find instance plugin make unnecessary requests that produce performance issues. Refs UIPFI-82.
+
 ## [6.0.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v6.0.0) (2021-10-05)
 
 * Change default search index to align it with the `ui-inventory` module. Fixes UIPFI-36.
