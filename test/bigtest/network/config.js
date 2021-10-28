@@ -9,14 +9,6 @@ export default function config() {
     return instances.all();
   });
 
-  this.get('/search/instances', (schema) => {
-    const {
-      instances,
-    } = schema;
-
-    return instances.all();
-  });
-
   this.get('/instance-types', ({ instanceTypes }) => {
     return instanceTypes.all();
   });

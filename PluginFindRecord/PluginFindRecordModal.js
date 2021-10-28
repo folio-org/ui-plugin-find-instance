@@ -19,6 +19,7 @@ import {
   Pane,
   PaneMenu,
   Paneset,
+  SearchField,
 } from '@folio/stripes/components';
 
 import {
@@ -30,12 +31,6 @@ import {
 import Filters from './Filters';
 import css from './PluginFindRecordModal.css';
 import FilterNavigation from '../Imports/imports/FilterNavigation';
-
-import ElasticQueryField from '../Imports/imports/ElasticQueryField';
-import {
-  operators,
-  booleanOperators,
-} from '../Imports/imports/filterConfig';
 
 const RESULTS_HEADER = <FormattedMessage id="ui-plugin-find-instance.resultsHeader" />;
 
@@ -59,8 +54,6 @@ class PluginFindRecordModal extends React.Component {
       checkedMap: {},
       isAllChecked: false,
     };
-
-    this.searchButtonRef = React.createRef();
   }
 
   toggleFilterPane = () => {
@@ -210,6 +203,7 @@ class PluginFindRecordModal extends React.Component {
       filterConfig,
       idPrefix,
       initialSearch,
+      intl,
       isMultiSelect,
       modalLabel,
       onComponentWillUnmount,
@@ -220,11 +214,11 @@ class PluginFindRecordModal extends React.Component {
       renderNewBtn,
       resultsFormatter,
       searchIndexes,
+      setSearchIndex,
       segment,
       setSegment,
       source,
       visibleColumns,
-      setIsSearchByKeyword,
     } = this.props;
     const { checkedMap, isAllChecked } = this.state;
 
@@ -254,6 +248,13 @@ class PluginFindRecordModal extends React.Component {
     if (source && source.loaded()) {
       resultPaneSub = <FormattedMessage id="stripes-smart-components.searchResultsCountHeader" values={{ count }} />;
     }
+
+    const formattedSearchableIndexes = searchIndexes.map(index => {
+      const { prefix = '' } = index;
+      const label = prefix + intl.formatMessage({ id: index.label });
+
+      return { ...index, label };
+    });
 
     const mixedResultsFormatter = {
       isChecked: record => (
@@ -365,15 +366,16 @@ class PluginFindRecordModal extends React.Component {
                         <FilterNavigation segment={segment} setSegment={setSegment} reset={resetAll} />
                         <form onSubmit={onSubmitSearch}>
                           <div className={css.searchGroupWrap}>
-                            <ElasticQueryField
+                            <SearchField
+                              autoFocus
+                              className={css.searchField}
                               data-test-plugin-search-input
-                              onChange={getSearchHandlers().query}
+                              marginBottom0
                               name="query"
-                              operators={operators}
-                              booleanOperators={booleanOperators}
-                              searchButtonRef={this.searchButtonRef}
-                              searchOptions={searchIndexes}
-                              setIsSearchByKeyword={setIsSearchByKeyword}
+                              onChange={getSearchHandlers().query}
+                              onClear={getSearchHandlers().reset}
+                              searchableIndexes={formattedSearchableIndexes}
+                              onChangeIndex={setSearchIndex}
                               value={searchValue.query}
                             />
                             <Button
@@ -383,7 +385,6 @@ class PluginFindRecordModal extends React.Component {
                               disabled={(!searchValue.query || searchValue.query === '')}
                               fullWidth
                               marginBottom0
-                              ref={this.searchButtonRef}
                               type="submit"
                             >
                               <FormattedMessage id="stripes-smart-components.search" />
@@ -472,6 +473,7 @@ PluginFindRecordModal.propTypes = {
   filterConfig: PropTypes.arrayOf(PropTypes.object),
   idPrefix: PropTypes.string.isRequired,
   initialSearch: PropTypes.string,
+  intl: PropTypes.object.isRequired,
   isMultiSelect: PropTypes.bool.isRequired,
   modalLabel: PropTypes.node,
   onComponentWillUnmount: PropTypes.func,
@@ -485,7 +487,7 @@ PluginFindRecordModal.propTypes = {
   resultsFormatter: PropTypes.object,
   searchIndexes: PropTypes.arrayOf(PropTypes.object),
   segment: PropTypes.string,
-  setIsSearchByKeyword: PropTypes.func,
+  setSearchIndex: PropTypes.func.isRequired,
   setSegment: PropTypes.func.isRequired,
   source: PropTypes.object,
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,

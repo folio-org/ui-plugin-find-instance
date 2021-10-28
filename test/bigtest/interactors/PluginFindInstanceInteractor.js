@@ -6,7 +6,6 @@ import {
   is,
   property,
   scoped,
-  isPresent,
 } from '@bigtest/interactor';
 
 import ButtonInteractor from './ButtonInteractor';
@@ -44,14 +43,8 @@ import ButtonInteractor from './ButtonInteractor';
     isFocused: is(':focus'),
   });
 
-  buttonIsPresent = isPresent('[data-test-plugin-find-record-button]');
-
   modal = new PluginModalInteractor();
   filter = new OrderLinesFilterInteractor();
-
-  whenButtonReady() {
-    return this.when(() => this.buttonIsPresent, 5000);
-  }
 }
 
 export default PluginFindInstanceInteractor;
