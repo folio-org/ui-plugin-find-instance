@@ -3,6 +3,7 @@
 ## [6.1.0] (IN PROGRESS)
 
 * Lookup instances by ids after they are returned from `mod-search`. Fixes UIPFI-83.
+* Use correct `css-loader` syntax. Refs UIPFI-84.
 
 ## [6.0.1] (IN PROGRESS)
 
