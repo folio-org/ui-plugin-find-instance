@@ -31,7 +31,7 @@ function TagsFilter({ onChange, onClear, selectedValues, tagsRecords }) {
       closedByDefault={!hasTagsSelected}
       displayClearButton={!!selectedValues?.length}
       header={FilterAccordionHeader}
-      label={intl.formatMessage({ id: 'ui-plugin-find-instance.filter.tags' })}
+      label={intl.formatMessage({ id: 'ui-inventory.filter.tags' })}
       onClearFilter={onClearFilter}
     >
       <MultiSelectionFilter

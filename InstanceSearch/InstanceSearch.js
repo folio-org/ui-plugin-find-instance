@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 
@@ -22,18 +21,12 @@ const query = {
 };
 
 const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => {
-  const intl = useIntl();
   const [segment, setSegment] = useState('instances');
   const [instances, setInstances] = useState([]);
   const {
     indexes,
     renderer,
   } = getFilterConfig(segment);
-  const searchIndexes = indexes.map(index => {
-    const { prefix = '' } = index;
-    const label = `${prefix}${intl.formatMessage({ id: index.label })}`;
-    return { ...index, label };
-  });
 
   const instantceIds = instances.filter(inst => inst).map(inst => inst.id);
   const results = useInstancesQuery(instantceIds);
@@ -56,20 +49,17 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
         {(modalProps) => (
           <DataContext.Consumer>
             {data => (
-              <FindInstanceContainer searchIndexes={searchIndexes} segment={segment}>
+              <FindInstanceContainer>
                 {(viewProps) => (
                   <PluginFindRecordModal
                     {...viewProps}
                     {...modalProps}
                     isMultiSelect={isMultiSelect}
                     renderNewBtn={renderNewBtn}
-                    renderFilters={renderer({
-                      ...data,
-                      query,
-                      onFetchFacets: viewProps.fetchFacets(data),
-                      parentResources: viewProps.resources,
-                    })}
+                    renderFilters={renderer({ ...data, query })}
+                    segment={segment}
                     setSegment={setSegment}
+                    searchIndexes={indexes}
                   />
                 )}
               </FindInstanceContainer>
