@@ -1,6 +1,6 @@
 # Change history for ui-plugin-find-instance
 
-## [6.1.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v6.1.0) (2021-11-01)
+## [6.1.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.1.0) (2021-11-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.0.0...v6.1.0)
 
 * Lookup instances by ids after they are returned from `mod-search`. Fixes UIPFI-83.
@@ -8,12 +8,13 @@
 * Find instance plugin make unnecessary requests that produce performance issues. Refs UIPFI-82.
 * Revert Elasticsearch UI. Fixes UIPFI-81.
 
-## [6.0.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v6.0.0) (2021-10-05)
+## [6.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.0.0) (2021-10-05)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v5.1.0...v6.0.0)
 
 * Change default search index to align it with the `ui-inventory` module. Fixes UIPFI-36.
 * Increment stripes to v7. Refs UIPFI-77.
 
-## [5.1.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v5.1.0) (2021-06-15)
+## [5.1.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v5.1.0) (2021-06-15)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v5.0.0...v5.1.0)
 
 * Update the .gitignore file. Refs UIPFI-25.
