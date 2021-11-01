@@ -1,13 +1,12 @@
 # Change history for ui-plugin-find-instance
 
-## [6.1.0] (IN PROGRESS)
+## [6.1.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v6.1.0) (2021-11-01)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.0.0...v6.1.0)
 
 * Lookup instances by ids after they are returned from `mod-search`. Fixes UIPFI-83.
 * Use correct `css-loader` syntax. Refs UIPFI-84.
-
-## [6.0.1] (IN PROGRESS)
-
 * Find instance plugin make unnecessary requests that produce performance issues. Refs UIPFI-82.
+* Revert Elasticsearch UI. Fixes UIPFI-81.
 
 ## [6.0.0] (https://github.com/folio-org/ui-plugin-find-instance/tree/v6.0.0) (2021-10-05)
 
