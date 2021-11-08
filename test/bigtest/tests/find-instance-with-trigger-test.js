@@ -4,7 +4,6 @@ import { expect } from 'chai';
 import setupApplication from '../helpers/helpers';
 import PluginFindInstanceInteractor from '../interactors/PluginFindInstanceInteractor';
 import { onCloseSpy } from '../helpers/PluginHarness';
-import { find } from '@bigtest/interactor';
 
 const INSTANCES_COUNT = 15;
 
