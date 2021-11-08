@@ -48,6 +48,7 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, onClose, 
     <DataProvider>
       <PluginFindRecord
         {...rest}
+        onClose={onClose}
         selectRecordsCb={list => setInstances(list)}
       >
         {(modalProps) => (
