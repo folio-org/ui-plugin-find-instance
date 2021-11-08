@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import setupApplication from '../helpers/helpers';
 import PluginFindInstanceInteractor from '../interactors/PluginFindInstanceInteractor';
 import { onCloseSpy } from '../helpers/PluginHarness';
+import { find } from '@bigtest/interactor';
 
 const INSTANCES_COUNT = 15;
 
@@ -50,6 +51,7 @@ describe('Find instance plugin with single select option', function () {
     describe('select an instance (click on it)', function () {
       beforeEach(async function () {
         await findInstance.modal.instances(1).click();
+        await findInstance.whenModalNotPresent();
       });
 
       it('modal is closed', function () {

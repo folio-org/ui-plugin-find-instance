@@ -42,6 +42,7 @@ class PluginFindRecord extends React.Component {
 
   passRecordsOut = records => {
     this.props.selectRecordsCb(records);
+    this.setState({ openModal: false });
   }
 
   passRecordOut = (e, record) => {

@@ -4,6 +4,7 @@ import {
   fillable,
   interactor,
   is,
+  isPresent,
   property,
   scoped,
 } from '@bigtest/interactor';
@@ -43,8 +44,14 @@ import ButtonInteractor from './ButtonInteractor';
     isFocused: is(':focus'),
   });
 
+  isModalPresent = isPresent('[data-test-find-records-modal]');
+
   modal = new PluginModalInteractor();
   filter = new OrderLinesFilterInteractor();
+
+  whenModalNotPresent() {
+    return this.when(() => !this.isModalPresent, 5000);
+  }
 }
 
 export default PluginFindInstanceInteractor;
