@@ -1,5 +1,10 @@
 # Change history for ui-plugin-find-instance
 
+## [6.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.1.1) (2021-11-08)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.1.0...v6.1.1)
+
+* Close modal only after instance record is refetched. Fixes UIPFI-87.
+
 ## [6.1.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.1.0) (2021-11-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.0.0...v6.1.0)
 
