@@ -20,7 +20,7 @@ const query = {
   sort: 'title',
 };
 
-const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }) => {
+const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, onClose, ...rest }) => {
   const [segment, setSegment] = useState('instances');
   const [instances, setInstances] = useState([]);
   const {
@@ -37,6 +37,10 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
       const result = isMultiSelect ? results.map(r => r.data) : results?.[0]?.data;
       selectInstance(result);
       setInstances([]);
+
+      if (onClose) {
+        onClose();
+      }
     }
   }, [isLoading, results, isMultiSelect, selectInstance]);
 
@@ -44,6 +48,7 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, ...rest }
     <DataProvider>
       <PluginFindRecord
         {...rest}
+        onClose={onClose}
         selectRecordsCb={list => setInstances(list)}
       >
         {(modalProps) => (
@@ -87,6 +92,7 @@ InstanceSearch.propTypes = {
   selectInstance: PropTypes.func,
   renderNewBtn: PropTypes.func,
   isMultiSelect: PropTypes.bool,
+  onClose: PropTypes.func,
 };
 
 export default InstanceSearch;

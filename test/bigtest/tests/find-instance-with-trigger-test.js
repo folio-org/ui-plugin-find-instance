@@ -50,6 +50,7 @@ describe('Find instance plugin with single select option', function () {
     describe('select an instance (click on it)', function () {
       beforeEach(async function () {
         await findInstance.modal.instances(1).click();
+        await findInstance.whenModalNotPresent();
       });
 
       it('modal is closed', function () {
