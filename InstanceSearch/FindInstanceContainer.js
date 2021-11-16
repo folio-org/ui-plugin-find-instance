@@ -70,7 +70,7 @@ class FindInstanceContainer extends React.Component {
       throwErrors: false,
       type: 'okapi',
       records: 'instances',
-      path: 'inventory/instances',
+      path: 'search/instances',
       recordsRequired: '%{resultCount}',
       perRequest: RESULT_COUNT_INCREMENT,
       GET: {

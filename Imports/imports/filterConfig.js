@@ -4,13 +4,12 @@ import itemFilterRenderer from '../FilterRenderers/ItemFilters';
 
 import {
   buildDateRangeQuery,
-  buildOptionalBooleanQuery,
 } from './utils';
 
 export const instanceFilterConfig = [
   {
     name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    cql: 'items.effectiveLocationId',
     values: [],
   },
   {
@@ -23,6 +22,7 @@ export const instanceFilterConfig = [
     name: 'format',
     cql: 'instanceFormatIds',
     values: [],
+    operator: '=',
   },
   {
     name: 'resource',
@@ -38,23 +38,24 @@ export const instanceFilterConfig = [
     name: 'natureOfContent',
     cql: 'natureOfContentTermIds',
     values: [],
+    operator: '=',
   },
   {
     name: 'location',
-    cql: 'holdingsRecords.permanentLocationId',
+    cql: 'holdings.permanentLocationId',
     values: [],
   },
   {
     name: 'staffSuppress',
     cql: 'staffSuppress',
     values: [],
-    parse: buildOptionalBooleanQuery('staffSuppress'),
+    operator: '==',
   },
   {
     name: 'discoverySuppress',
     cql: 'discoverySuppress',
     values: [],
-    parse: buildOptionalBooleanQuery('discoverySuppress'),
+    operator: '==',
   },
   {
     name: 'createdDate',
@@ -84,14 +85,12 @@ export const instanceFilterConfig = [
 
 export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
+  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
-  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
-  { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.isbnNormalized', prefix: '- ', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"' },
+  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
-  // { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
@@ -105,20 +104,12 @@ export const instanceSortMap = {
 
 export const holdingIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.isbnNormalized', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.callNumberEyeReadable',
     value: 'callNumberER',
-    queryTemplate: `
-      holdingsRecords.fullCallNumber=="%{query.query}"
-      OR holdingsRecords.callNumberAndSuffix=="%{query.query}"
-      OR holdingsRecords.callNumber=="%{query.query}"
-    ` },
-  { label: 'ui-inventory.callNumberNormalized',
-    value: 'callNumberNormalized',
-    queryTemplate: 'holdingsRecords.fullCallNumberNormalized="%{query.query}" OR holdingsRecords.callNumberAndSuffixNormalized="%{query.query}"' },
-  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdingsRecords.hrid=="%{query.query}"' },
+    queryTemplate: 'holdings.fullCallNumber=="%{query.query}"' },
+  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -127,23 +118,23 @@ export const holdingSortMap = {};
 export const holdingFilterConfig = [
   {
     name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    cql: 'items.effectiveLocationId',
     values: [],
   },
   {
     name: 'holdingsPermanentLocation',
-    cql: 'holdingsRecords.permanentLocationId',
+    cql: 'holdings.permanentLocationId',
     values: [],
   },
   {
     name: 'discoverySuppress',
-    cql: 'holdingsRecords.discoverySuppress',
+    cql: 'holdings.discoverySuppress',
     values: [],
-    parse: buildOptionalBooleanQuery('holdingsRecords.discoverySuppress'),
+    operator: '==',
   },
   {
     name: 'tags',
-    cql: 'holdingsRecords.tags.tagList',
+    cql: 'holdings.tags.tagList',
     values: [],
     operator: '=',
   },
@@ -151,21 +142,13 @@ export const holdingFilterConfig = [
 
 export const itemIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.isbnNormalized', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.barcode', value: 'items.barcode', queryTemplate: 'items.barcode=="%{query.query}"' },
+  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
     value: 'itemCallNumberER',
-    queryTemplate: `
-      item.fullCallNumber=="%{query.query}"
-      OR item.callNumberAndSuffix=="%{query.query}"
-      OR item.effectiveCallNumberComponents.callNumber=="%{query.query}"
-    ` },
-  { label: 'ui-inventory.itemEffectiveCallNumberNormalized',
-    value: 'itemCallNumberNorm',
-    queryTemplate: 'item.fullCallNumberNormalized="%{query.query}" OR item.callNumberAndSuffixNormalized="%{query.query}"' },
-  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'item.hrid=="%{query.query}"' },
+    queryTemplate: 'items.effectiveCallNumberComponents=="%{query.query}"' },
+  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 
 ];
@@ -173,34 +156,34 @@ export const itemIndexes = [
 export const itemFilterConfig = [
   {
     name: 'materialType',
-    cql: 'item.materialTypeId',
+    cql: 'items.materialTypeId',
     values: [],
   },
   {
     name: 'itemStatus',
-    cql: 'item.status.name',
+    cql: 'items.status.name',
     operator: '==',
     values: [],
   },
   {
     name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    cql: 'items.effectiveLocationId',
     values: [],
   },
   {
     name: 'holdingsPermanentLocation',
-    cql: 'holdingsRecords.permanentLocationId',
+    cql: 'holdings.permanentLocationId',
     values: [],
   },
   {
     name: 'discoverySuppress',
-    cql: 'item.discoverySuppress',
+    cql: 'items.discoverySuppress',
     values: [],
-    parse: buildOptionalBooleanQuery('item.discoverySuppress'),
+    operator: '==',
   },
   {
     name: 'tags',
-    cql: 'item.tags.tagList',
+    cql: 'items.tags.tagList',
     values: [],
     operator: '=',
   },
