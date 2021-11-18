@@ -181,7 +181,7 @@ class FindInstanceContainer extends React.Component {
         </AppIcon>
       ),
       contributors: r => contributorsFormatter(r, contributorTypes),
-      publishers: r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
+      publishers: r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
     };
 
     if (this.source) {
