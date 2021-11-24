@@ -1,6 +1,6 @@
 # Change history for ui-plugin-find-instance
 
-## [6.1.2] IN PROGRESS
+## [6.1.2](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.1.2) (2021-11-24)
 
 * Adjust filters so they work correctly with `mod-search`. Fixes UIPFI-88.
 
