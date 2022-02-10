@@ -1,12 +1,24 @@
 import React from 'react';
 
 jest.mock('@folio/stripes/components', () => ({
-  Button: jest.fn(({ children }) => (
-    <button data-test-button type="button">
+  Button: jest.fn(({
+    children,
+    onClick,
+  }) => (
+    <button
+      data-test-button
+      type="button"
+      onClick={onClick}
+    >
       <span>
         {children}
       </span>
     </button>
+  )),
+  ButtonGroup: jest.fn(({ children }) => (
+    <div data-testid="buttonGroup">
+      {children}
+    </div>
   )),
   Checkbox: jest.fn(({
     checked,
@@ -196,7 +208,7 @@ jest.mock('@folio/stripes/components', () => ({
     readOnly,
     component = <input type="text" />,
     warningElement,
-    errorElement
+    errorElement,
   }) => (
     <div>
       {label && (

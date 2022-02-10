@@ -23,6 +23,13 @@ of the Module Developer's Guide.
 | `isMultiSelect` | boolean | Flag to control if user can select several instances, default is `false` | No |
 | `selectInstance` | function | Callback with selected array of instances | No |
 | `renderNewBtn` | function | Render function for button `New` | No |
+| `config` | object | Allows to pass some options to the plugin components | No |
+
+## Config
+
+| Name | Type | Description | Required |
+--- | --- | --- | --- |
+| `availableSegments` | array of objects | Object should contain `name` field, which represent what exact section will be rendered. Possible variants of segments: `instances`, `holdings`, `items`. All uniq passed segments will be rendered. If nothing passed, all sections will be rendered. | No |
 
 This is a [Stripes](https://github.com/folio-org/stripes-core/) UI module to display, filter and select Inventory instance(s).
 

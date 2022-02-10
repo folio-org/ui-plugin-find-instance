@@ -3,6 +3,7 @@
 ## 6.2.0 IN PROGRESS
 
 * Only fetch reference data when plugin is opened. Fixes UIPFI-95.
+* Add posibility to change visible filter fragments. Refs UIPFI-91.
 
 ## [6.1.4](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.1.4) (2022-02-24)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.1.3...v6.1.4)

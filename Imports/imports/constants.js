@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export const itemStatuses = [
   { label: 'ui-inventory.item.status.agedToLost', value: 'Aged to lost' },
   { label: 'ui-inventory.item.status.available', value: 'Available' },
@@ -29,3 +31,13 @@ export const segments = {
 };
 
 export const CQL_FIND_ALL = 'cql.allRecords=1';
+
+export const AVAILABLE_SEGMENTS_TYPES = PropTypes.arrayOf(
+  PropTypes.shape({
+    name: PropTypes.oneOf([segments.instances, segments.holdings, segments.items]),
+  })
+);
+
+export const CONFIG_TYPES = PropTypes.shape({
+  availableSegments: AVAILABLE_SEGMENTS_TYPES,
+});
