@@ -27,3 +27,5 @@ export const segments = {
   holdings: 'holdings',
   items: 'items',
 };
+
+export const CQL_FIND_ALL = 'cql.allRecords=1';

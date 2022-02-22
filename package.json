@@ -25,7 +25,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "yarn run test:jest && yarn run test:bigtest",
+    "test": "yarn run test:jest",
     "test:bigtest": "stripes test karma",
     "test:jest": "jest --ci --coverage --colors --silent",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",

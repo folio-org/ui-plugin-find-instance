@@ -1,4 +1,4 @@
-import { escapeRegExp } from 'lodash';
+import { escapeRegExp, template } from 'lodash';
 import moment from 'moment';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
@@ -92,3 +92,16 @@ export const retrieveDatesFromDateRangeFilterString = filterValue => {
   return dateRange;
 };
 
+export function getQueryTemplate(queryIndex, indexes) {
+  const searchableIndex = indexes.find(({ value }) => value === queryIndex);
+
+  return searchableIndex?.queryTemplate;
+}
+
+export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) {
+  const identifierType = identifierTypes
+    .find(({ name }) => name.toLowerCase() === queryIndex);
+  const identifierTypeId = identifierType?.id?.['identifier-type-not-found'];
+
+  return template(queryTemplate)({ identifierTypeId });
+}

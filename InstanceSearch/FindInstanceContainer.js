@@ -13,6 +13,11 @@ import {
 } from '@folio/stripes/core';
 
 import { getFilterConfig } from '../Imports/imports/filterConfig';
+import {
+  getQueryTemplate,
+  getIsbnIssnTemplate,
+} from '../Imports/imports/utils';
+import { CQL_FIND_ALL } from '../Imports/imports/constants';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -58,6 +63,44 @@ const contributorsFormatter = (r, contributorTypes) => {
   return formatted;
 };
 
+
+export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
+  const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
+  const query = { ...resourceData.query };
+  const queryIndex = queryParams?.qindex ?? 'all';
+  const queryValue = get(queryParams, 'query', '');
+  let queryTemplate = getQueryTemplate(queryIndex, indexes);
+
+  if (queryIndex.match(/isbn|issn/)) {
+    // eslint-disable-next-line camelcase
+    const identifierTypes = resourceData?.identifier_types?.records ?? [];
+    queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
+  }
+
+  if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
+    query.sort = '';
+  } else if (!query.sort) {
+    // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
+    query.sort = 'title';
+  }
+
+  resourceData.query = { ...query, qindex: '' };
+
+  // makeQueryFunction escapes quote and backslash characters by default,
+  // but when submitting a raw CQL query (i.e. when queryIndex === 'querySearch')
+  // we assume the user knows what they are doing and wants to run the CQL as-is.
+  return makeQueryFunction(
+    CQL_FIND_ALL,
+    queryTemplate,
+    sortMap,
+    filters,
+    2,
+    null,
+    queryIndex !== 'querySearch',
+  )(queryParams, pathComponents, resourceData, logger, props);
+}
+
+
 class FindInstanceContainer extends React.Component {
   static manifest = Object.freeze({
     query: {
@@ -75,13 +118,8 @@ class FindInstanceContainer extends React.Component {
       perRequest: RESULT_COUNT_INCREMENT,
       GET: {
         params: {
-          query: makeQueryFunction(
-            'cql.allRecords=1 sortby title',
-            'keyword all "%{query.query}"',
-            {},
-            filterConfig,
-            2,
-          ),
+          expandAll: true,
+          query: buildQuery,
         },
         staticFallback: { params: {} },
       },
