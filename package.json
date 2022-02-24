@@ -42,9 +42,9 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.3.0",
-    "@folio/stripes": "^7.0.0",
+    "@folio/stripes": "^7.1.0",
     "@folio/stripes-cli": "^2.4.0",
-    "@folio/stripes-components": "^10.0.0",
+    "@folio/stripes-components": "^10.1.0",
     "@folio/stripes-testing": "^3.0.0",
     "@formatjs/cli": "^4.2.20",
     "@testing-library/dom": "^7.29.4",
@@ -80,7 +80,7 @@
     "sinon": "^9.0.2"
   },
   "peerDependencies": {
-    "@folio/stripes": "^7.0.0",
+    "@folio/stripes": "^7.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intl": "^5.7.0"
