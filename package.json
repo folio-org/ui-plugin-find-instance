@@ -1,6 +1,6 @@
 {
   "name": "@folio/plugin-find-instance",
-  "version": "6.1.4",
+  "version": "6.2.0",
   "description": "Instance-finder for Stripes",
   "repository": "folio-org/ui-plugin-find-instance",
   "publishConfig": {
