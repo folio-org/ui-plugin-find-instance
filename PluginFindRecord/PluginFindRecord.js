@@ -8,6 +8,8 @@ import {
   Icon,
 } from '@folio/stripes/components';
 
+import DataProvider from '../Imports/imports/DataProvider';
+
 import css from './PluginFindRecord.css';
 
 const triggerId = 'find-instance-trigger';
@@ -85,11 +87,18 @@ class PluginFindRecord extends React.Component {
     return (
       <div className={this.getStyle()}>
         {withTrigger && this.renderTriggerButton()}
-        {this.state.openModal && children({
-          onSaveMultiple: this.passRecordsOut,
-          onSelectRow: this.passRecordOut,
-          closeModal: this.closeModal,
-        })}
+        {
+          this.state.openModal &&
+          <DataProvider>
+            {
+              children({
+                onSaveMultiple: this.passRecordsOut,
+                onSelectRow: this.passRecordOut,
+                closeModal: this.closeModal,
+              })
+            }
+          </DataProvider>
+        }
       </div>
     );
   }
