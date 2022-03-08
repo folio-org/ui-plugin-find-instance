@@ -10,7 +10,6 @@ import {
 
 import FindInstanceContainer from './FindInstanceContainer';
 
-import DataProvider from '../Imports/imports/DataProvider';
 import DataContext from '../Imports/imports/DataContext';
 import { getFilterConfig } from '../Imports/imports/filterConfig';
 import useInstancesQuery from '../hooks/useInstancesQuery';
@@ -45,34 +44,32 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, onClose, 
   }, [isLoading, results, isMultiSelect, selectInstance]);
 
   return (
-    <DataProvider>
-      <PluginFindRecord
-        {...rest}
-        onClose={onClose}
-        selectRecordsCb={list => setInstances(list)}
-      >
-        {(modalProps) => (
-          <DataContext.Consumer>
-            {data => (
-              <FindInstanceContainer>
-                {(viewProps) => (
-                  <PluginFindRecordModal
-                    {...viewProps}
-                    {...modalProps}
-                    isMultiSelect={isMultiSelect}
-                    renderNewBtn={renderNewBtn}
-                    renderFilters={renderer({ ...data, query })}
-                    segment={segment}
-                    setSegment={setSegment}
-                    searchIndexes={indexes}
-                  />
-                )}
-              </FindInstanceContainer>
-            )}
-          </DataContext.Consumer>
-        )}
-      </PluginFindRecord>
-    </DataProvider>
+    <PluginFindRecord
+      {...rest}
+      onClose={onClose}
+      selectRecordsCb={list => setInstances(list)}
+    >
+      {(modalProps) => (
+        <DataContext.Consumer>
+          {data => (
+            <FindInstanceContainer>
+              {(viewProps) => (
+                <PluginFindRecordModal
+                  {...viewProps}
+                  {...modalProps}
+                  isMultiSelect={isMultiSelect}
+                  renderNewBtn={renderNewBtn}
+                  renderFilters={renderer({ ...data, query })}
+                  segment={segment}
+                  setSegment={setSegment}
+                  searchIndexes={indexes}
+                />
+              )}
+            </FindInstanceContainer>
+          )}
+        </DataContext.Consumer>
+      )}
+    </PluginFindRecord>
   );
 };
 
