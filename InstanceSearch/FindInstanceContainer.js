@@ -67,8 +67,8 @@ const contributorsFormatter = (r, contributorTypes) => {
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
   const query = { ...resourceData.query };
-  const queryIndex = queryParams?.qindex ?? 'all';
-  const queryValue = get(queryParams, 'query', '');
+  const queryIndex = get(props, 'resources.query.qindex', 'all');
+  const queryValue = get(props, 'resources.query.query', '');
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryIndex.match(/isbn|issn/)) {
