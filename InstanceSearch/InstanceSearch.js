@@ -10,17 +10,25 @@ import {
 
 import FindInstanceContainer from './FindInstanceContainer';
 
-import DataProvider from '../Imports/imports/DataProvider';
 import DataContext from '../Imports/imports/DataContext';
 import { getFilterConfig } from '../Imports/imports/filterConfig';
 import useInstancesQuery from '../hooks/useInstancesQuery';
+
+import { CONFIG_TYPES } from '../Imports/imports/constants';
 
 const query = {
   query: '',
   sort: 'title',
 };
 
-const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, onClose, ...rest }) => {
+const InstanceSearch = ({
+  config,
+  selectInstance,
+  isMultiSelect,
+  renderNewBtn,
+  onClose,
+  ...rest
+}) => {
   const [segment, setSegment] = useState('instances');
   const [instances, setInstances] = useState([]);
   const {
@@ -45,34 +53,33 @@ const InstanceSearch = ({ selectInstance, isMultiSelect, renderNewBtn, onClose, 
   }, [isLoading, results, isMultiSelect, selectInstance]);
 
   return (
-    <DataProvider>
-      <PluginFindRecord
-        {...rest}
-        onClose={onClose}
-        selectRecordsCb={list => setInstances(list)}
-      >
-        {(modalProps) => (
-          <DataContext.Consumer>
-            {data => (
-              <FindInstanceContainer>
-                {(viewProps) => (
-                  <PluginFindRecordModal
-                    {...viewProps}
-                    {...modalProps}
-                    isMultiSelect={isMultiSelect}
-                    renderNewBtn={renderNewBtn}
-                    renderFilters={renderer({ ...data, query })}
-                    segment={segment}
-                    setSegment={setSegment}
-                    searchIndexes={indexes}
-                  />
-                )}
-              </FindInstanceContainer>
-            )}
-          </DataContext.Consumer>
-        )}
-      </PluginFindRecord>
-    </DataProvider>
+    <PluginFindRecord
+      {...rest}
+      onClose={onClose}
+      selectRecordsCb={list => setInstances(list)}
+    >
+      {(modalProps) => (
+        <DataContext.Consumer>
+          {data => (
+            <FindInstanceContainer>
+              {(viewProps) => (
+                <PluginFindRecordModal
+                  {...viewProps}
+                  {...modalProps}
+                  config={config}
+                  isMultiSelect={isMultiSelect}
+                  renderNewBtn={renderNewBtn}
+                  renderFilters={renderer({ ...data, query })}
+                  segment={segment}
+                  setSegment={setSegment}
+                  searchIndexes={indexes}
+                />
+              )}
+            </FindInstanceContainer>
+          )}
+        </DataContext.Consumer>
+      )}
+    </PluginFindRecord>
   );
 };
 
@@ -82,6 +89,7 @@ InstanceSearch.defaultProps = {
   selectInstance: noop,
   renderNewBtn: noop,
   isMultiSelect: false,
+  config: {},
 };
 
 InstanceSearch.propTypes = {
@@ -93,6 +101,7 @@ InstanceSearch.propTypes = {
   renderNewBtn: PropTypes.func,
   isMultiSelect: PropTypes.bool,
   onClose: PropTypes.func,
+  config: CONFIG_TYPES,
 };
 
 export default InstanceSearch;

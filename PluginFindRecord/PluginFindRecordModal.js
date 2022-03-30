@@ -32,6 +32,8 @@ import Filters from './Filters';
 import css from './PluginFindRecordModal.css';
 import FilterNavigation from '../Imports/imports/FilterNavigation';
 
+import { CONFIG_TYPES } from '../Imports/imports/constants';
+
 const RESULTS_HEADER = <FormattedMessage id="ui-plugin-find-instance.resultsHeader" />;
 
 const reduceCheckedRecords = (records, isChecked = false) => {
@@ -219,9 +221,12 @@ class PluginFindRecordModal extends React.Component {
       setSegment,
       source,
       visibleColumns,
+      config,
     } = this.props;
     const { checkedMap, isAllChecked } = this.state;
-
+    const {
+      availableSegments,
+    } = config;
     const { records } = data;
     const checkedRecordsLength = Object.keys(checkedMap).length;
     const builtVisibleColumns = isMultiSelect ? ['isChecked', ...visibleColumns] : visibleColumns;
@@ -363,7 +368,12 @@ class PluginFindRecordModal extends React.Component {
                         defaultWidth="25%"
                         paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                       >
-                        <FilterNavigation segment={segment} setSegment={setSegment} reset={resetAll} />
+                        <FilterNavigation
+                          availableSegments={availableSegments}
+                          segment={segment}
+                          setSegment={setSegment}
+                          reset={resetAll}
+                        />
                         <form onSubmit={onSubmitSearch}>
                           <div className={css.searchGroupWrap}>
                             <SearchField
@@ -491,6 +501,7 @@ PluginFindRecordModal.propTypes = {
   setSegment: PropTypes.func.isRequired,
   source: PropTypes.object,
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  config: CONFIG_TYPES,
 };
 
 PluginFindRecordModal.defaultProps = {
@@ -505,6 +516,9 @@ PluginFindRecordModal.defaultProps = {
   resultsFormatter: {},
   searchIndexes: [],
   segment: 'instances',
+  config: {
+    availableSegments: [],
+  },
 };
 
 export default injectIntl(PluginFindRecordModal);
