@@ -2,6 +2,6 @@
     "meta.title": "Vyhledávač instancí (plugin)",
     "modal.title": "Vybrat instanci",
     "totalSelected": "Total selected: {count}",
-    "noSourceYet": "No source yet",
+    "noSourceYet": "Zatím žádný zdroj",
     "resultsHeader": "Search results"
 }
