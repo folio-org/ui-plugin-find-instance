@@ -20,6 +20,7 @@ import {
   PaneMenu,
   Paneset,
   SearchField,
+  MCLPagingTypes
 } from '@folio/stripes/components';
 
 import {
@@ -47,6 +48,7 @@ const reduceCheckedRecords = (records, isChecked = false) => {
 
   return records.reduce(recordsReducer, {});
 };
+const PAGE_SIZE = 100;
 
 class PluginFindRecordModal extends React.Component {
   constructor(props, context) {
@@ -196,6 +198,26 @@ class PluginFindRecordModal extends React.Component {
     return nextState;
   }
 
+  getPaginatedItems = () => {
+    const { index, data } = this.props;
+    const { records } = data;
+
+    const paginatedItems = [];
+    if (records.length > 0) {
+      // paginatedItems = new Array(PAGE_SIZE);
+
+      // slice original records array to extract 'pageAmount' of records
+      const recordSlice = records.slice(index, index + PAGE_SIZE);
+      // push it at the end of the sparse array
+      paginatedItems.push(...recordSlice);
+    }
+    // else {
+    //   paginatedItems = [];
+    // }
+    console.log('paginatedItems ', paginatedItems);
+    return paginatedItems;
+  }
+
   render() {
     const {
       closeModal,
@@ -222,12 +244,14 @@ class PluginFindRecordModal extends React.Component {
       source,
       visibleColumns,
       config,
+      index,
+      currentPage
     } = this.props;
     const { checkedMap, isAllChecked } = this.state;
     const {
       availableSegments,
     } = config;
-    const { records } = data;
+    const { records, paginatedItems, totalRecords } = data;
     const checkedRecordsLength = Object.keys(checkedMap).length;
     const builtVisibleColumns = isMultiSelect ? ['isChecked', ...visibleColumns] : visibleColumns;
 
@@ -303,6 +327,12 @@ class PluginFindRecordModal extends React.Component {
         )}
       </div>
     );
+
+    // const paginatedItems = this.getPaginatedItems();
+    const totalPages = Math.ceil(totalRecords / PAGE_SIZE);
+
+    const pagingCanGoNext = currentPage < totalPages;
+    const pagingCanGoPrevious = currentPage > 1;
 
     return (
       <Modal
@@ -435,7 +465,7 @@ class PluginFindRecordModal extends React.Component {
                       paneTitle={RESULTS_HEADER}
                     >
                       <MultiColumnList
-                        autosize
+                        // autosize
                         columnMapping={{
                           isChecked: (
                             <Checkbox
@@ -449,7 +479,8 @@ class PluginFindRecordModal extends React.Component {
 
                         }}
                         columnWidths={columnWidths}
-                        contentData={records}
+                        contentData={paginatedItems}
+                        // contentData={records}
                         formatter={mixedResultsFormatter}
                         id="list-plugin-find-records"
                         isEmptyMessage={resultsStatusMessage}
@@ -459,9 +490,14 @@ class PluginFindRecordModal extends React.Component {
                         onRowClick={this.onRowClick}
                         sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                         sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
-                        totalCount={count}
-                        virtualize
+                        // totalCount={count}
+                        totalCount={totalRecords}
+                        // virtualize
                         visibleColumns={builtVisibleColumns}
+                        pageAmount={PAGE_SIZE}
+                        pagingType="prev-next"
+                        pagingCanGoNext={pagingCanGoNext}
+                        pagingCanGoPrevious={pagingCanGoPrevious}
                       />
                     </Pane>
                   </Paneset>
@@ -502,6 +538,7 @@ PluginFindRecordModal.propTypes = {
   source: PropTypes.object,
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   config: CONFIG_TYPES,
+  index: PropTypes.number,
 };
 
 PluginFindRecordModal.defaultProps = {
