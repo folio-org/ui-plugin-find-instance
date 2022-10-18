@@ -57,7 +57,22 @@ class PluginFindRecordModal extends React.Component {
       filterPaneIsVisible: true,
       checkedMap: {},
       isAllChecked: false,
+      paginatedItems: [],
     };
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  static getDerivedStateFromProps(props, state) {
+    const { isPending, paginatedItems } = props.data;
+    const { index } = props;
+    if (!isPending && paginatedItems[index]) {
+      return {
+        paginatedItems,
+      };
+    }
+
+    // Return null to indicate no change to state.
+    return null;
   }
 
   toggleFilterPane = () => {
@@ -198,25 +213,6 @@ class PluginFindRecordModal extends React.Component {
     return nextState;
   }
 
-  getPaginatedItems = () => {
-    const { index, data } = this.props;
-    const { records } = data;
-
-    const paginatedItems = [];
-    if (records.length > 0) {
-      // paginatedItems = new Array(PAGE_SIZE);
-
-      // slice original records array to extract 'pageAmount' of records
-      const recordSlice = records.slice(index, index + PAGE_SIZE);
-      // push it at the end of the sparse array
-      paginatedItems.push(...recordSlice);
-    }
-    // else {
-    //   paginatedItems = [];
-    // }
-    console.log('paginatedItems ', paginatedItems);
-    return paginatedItems;
-  }
 
   render() {
     const {
@@ -244,14 +240,13 @@ class PluginFindRecordModal extends React.Component {
       source,
       visibleColumns,
       config,
-      index,
-      currentPage
+      currentPage,
     } = this.props;
     const { checkedMap, isAllChecked } = this.state;
     const {
       availableSegments,
     } = config;
-    const { records, paginatedItems, totalRecords } = data;
+    const { totalRecords } = data;
     const checkedRecordsLength = Object.keys(checkedMap).length;
     const builtVisibleColumns = isMultiSelect ? ['isChecked', ...visibleColumns] : visibleColumns;
 
@@ -328,7 +323,6 @@ class PluginFindRecordModal extends React.Component {
       </div>
     );
 
-    // const paginatedItems = this.getPaginatedItems();
     const totalPages = Math.ceil(totalRecords / PAGE_SIZE);
 
     const pagingCanGoNext = currentPage < totalPages;
@@ -465,7 +459,6 @@ class PluginFindRecordModal extends React.Component {
                       paneTitle={RESULTS_HEADER}
                     >
                       <MultiColumnList
-                        // autosize
                         columnMapping={{
                           isChecked: (
                             <Checkbox
@@ -479,8 +472,7 @@ class PluginFindRecordModal extends React.Component {
 
                         }}
                         columnWidths={columnWidths}
-                        contentData={paginatedItems}
-                        // contentData={records}
+                        contentData={this.state.paginatedItems}
                         formatter={mixedResultsFormatter}
                         id="list-plugin-find-records"
                         isEmptyMessage={resultsStatusMessage}
@@ -490,12 +482,10 @@ class PluginFindRecordModal extends React.Component {
                         onRowClick={this.onRowClick}
                         sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                         sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
-                        // totalCount={count}
                         totalCount={totalRecords}
-                        // virtualize
                         visibleColumns={builtVisibleColumns}
                         pageAmount={PAGE_SIZE}
-                        pagingType="prev-next"
+                        pagingType={MCLPagingTypes.PREV_NEXT}
                         pagingCanGoNext={pagingCanGoNext}
                         pagingCanGoPrevious={pagingCanGoPrevious}
                       />
@@ -515,6 +505,7 @@ PluginFindRecordModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   columnMapping: PropTypes.object,
   columnWidths: PropTypes.object,
+  currentPage: PropTypes.number,
   data: PropTypes.object,
   filterConfig: PropTypes.arrayOf(PropTypes.object),
   idPrefix: PropTypes.string.isRequired,

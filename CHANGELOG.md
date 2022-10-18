@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
 ## 6.3.0 IN PROGRESS
+* Find an instance - Apply Previous/Next Pagination. Refs UIPFI-107
 
 ## [6.2.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.2.0) (2022-06-27)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.1.4...v6.2.0)

@@ -164,7 +164,6 @@ class FindInstanceContainer extends React.Component {
 
   componentDidMount() {
     this.source = new StripesConnectedSource(this.props, this.logger);
-    console.log("source ", this.source);
     this.props.mutator.query.replace('');
   }
 
@@ -182,25 +181,19 @@ class FindInstanceContainer extends React.Component {
     this.source.fetchMore(RESULT_COUNT_INCREMENT);
   };
 
-  onNeedMoreData = (amount, index, firstIndex, direction) => { // (askAmount, index, firstIndex, direction
-    console.log('[FindINstanceContainer] amount ' + ' '+ amount + ' '+ 'index ' + index + 'firstIndex ' + firstIndex + 'direction '+ direction);
+  onNeedMoreData = (amount, index, firstIndex, direction) => {
     if (this.source) {
       const { resources } = this.props;
       const records = get(resources, 'records.records', []);
-      console.log('this.currentPage * PAGE_SIZE ', this.currentPage * PAGE_SIZE);
-      console.log('records length ', records.length);
       this.index = index;
       if (direction === 'next') {
         this.currentPage += 1;
-        console.log('current page ', this.currentPage);
         if (this.currentPage * PAGE_SIZE > records.length) {
           this.fetchMore();
         }
       } else {
         this.currentPage -= 1;
       }
-      // direction === 'next' ? (this.currentPage = this.currentPage+1) : (this.currentPage = this.currentPage -1);
-      // this.source.fetchMore(RESULT_COUNT_INCREMENT);
       const newState = {
         ...this.state,
         direction
@@ -233,39 +226,11 @@ class FindInstanceContainer extends React.Component {
   }
 
   getPaginatedItems = () => {
-    // const { index, data } = this.props;
     const { resources } = this.props;
-    const direction = this.state.direction;
     const index = this.index;
     const records = get(resources, 'records.records', []);
-
-    const paginatedItems = [];
-    console.log('records length ==== BEFORE preparing paginatedItems', records.length);
-    if (records.length > 0) {
-      if (!direction) {
-        paginatedItems.push(...records);
-      } else if (direction === 'next') {
-        // if (records.length > 0) {
-        // paginatedItems = new Array(PAGE_SIZE);
-
-        // slice original records array to extract 'pageAmount' of records
-        const recordSlice = records.slice(index, index + PAGE_SIZE);
-        // push it at the end of the sparse array
-        paginatedItems.push(...recordSlice);
-        // }
-      } else {
-        // if (records.length > 0) {
-        // paginatedItems = new Array(PAGE_SIZE);
-
-        // slice original records array to extract 'pageAmount' of records
-        const recordSlice = records.slice(index - PAGE_SIZE - 1, index);
-        // push it at the end of the sparse array
-        paginatedItems.push(...recordSlice);
-        // }
-      }
-    }
-    console.log('records length ==== AFTER preparing paginatedItems', records.length);
-    console.log('paginatedItems ', paginatedItems);
+    const paginatedItems = new Array(records.length);
+    paginatedItems.splice(index, PAGE_SIZE, ...records.slice(index, index + PAGE_SIZE));
     return paginatedItems;
   }
 
@@ -312,7 +277,7 @@ class FindInstanceContainer extends React.Component {
       data: {
         records: get(resources, 'records.records', []),
         totalRecords: get(resources, 'records.other.totalRecords', 0),
-        // isPending: get(resources, 'records.isPending', true),
+        isPending: get(resources, 'records.isPending', false),
         paginatedItems: this.getPaginatedItems()
       },
     });
