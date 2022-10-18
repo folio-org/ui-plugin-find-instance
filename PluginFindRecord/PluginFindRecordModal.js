@@ -48,7 +48,6 @@ const reduceCheckedRecords = (records, isChecked = false) => {
 
   return records.reduce(recordsReducer, {});
 };
-const PAGE_SIZE = 100;
 
 class PluginFindRecordModal extends React.Component {
   constructor(props, context) {
@@ -241,6 +240,7 @@ class PluginFindRecordModal extends React.Component {
       visibleColumns,
       config,
       currentPage,
+      pageSize
     } = this.props;
     const { checkedMap, isAllChecked } = this.state;
     const {
@@ -323,7 +323,7 @@ class PluginFindRecordModal extends React.Component {
       </div>
     );
 
-    const totalPages = Math.ceil(totalRecords / PAGE_SIZE);
+    const totalPages = Math.ceil(totalRecords / pageSize);
 
     const pagingCanGoNext = currentPage < totalPages;
     const pagingCanGoPrevious = currentPage > 1;
@@ -484,7 +484,7 @@ class PluginFindRecordModal extends React.Component {
                         sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                         totalCount={totalRecords}
                         visibleColumns={builtVisibleColumns}
-                        pageAmount={PAGE_SIZE}
+                        pageAmount={pageSize}
                         pagingType={MCLPagingTypes.PREV_NEXT}
                         pagingCanGoNext={pagingCanGoNext}
                         pagingCanGoPrevious={pagingCanGoPrevious}
@@ -530,6 +530,7 @@ PluginFindRecordModal.propTypes = {
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   config: CONFIG_TYPES,
   index: PropTypes.number,
+  pageSize: PropTypes.number,
 };
 
 PluginFindRecordModal.defaultProps = {

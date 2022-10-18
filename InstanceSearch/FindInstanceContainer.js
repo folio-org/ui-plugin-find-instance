@@ -21,7 +21,6 @@ import { CQL_FIND_ALL } from '../Imports/imports/constants';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
-const PAGE_SIZE = 100;
 const columnWidths = {
   isChecked: '8%',
   title: '40%',
@@ -188,7 +187,7 @@ class FindInstanceContainer extends React.Component {
       this.index = index;
       if (direction === 'next') {
         this.currentPage += 1;
-        if (this.currentPage * PAGE_SIZE > records.length) {
+        if (this.currentPage * RESULT_COUNT_INCREMENT > records.length) {
           this.fetchMore();
         }
       } else {
@@ -230,7 +229,7 @@ class FindInstanceContainer extends React.Component {
     const index = this.index;
     const records = get(resources, 'records.records', []);
     const paginatedItems = new Array(records.length);
-    paginatedItems.splice(index, PAGE_SIZE, ...records.slice(index, index + PAGE_SIZE));
+    paginatedItems.splice(index, RESULT_COUNT_INCREMENT, ...records.slice(index, index + RESULT_COUNT_INCREMENT));
     return paginatedItems;
   }
 
@@ -274,6 +273,7 @@ class FindInstanceContainer extends React.Component {
       visibleColumns,
       index: this.index,
       currentPage: this.currentPage,
+      pageSize: RESULT_COUNT_INCREMENT,
       data: {
         records: get(resources, 'records.records', []),
         totalRecords: get(resources, 'records.other.totalRecords', 0),
