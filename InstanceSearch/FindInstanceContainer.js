@@ -193,11 +193,9 @@ class FindInstanceContainer extends React.Component {
       } else {
         this.currentPage -= 1;
       }
-      const newState = {
-        ...this.state,
-        direction
-      };
-      this.setState(newState);
+
+      // eslint-disable-next-line react/no-unused-state
+      this.setState({ direction });
     }
   };
 
