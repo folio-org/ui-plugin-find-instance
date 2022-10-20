@@ -152,12 +152,11 @@ class FindInstanceContainer extends React.Component {
       // The qindex param holds the search index to use for a query,
       // if multiple indices are in play
       qindex: '',
-      direction: '',
+      index: 0,
     };
 
     this.logger = props.stripes.logger;
     this.log = this.logger.log.bind(this.logger);
-    this.index = 0;
     this.currentPage = 1;
   }
 
@@ -184,7 +183,6 @@ class FindInstanceContainer extends React.Component {
     if (this.source) {
       const { resources } = this.props;
       const records = get(resources, 'records.records', []);
-      this.index = index;
       if (direction === 'next') {
         this.currentPage += 1;
         if (this.currentPage * RESULT_COUNT_INCREMENT > records.length) {
@@ -195,7 +193,7 @@ class FindInstanceContainer extends React.Component {
       }
 
       // eslint-disable-next-line react/no-unused-state
-      this.setState({ direction });
+      this.setState({ index });
     }
   };
 
@@ -224,7 +222,7 @@ class FindInstanceContainer extends React.Component {
 
   getPaginatedItems = () => {
     const { resources } = this.props;
-    const index = this.index;
+    const index = this.state.index;
     const records = get(resources, 'records.records', []);
     const paginatedItems = new Array(records.length);
     paginatedItems.splice(index, RESULT_COUNT_INCREMENT, ...records.slice(index, index + RESULT_COUNT_INCREMENT));
@@ -269,7 +267,7 @@ class FindInstanceContainer extends React.Component {
       setSearchIndex: this.setSearchIndex,
       source: this.source,
       visibleColumns,
-      index: this.index,
+      index: this.state.index,
       currentPage: this.currentPage,
       pageSize: RESULT_COUNT_INCREMENT,
       data: {
