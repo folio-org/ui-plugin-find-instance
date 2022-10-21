@@ -152,10 +152,12 @@ class FindInstanceContainer extends React.Component {
       // The qindex param holds the search index to use for a query,
       // if multiple indices are in play
       qindex: '',
+      index: 0,
     };
 
     this.logger = props.stripes.logger;
     this.log = this.logger.log.bind(this.logger);
+    this.currentPage = 1;
   }
 
   componentDidMount() {
@@ -173,11 +175,28 @@ class FindInstanceContainer extends React.Component {
     this.source.update(this.props);
   }
 
-  onNeedMoreData = () => {
+  fetchMore = () => {
+    this.source.fetchMore(RESULT_COUNT_INCREMENT);
+  };
+
+  onNeedMoreData = (amount, index, firstIndex, direction) => {
     if (this.source) {
-      this.source.fetchMore(RESULT_COUNT_INCREMENT);
+      const { resources } = this.props;
+      const records = get(resources, 'records.records', []);
+      if (direction === 'next') {
+        this.currentPage += 1;
+        if (this.currentPage * RESULT_COUNT_INCREMENT > records.length) {
+          this.fetchMore();
+        }
+      } else {
+        this.currentPage -= 1;
+      }
+
+      // eslint-disable-next-line react/no-unused-state
+      this.setState({ index });
     }
   };
+
 
   querySetter = ({ nsValues, state }) => {
     const nsValuesWithIndex = {
@@ -199,6 +218,15 @@ class FindInstanceContainer extends React.Component {
   // Handler for a change of search index in PluginFindRecordModal's <SearchField> component
   setSearchIndex = (e) => {
     this.setState({ qindex: e.target.value });
+  }
+
+  getPaginatedItems = () => {
+    const { resources } = this.props;
+    const index = this.state.index;
+    const records = get(resources, 'records.records', []);
+    const paginatedItems = new Array(records.length);
+    paginatedItems.splice(index, RESULT_COUNT_INCREMENT, ...records.slice(index, index + RESULT_COUNT_INCREMENT));
+    return paginatedItems;
   }
 
   render() {
@@ -239,8 +267,14 @@ class FindInstanceContainer extends React.Component {
       setSearchIndex: this.setSearchIndex,
       source: this.source,
       visibleColumns,
+      index: this.state.index,
+      currentPage: this.currentPage,
+      pageSize: RESULT_COUNT_INCREMENT,
       data: {
         records: get(resources, 'records.records', []),
+        totalRecords: get(resources, 'records.other.totalRecords', 0),
+        isPending: get(resources, 'records.isPending', false),
+        paginatedItems: this.getPaginatedItems()
       },
     });
   }
