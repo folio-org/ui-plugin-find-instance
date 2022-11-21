@@ -61,7 +61,7 @@ const InstanceSearch = ({
       {(modalProps) => (
         <DataContext.Consumer>
           {data => (
-            <FindInstanceContainer>
+            <FindInstanceContainer segment={segment}>
               {(viewProps) => (
                 <PluginFindRecordModal
                   {...viewProps}

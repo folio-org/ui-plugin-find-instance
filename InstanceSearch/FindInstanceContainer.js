@@ -65,7 +65,7 @@ const contributorsFormatter = (r, contributorTypes) => {
 
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
-  const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
+  const { indexes, sortMap, filters } = getFilterConfig(props.segment);
   const query = { ...resourceData.query };
   const queryIndex = props?.resources?.query?.qindex || 'all';
   const queryValue = props?.resources?.query?.query ?? '';
@@ -172,6 +172,7 @@ class FindInstanceContainer extends React.Component {
 
     setFilterValues(locations, 'location', 'name', 'id');
     setFilterValues(instanceTypes, 'resource', 'name', 'id');
+
     this.source.update(this.props);
   }
 
