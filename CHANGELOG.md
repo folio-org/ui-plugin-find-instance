@@ -2,6 +2,8 @@
 
 ## 6.4.0 IN PROGRESS
 
+* Fix segment when switching between filter tabs. Fixes UIIN-2258
+
 ## [6.3.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.3.0) (2022-10-24)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.2.0...v6.3.0)
 
