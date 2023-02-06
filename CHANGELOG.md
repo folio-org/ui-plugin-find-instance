@@ -4,6 +4,7 @@
 
 * Fix segment when switching between filter tabs. Fixes UIIN-2258
 * Bump search interface to 1.0. Fixes UIPFI-112
+* Bump stripes to 8.0.0 for Orchid/2023-R1. Refs UIPFI-113.
 
 ## [6.3.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.3.0) (2022-10-24)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.2.0...v6.3.0)
