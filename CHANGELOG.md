@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## 6.4.0 IN PROGRESS
+## [6.4.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.4.0) (2023-02-20)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.3.0...v6.4.0)
 
 * Fix segment when switching between filter tabs. Fixes UIIN-2258
 * Bump search interface to 1.0. Fixes UIPFI-112
