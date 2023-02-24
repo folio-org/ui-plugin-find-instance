@@ -2,6 +2,8 @@
 
 ## 6.5.0 IN PROGRESS
 
+* Fix pagination issues when applying filters and search query. Fixes UIPFI-116.
+
 ## [6.4.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.4.0) (2023-02-20)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.3.0...v6.4.0)
 
