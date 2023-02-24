@@ -110,11 +110,14 @@ class FindInstanceContainer extends React.Component {
       },
     },
     records: {
+      accumulate: 'true',
       throwErrors: false,
       type: 'okapi',
       records: 'instances',
+      resultDensity: 'sparse',
       path: 'search/instances',
       recordsRequired: '%{resultCount}',
+      resultOffset: '%{resultOffset}',
       perRequest: RESULT_COUNT_INCREMENT,
       GET: {
         params: {
@@ -125,6 +128,7 @@ class FindInstanceContainer extends React.Component {
       },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    resultOffset: { initialValue: 0 },
     locations: {
       throwErrors: false,
       type: 'okapi',
@@ -157,7 +161,6 @@ class FindInstanceContainer extends React.Component {
 
     this.logger = props.stripes.logger;
     this.log = this.logger.log.bind(this.logger);
-    this.currentPage = 1;
   }
 
   componentDidMount() {
@@ -180,35 +183,39 @@ class FindInstanceContainer extends React.Component {
     this.source.fetchMore(RESULT_COUNT_INCREMENT);
   };
 
-  onNeedMoreData = (amount, index, firstIndex, direction) => {
-    if (this.source) {
-      const { resources } = this.props;
-      const records = get(resources, 'records.records', []);
-      if (direction === 'next') {
-        this.currentPage += 1;
-        if (this.currentPage * RESULT_COUNT_INCREMENT > records.length) {
-          this.fetchMore();
-        }
-      } else {
-        this.currentPage -= 1;
-      }
+  onNeedMoreData = (_amount, index) => {
+    const {
+      mutator: { resultOffset },
+    } = this.props;
 
-      // eslint-disable-next-line react/no-unused-state
-      this.setState({ index });
+    if (this.source) {
+      if (resultOffset && index >= 0) {
+        this.source.fetchOffset(index);
+      } else {
+        this.fetchMore();
+      }
     }
   };
 
 
   querySetter = ({ nsValues, state }) => {
+    const {
+      mutator: { query, resultOffset },
+    } = this.props;
+
     const nsValuesWithIndex = {
       ...nsValues,
       qindex: this.state.qindex,
     };
 
+    if (resultOffset) {
+      resultOffset.replace(0);
+    }
+
     if (/reset/.test(state.changeType)) {
-      this.props.mutator.query.replace(nsValuesWithIndex);
+      query.replace(nsValuesWithIndex);
     } else {
-      this.props.mutator.query.update(nsValuesWithIndex);
+      query.update(nsValuesWithIndex);
     }
   }
 
@@ -219,15 +226,6 @@ class FindInstanceContainer extends React.Component {
   // Handler for a change of search index in PluginFindRecordModal's <SearchField> component
   setSearchIndex = (e) => {
     this.setState({ qindex: e.target.value });
-  }
-
-  getPaginatedItems = () => {
-    const { resources } = this.props;
-    const index = this.state.index;
-    const records = get(resources, 'records.records', []);
-    const paginatedItems = new Array(records.length);
-    paginatedItems.splice(index, RESULT_COUNT_INCREMENT, ...records.slice(index, index + RESULT_COUNT_INCREMENT));
-    return paginatedItems;
   }
 
   render() {
@@ -269,13 +267,11 @@ class FindInstanceContainer extends React.Component {
       source: this.source,
       visibleColumns,
       index: this.state.index,
-      currentPage: this.currentPage,
       pageSize: RESULT_COUNT_INCREMENT,
       data: {
         records: get(resources, 'records.records', []),
         totalRecords: get(resources, 'records.other.totalRecords', 0),
         isPending: get(resources, 'records.isPending', false),
-        paginatedItems: this.getPaginatedItems()
       },
     });
   }
