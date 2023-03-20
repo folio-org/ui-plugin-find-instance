@@ -94,7 +94,6 @@ export const instanceIndexes = [
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.callNumber', value: 'callNumber', queryTemplate: 'callNumber=%{query.query}' },
 ];
 
 export const instanceSortMap = {
@@ -108,8 +107,11 @@ export const holdingIndexes = [
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.callNumberEyeReadable',
-    value: 'callNumberER',
-    queryTemplate: 'holdings.fullCallNumber=="%{query.query}"' },
+    value: 'holdingsFullCallNumbers',
+    queryTemplate: 'holdingsFullCallNumbers="%{query.query}"' },
+  { label: 'ui-inventory.callNumberNormalized',
+    value: 'callNumberNormalized',
+    queryTemplate: 'holdingsNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
@@ -147,8 +149,11 @@ export const itemIndexes = [
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
-    value: 'itemCallNumberER',
-    queryTemplate: 'items.effectiveCallNumberComponents=="%{query.query}"' },
+    value: 'itemFullCallNumbers',
+    queryTemplate: 'itemFullCallNumbers="%{query.query}"' },
+  { label: 'ui-inventory.itemEffectiveCallNumberNormalized',
+    value: 'itemNormalizedCallNumbers',
+    queryTemplate: 'itemNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 
