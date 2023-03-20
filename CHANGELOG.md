@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## 6.5.0 IN PROGRESS
+## [6.5.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.4.0) (2023-03-20)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.4.0...v6.5.0)
 
 * Fix pagination issues when applying filters and search query. Fixes UIPFI-116.
 * Remove `callNumber` index. Add eye readable and normalized indexes on call numbers. Fixes UIPFI-117.
