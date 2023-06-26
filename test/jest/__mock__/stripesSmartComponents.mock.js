@@ -23,6 +23,53 @@ jest.mock('@folio/stripes/smart-components', () => ({
       }
     </div>
   )),
+  MultiSelectionFilter: jest.fn(({
+    name,
+    onChange = jest.fn()
+  }) => (
+    <div>
+      <div>
+        <span>{name}</span>
+      </div>
+      <input
+        type="text"
+        onChange={onChange()}
+        data-testid={`${name}`}
+      />
+    </div>
+  )),
+  DateRangeFilter: jest.fn(({
+    name,
+    onChange = jest.fn(),
+  }) => (
+    <div>
+      <div>
+        <span>{name}</span>
+      </div>
+      <button
+        type="submit"
+        onClick={onChange}
+      >
+        DateRangeFilter
+      </button>
+    </div>
+  )),
+  CheckboxFilter: jest.fn(({
+    name,
+    onChange = jest.fn(),
+  }) => (
+    <div>
+      <div>
+        <span>{name}</span>
+      </div>
+      <button
+        type="submit"
+        onClick={onChange}
+      >
+        CheckboxFilter
+      </button>
+    </div>
+  )),
   SearchAndSortSearchButton: jest.fn(({
     label,
     id,
