@@ -42,6 +42,7 @@ jest.mock('@folio/stripes/core', () => {
   };
 
   return {
+    AppIcon: jest.fn(({ children }) => <span>{children}</span>),
     stripesConnect: Component => ({ mutator, resources, stripes, ...rest }) => {
       const fakeMutator = mutator || Object.keys(Component.manifest).reduce((acc, mutatorName) => {
         const returnValue = Component.manifest[mutatorName].records ? [] : {};
