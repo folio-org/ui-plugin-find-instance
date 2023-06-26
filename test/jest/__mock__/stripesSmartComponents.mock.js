@@ -1,6 +1,7 @@
 import React from 'react';
 
 jest.mock('@folio/stripes/smart-components', () => ({
+  makeQueryFunction: jest.fn(() => jest.fn()),
   SearchAndSortQuery: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
   SearchAndSortNoResultsMessage: jest.fn(({
     label,
@@ -20,6 +21,53 @@ jest.mock('@folio/stripes/smart-components', () => ({
           Show filters
         </button>
       }
+    </div>
+  )),
+  MultiSelectionFilter: jest.fn(({
+    name,
+    onChange = jest.fn()
+  }) => (
+    <div>
+      <div>
+        <span>{name}</span>
+      </div>
+      <input
+        type="text"
+        onChange={onChange()}
+        data-testid={`${name}`}
+      />
+    </div>
+  )),
+  DateRangeFilter: jest.fn(({
+    name,
+    onChange = jest.fn(),
+  }) => (
+    <div>
+      <div>
+        <span>{name}</span>
+      </div>
+      <button
+        type="submit"
+        onClick={onChange}
+      >
+        DateRangeFilter
+      </button>
+    </div>
+  )),
+  CheckboxFilter: jest.fn(({
+    name,
+    onChange = jest.fn(),
+  }) => (
+    <div>
+      <div>
+        <span>{name}</span>
+      </div>
+      <button
+        type="submit"
+        onClick={onChange}
+      >
+        CheckboxFilter
+      </button>
     </div>
   )),
   SearchAndSortSearchButton: jest.fn(({
@@ -44,4 +92,5 @@ jest.mock('@folio/stripes/smart-components', () => ({
       </button>
     </div>
   )),
+  StripesConnectedSource: jest.fn()
 }), { virtual: true });
