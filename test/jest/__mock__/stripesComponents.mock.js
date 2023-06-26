@@ -20,6 +20,22 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </div>
   )),
+  Accordion: jest.fn(({ children, label, name, onClearFilter, displayClearButton }) => (
+    <div>
+      {label}
+      {children}
+      <div>
+        <button
+          type="button"
+          disabled={!displayClearButton}
+          onClick={() => onClearFilter()}
+          data-testid={`clear-${name}`}
+        >Clear
+        </button>
+      </div>
+      <div data-testid={`accordion-${name}`} />
+    </div>
+  )),
   Checkbox: jest.fn(({
     checked,
     disabled,
@@ -170,6 +186,7 @@ jest.mock('@folio/stripes/components', () => ({
       </div>
     );
   }),
+  languageOptions: jest.fn(() => <div>languageOptions</div>),
   PaneMenu: jest.fn(({ children }) => <div>{children}</div>),
   Paneset: jest.fn(({ children }) => <div>{children}</div>),
   SearchField: jest.fn(({
