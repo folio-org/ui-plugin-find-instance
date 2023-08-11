@@ -1,7 +1,10 @@
-import React from 'react';
-import '../../../test/jest/__mock__';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import {
+  render,
+  screen,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
+
 import InstanceFilters from './InstanceFilters';
 
 jest.mock('../TagsFilter', () => jest.fn().mockReturnValue('TagsFilter'));
@@ -69,67 +72,67 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for effective Location', () => {
     const cleareffectiveLocation = document.querySelector('[data-testid="clear-effectiveLocation"]');
-    userEvent.click(cleareffectiveLocation);
+    fireEvent.click(cleareffectiveLocation);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for language', () => {
     const clearlanguage = document.querySelector('[data-testid="clear-language"]');
-    userEvent.click(clearlanguage);
+    fireEvent.click(clearlanguage);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for resource', () => {
     const clearresource = document.querySelector('[data-testid="clear-resource"]');
-    userEvent.click(clearresource);
+    fireEvent.click(clearresource);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for format', () => {
     const clearformat = document.querySelector('[data-testid="clear-format"]');
-    userEvent.click(clearformat);
+    fireEvent.click(clearformat);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for mode', () => {
     const clearmode = document.querySelector('[data-testid="clear-mode"]');
-    userEvent.click(clearmode);
+    fireEvent.click(clearmode);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for natureOfContent', () => {
     const clearnatureOfContent = document.querySelector('[data-testid="clear-natureOfContent"]');
-    userEvent.click(clearnatureOfContent);
+    fireEvent.click(clearnatureOfContent);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for staffSuppress', () => {
     const clearstaffSuppress = document.querySelector('[data-testid="clear-staffSuppress"]');
-    userEvent.click(clearstaffSuppress);
+    fireEvent.click(clearstaffSuppress);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for discoverySuppress', () => {
     const cleardiscoverySuppress = document.querySelector('[data-testid="clear-discoverySuppress"]');
-    userEvent.click(cleardiscoverySuppress);
+    fireEvent.click(cleardiscoverySuppress);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for createdDate', () => {
     const clearcreatedDate = document.querySelector('[data-testid="clear-createdDate"]');
-    userEvent.click(clearcreatedDate);
+    fireEvent.click(clearcreatedDate);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for updatedDate', () => {
     const clearupdatedDate = document.querySelector('[data-testid="clear-updatedDate"]');
-    userEvent.click(clearupdatedDate);
+    fireEvent.click(clearupdatedDate);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for source', () => {
     const clearsource = document.querySelector('[data-testid="clear-source"]');
-    userEvent.click(clearsource);
+    fireEvent.click(clearsource);
     expect(mockClear).toBeCalled();
   });
 });

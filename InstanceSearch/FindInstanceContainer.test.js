@@ -1,10 +1,13 @@
-import '../test/jest/__mock__';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {
+  render,
+  screen,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
 import {
   makeQueryFunction,
   StripesConnectedSource,
 } from '@folio/stripes/smart-components';
+
 import FindInstanceContainer, { buildQuery } from './FindInstanceContainer';
 
 const mockStripesConnectedSourceValues = {
@@ -127,15 +130,15 @@ describe('FindInstanceContainer', () => {
     expect(screen.getByTestId('total-records')).toBeInTheDocument();
   });
   it('should call soure.fetchMore on onNeedMoreData', () => {
-    userEvent.click(screen.getByText('onNeedMoreData'));
+    fireEvent.click(screen.getByText('onNeedMoreData'));
     expect(mockStripesConnectedSourceValues.fetchMore).toBeCalled();
   });
   it('query.update function to be called when changeType value is not reset', () => {
-    userEvent.click(screen.getByText('querySetterForUpdate'));
+    fireEvent.click(screen.getByText('querySetterForUpdate'));
     expect(defaultProps.mutator.query.update).toBeCalledWith({ qindex: '' });
   });
   it('query.replace function to be called when changeType value is reset', () => {
-    userEvent.click(screen.getByText('querySetterForReset'));
+    fireEvent.click(screen.getByText('querySetterForReset'));
     expect(defaultProps.mutator.query.replace).toBeCalledWith({ qindex: '' });
   });
   describe('buildQuery', () => {

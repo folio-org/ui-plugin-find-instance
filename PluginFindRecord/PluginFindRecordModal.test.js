@@ -1,11 +1,9 @@
-import React from 'react';
 import {
   render,
   cleanup,
   screen,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 
-import '../test/jest/__mock__';
 import PluginFindRecordModal from './PluginFindRecordModal';
 import css from './PluginFindRecordModal.css';
 

@@ -1,15 +1,16 @@
-import React from 'react';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@testing-library/react-hooks';
 
-import '../test/jest/__mock__';
-
+import {
+  renderHook,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import instances from '../test/jest/fixtures/instances';
+
+import { instances } from '../test/jest/fixtures/instances';
 import useInstancesQuery from './useInstancesQuery';
 
 
@@ -26,7 +27,7 @@ describe('useInstancesQuery', () => {
   beforeEach(() => {
     mock = useOkapiKy.mockClear().mockReturnValue({
       get: () => ({
-        json: () => instance,
+        json: jest.fn().mockResolvedValue(instance),
       }),
     });
   });
@@ -36,8 +37,7 @@ describe('useInstancesQuery', () => {
   });
 
   it('fetches instances', async () => {
-    const { result, waitFor } = renderHook(() => useInstancesQuery([instance.id]), { wrapper });
-    await waitFor(() => result.current[0].isSuccess);
-    expect(result.current[0].data.id).toEqual(instance.id);
+    const { result } = renderHook(() => useInstancesQuery([instance.id]), { wrapper });
+    await waitFor(() => expect(result.current[0].data.id).toEqual(instance.id));
   });
 });

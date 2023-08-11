@@ -10,10 +10,12 @@ const useInstancesQuery = (ids = []) => {
   const ky = useOkapiKy();
   const [namespace] = useNamespace();
 
-  return useQueries(ids.map(id => ({
+  const res = useQueries(ids.map(id => ({
     queryKey: [namespace, 'instances', id],
     queryFn: () => ky.get(`inventory/instances/${id}`).json(),
   })));
+
+  return res;
 };
 
 export default useInstancesQuery;

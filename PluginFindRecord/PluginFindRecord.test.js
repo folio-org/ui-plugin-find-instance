@@ -1,10 +1,8 @@
-import React from 'react';
 import {
   render,
   cleanup,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 
-import '../test/jest/__mock__';
 import PluginFindRecord from './PluginFindRecord';
 
 const renderPluginFindRecord = ({
