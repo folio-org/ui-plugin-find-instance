@@ -1,7 +1,10 @@
-import React from 'react';
-import '../../../test/jest/__mock__';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import {
+  fireEvent,
+  render,
+  screen,
+} from '@folio/jest-config-stripes/testing-library/react';
+
 import HoldingsRecordFilters from './HoldingsRecordFilters';
 
 jest.mock('../TagsFilter', () => jest.fn().mockReturnValue('TagsFilter'));
@@ -44,19 +47,19 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for effective Location', () => {
     const cleareffectiveLocation = document.querySelector('[data-testid="clear-effectiveLocation"]');
-    userEvent.click(cleareffectiveLocation);
+    fireEvent.click(cleareffectiveLocation);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for holdingsPermanentLocation', () => {
     const clearholdingsPermanentLocation = document.querySelector('[data-testid="clear-holdingsPermanentLocation"]');
-    userEvent.click(clearholdingsPermanentLocation);
+    fireEvent.click(clearholdingsPermanentLocation);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for discoverySuppress', () => {
     const cleardiscoverySuppress = document.querySelector('[data-testid="clear-discoverySuppress"]');
-    userEvent.click(cleardiscoverySuppress);
+    fireEvent.click(cleardiscoverySuppress);
     expect(mockClear).toBeCalled();
   });
 });

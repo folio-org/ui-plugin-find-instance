@@ -1,7 +1,8 @@
-import '../../../test/jest/__mock__';
-import React from 'react';
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import {
+  render,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import holdingsRecordFilterRenderer from './holdingsRecordFilterRenderer';
 
@@ -56,14 +57,14 @@ describe('holdingsRecordFilterRenderer', () => {
   it('calls onChangeHandler when clear button is clicked', () => {
     const { getByTestId } = render(holdingsRecordFilterRenderer(data)(onChange));
     const clearButton = getByTestId('clear-button');
-    userEvent.click(clearButton);
+    fireEvent.click(clearButton);
     expect(onChange).toEqual(expectedParam);
   });
 
   it('calls onChangeHandler when change button is clicked', () => {
     const { getByTestId } = render(holdingsRecordFilterRenderer(data)(onChange));
     const changeButton = getByTestId('change-button');
-    userEvent.click(changeButton);
+    fireEvent.click(changeButton);
     expect(onChange).toEqual(expectedParam);
   });
 });

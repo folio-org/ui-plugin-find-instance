@@ -1,7 +1,10 @@
-import '../test/jest/__mock__';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+import {
+  render,
+  screen,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import InstanceSearch from './InstanceSearch';
 
@@ -45,7 +48,7 @@ describe('InstanceSearch', () => {
       </QueryClientProvider>
     );
     const searchButton = screen.getByText('Search');
-    userEvent.click(searchButton);
+    fireEvent.click(searchButton);
     expect(defaultProps.onClose).toHaveBeenCalled();
   });
 });

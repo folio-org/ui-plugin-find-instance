@@ -1,7 +1,10 @@
-import React from 'react';
-import '../../../test/jest/__mock__';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import {
+  render,
+  screen,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
+
 import ItemFilters from './ItemFilters';
 
 jest.mock('../TagsFilter', () => jest.fn().mockReturnValue('TagsFilter'));
@@ -55,31 +58,31 @@ describe('ItemFilters', () => {
 
   it('Should Clear selected filters for effective Location', () => {
     const clearEffectiveLocation = document.querySelector('[data-testid="clear-effectiveLocation"]');
-    userEvent.click(clearEffectiveLocation);
+    fireEvent.click(clearEffectiveLocation);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for materialType', () => {
     const clearMaterialType = document.querySelector('[data-testid="clear-materialTypeAccordion"]');
-    userEvent.click(clearMaterialType);
+    fireEvent.click(clearMaterialType);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for itemStatus', () => {
     const clearitemStatus = document.querySelector('[data-testid="clear-itemFilterAccordion"]');
-    userEvent.click(clearitemStatus);
+    fireEvent.click(clearitemStatus);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for holdingsPermanentLocation', () => {
     const clearholdingsPermanentLocation = document.querySelector('[data-testid="clear-holdingsPermanentLocationAccordion"]');
-    userEvent.click(clearholdingsPermanentLocation);
+    fireEvent.click(clearholdingsPermanentLocation);
     expect(mockClear).toBeCalled();
   });
 
   it('Should Clear selected filters for discoverySuppress', () => {
     const cleardiscoverySuppress = document.querySelector('[data-testid="clear-discoverySuppress"]');
-    userEvent.click(cleardiscoverySuppress);
+    fireEvent.click(cleardiscoverySuppress);
     expect(mockClear).toBeCalled();
   });
 });
