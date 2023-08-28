@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { FormattedMessage } from 'react-intl';
+import classnames from 'classnames';
 
+import { Icon } from '@folio/stripes/components';
 import {
   makeQueryFunction,
   StripesConnectedSource,
@@ -18,6 +20,8 @@ import {
   getIsbnIssnTemplate,
 } from '../Imports/imports/utils';
 import { CQL_FIND_ALL } from '../Imports/imports/constants';
+
+import css from './FindInstanceContainer.css';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -236,14 +240,26 @@ class FindInstanceContainer extends React.Component {
     const contributorTypes = get(resources, 'contributorTypes.records') || [];
 
     const resultsFormatter = {
-      title: ({ title }) => (
-        <AppIcon
-          size="small"
-          app="inventory"
-          iconKey="instance"
-        >
-          {title}
-        </AppIcon>
+      title: ({ title, shared }) => (
+        <>
+          {shared &&
+            <Icon
+              size="medium"
+              icon="graph"
+              iconRootClass={css.sharedIconRoot}
+              iconClassName={classnames(
+                css.sharedIcon,
+              )}
+            />
+          }
+          <AppIcon
+            size="small"
+            app="inventory"
+            iconKey="instance"
+          >
+            {title}
+          </AppIcon>
+        </>
       ),
       contributors: r => contributorsFormatter(r, contributorTypes),
       publishers: r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
