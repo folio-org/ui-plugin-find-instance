@@ -241,7 +241,14 @@ class FindInstanceContainer extends React.Component {
 
     const resultsFormatter = {
       title: ({ title, shared }) => (
-        <>
+        <div className={css.titleContainer}>
+          <AppIcon
+            size="small"
+            app="inventory"
+            iconKey="instance"
+          >
+            {title}
+          </AppIcon>
           {shared &&
             <Icon
               size="medium"
@@ -252,14 +259,7 @@ class FindInstanceContainer extends React.Component {
               )}
             />
           }
-          <AppIcon
-            size="small"
-            app="inventory"
-            iconKey="instance"
-          >
-            {title}
-          </AppIcon>
-        </>
+        </div>
       ),
       contributors: r => contributorsFormatter(r, contributorTypes),
       publishers: r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),

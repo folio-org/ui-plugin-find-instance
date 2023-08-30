@@ -1,3 +1,8 @@
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .sharedIconRoot {
   justify-content: start;
   margin-right: var(--gutter-static-one-third);
