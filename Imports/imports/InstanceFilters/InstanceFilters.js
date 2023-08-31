@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useStripes } from '@folio/stripes/core';
+import {
+  checkIfUserInMemberTenant,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   Accordion,
   FilterAccordionHeader,
@@ -20,12 +23,14 @@ import {
   makeDateRangeFilterString,
 } from '../utils';
 import TagsFilter from '../TagsFilter';
+import SharedFilter from '../SharedFilter';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
 const InstanceFilters = props => {
   const {
     activeFilters: {
+      shared = [],
       effectiveLocation = [],
       resource = [],
       language = [],
@@ -102,8 +107,17 @@ const InstanceFilters = props => {
   const stripes = useStripes();
   const langOptions = languageOptions(intl, stripes.locale);
 
+  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+
   return (
     <>
+      {showSharedFacet && (
+        <SharedFilter
+          activeFilters={shared}
+          onClear={() => onClear('shared')}
+          onChange={onChange}
+        />
+      )}
       <Accordion
         label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
         id="effectiveLocation"
@@ -301,8 +315,6 @@ const InstanceFilters = props => {
   );
 };
 
-export default InstanceFilters;
-
 InstanceFilters.propTypes = {
   activeFilters: PropTypes.objectOf(PropTypes.array),
   onChange: PropTypes.func.isRequired,
@@ -317,3 +329,5 @@ InstanceFilters.defaultProps = {
     locations: [],
   },
 };
+
+export default InstanceFilters;

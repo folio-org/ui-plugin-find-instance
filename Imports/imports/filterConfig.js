@@ -8,6 +8,11 @@ import {
 
 export const instanceFilterConfig = [
   {
+    name: 'shared',
+    cql: 'shared',
+    values: [],
+  },
+  {
     name: 'effectiveLocation',
     cql: 'items.effectiveLocationId',
     values: [],
@@ -120,6 +125,11 @@ export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
+    name: 'shared',
+    cql: 'shared',
+    values: [],
+  },
+  {
     name: 'effectiveLocation',
     cql: 'items.effectiveLocationId',
     values: [],
@@ -160,6 +170,11 @@ export const itemIndexes = [
 ];
 
 export const itemFilterConfig = [
+  {
+    name: 'shared',
+    cql: 'shared',
+    values: [],
+  },
   {
     name: 'materialType',
     cql: 'items.materialTypeId',
