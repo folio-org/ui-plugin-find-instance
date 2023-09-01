@@ -27,34 +27,38 @@ import SharedFilter from '../SharedFilter';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
-const InstanceFilters = props => {
-  const {
-    activeFilters: {
-      shared = [],
-      effectiveLocation = [],
-      resource = [],
-      language = [],
-      format = [],
-      mode = [],
-      natureOfContent = [],
-      discoverySuppress = [],
-      staffSuppress = [],
-      createdDate = [],
-      updatedDate = [],
-      source = [],
-      tags,
-    },
-    data: {
-      locations,
-      resourceTypes,
-      instanceFormats,
-      modesOfIssuance,
-      natureOfContentTerms,
-      tagsRecords,
-    },
-    onChange,
-    onClear,
-  } = props;
+const InstanceFilters = ({
+  activeFilters: {
+    shared = [],
+    effectiveLocation = [],
+    resource = [],
+    language = [],
+    format = [],
+    mode = [],
+    natureOfContent = [],
+    discoverySuppress = [],
+    staffSuppress = [],
+    createdDate = [],
+    updatedDate = [],
+    source = [],
+    tags,
+  },
+  data: {
+    locations,
+    resourceTypes,
+    instanceFormats,
+    modesOfIssuance,
+    natureOfContentTerms,
+    tagsRecords,
+  },
+  onChange,
+  onClear,
+}) => {
+  const intl = useIntl();
+  const stripes = useStripes();
+  const langOptions = languageOptions(intl, stripes.locale);
+
+  const showSharedFacet = checkIfUserInMemberTenant(stripes);
 
   const effectiveLocationOptions = locations.map(({ name, id }) => ({
     label: name,
@@ -102,12 +106,6 @@ const InstanceFilters = props => {
       value: 'MARC',
     },
   ];
-
-  const intl = useIntl();
-  const stripes = useStripes();
-  const langOptions = languageOptions(intl, stripes.locale);
-
-  const showSharedFacet = checkIfUserInMemberTenant(stripes);
 
   return (
     <>

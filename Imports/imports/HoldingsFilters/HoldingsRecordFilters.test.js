@@ -6,9 +6,11 @@ import {
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import HoldingsRecordFilters from './HoldingsRecordFilters';
+import Harness from '../../../test/jest/helpers/harness';
 
 jest.mock('../TagsFilter', () => jest.fn().mockReturnValue('TagsFilter'));
 const activeFilters = {
+  shared: ['true'],
   effectiveLocation: ['effectiveLocation1'],
   discoverySuppress: ['discoverySuppress'],
   holdingsPermanentLocation: ['holdingsPermanentLocation'],
@@ -30,56 +32,66 @@ const data = {
 
 const mockClear = jest.fn();
 const onChange = jest.fn();
-const renderHoldingsRecordFilters = () => render(
-  <HoldingsRecordFilters
-    activeFilters={activeFilters}
-    data={data}
-    onChange={onChange}
-    onClear={mockClear}
-  />
+const renderHoldingsRecordFilters = (props = {}) => render(
+  <Harness>
+    <HoldingsRecordFilters
+      activeFilters={activeFilters}
+      data={data}
+      onChange={onChange}
+      onClear={mockClear}
+      {...props}
+    />
+  </Harness>
 );
 
 describe('InstanceFilters', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    renderHoldingsRecordFilters();
+  describe('when filters are not empty', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      renderHoldingsRecordFilters();
+    });
+
+    it('Should Clear selected filters for shared', () => {
+      const clearShared = document.querySelector('[data-testid="clear-shared"]');
+      fireEvent.click(clearShared);
+      expect(mockClear).toBeCalled();
+    });
+
+    it('Should Clear selected filters for effective Location', () => {
+      const cleareffectiveLocation = document.querySelector('[data-testid="clear-effectiveLocation"]');
+      fireEvent.click(cleareffectiveLocation);
+      expect(mockClear).toBeCalled();
+    });
+
+    it('Should Clear selected filters for holdingsPermanentLocation', () => {
+      const clearholdingsPermanentLocation = document.querySelector('[data-testid="clear-holdingsPermanentLocation"]');
+      fireEvent.click(clearholdingsPermanentLocation);
+      expect(mockClear).toBeCalled();
+    });
+
+    it('Should Clear selected filters for discoverySuppress', () => {
+      const cleardiscoverySuppress = document.querySelector('[data-testid="clear-discoverySuppress"]');
+      fireEvent.click(cleardiscoverySuppress);
+      expect(mockClear).toBeCalled();
+    });
+
+    it('should render Shared filter', () => {
+      expect(screen.getByText('ui-inventory.filters.shared')).toBeInTheDocument();
+    });
   });
 
-  it('Should Clear selected filters for effective Location', () => {
-    const cleareffectiveLocation = document.querySelector('[data-testid="clear-effectiveLocation"]');
-    fireEvent.click(cleareffectiveLocation);
-    expect(mockClear).toBeCalled();
-  });
+  describe('when filters are empty', () => {
+    beforeEach(() => {
+      renderHoldingsRecordFilters({
+        activeFilters: {},
+      });
+    });
 
-  it('Should Clear selected filters for holdingsPermanentLocation', () => {
-    const clearholdingsPermanentLocation = document.querySelector('[data-testid="clear-holdingsPermanentLocation"]');
-    fireEvent.click(clearholdingsPermanentLocation);
-    expect(mockClear).toBeCalled();
-  });
-
-  it('Should Clear selected filters for discoverySuppress', () => {
-    const cleardiscoverySuppress = document.querySelector('[data-testid="clear-discoverySuppress"]');
-    fireEvent.click(cleardiscoverySuppress);
-    expect(mockClear).toBeCalled();
-  });
-});
-describe('HoldingsRecordFilters with empty filters', () => {
-  const emptyActiveFilters = {};
-  beforeEach(() => {
-    render(
-      <HoldingsRecordFilters
-        activeFilters={emptyActiveFilters}
-        data={data}
-        onChange={onChange}
-        onClear={mockClear}
-      />
-    );
-  });
-
-  it('Clear buttons Should be disabled when activeFilters are Empty', () => {
-    const clearButtons = screen.getAllByRole('button', { name: 'Clear' });
-    clearButtons.forEach((button) => {
-      expect(button).toBeDisabled();
+    it('should disable clear buttons', () => {
+      const clearButtons = screen.getAllByRole('button', { name: 'Clear' });
+      clearButtons.forEach((button) => {
+        expect(button).toBeDisabled();
+      });
     });
   });
 });
