@@ -30,7 +30,7 @@ const instanceFilterRenderer = data => onChange => {
         instanceFormats,
         modesOfIssuance,
         tagsRecords: tags,
-        natureOfContentTerms
+        natureOfContentTerms,
       }}
       onChange={onChangeHandler}
       onClear={(name) => onChangeHandler({ name, values: [] })}

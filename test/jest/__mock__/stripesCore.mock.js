@@ -90,5 +90,7 @@ jest.mock('@folio/stripes/core', () => {
     IfPermission: props => <>{props.children}</>,
 
     useNamespace: () => ['@folio/inventory'],
+
+    checkIfUserInMemberTenant: () => true,
   };
 }, { virtual: true });
