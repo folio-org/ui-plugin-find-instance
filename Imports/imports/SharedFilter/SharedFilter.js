@@ -52,6 +52,7 @@ const SharedFilter = ({
       header={FilterAccordionHeader}
       displayClearButton={activeFilters?.length > 0}
       onClearFilter={() => onClear('shared')}
+      closedByDefault
     >
       <CheckboxFilter
         name="shared"
