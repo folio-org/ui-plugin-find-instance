@@ -21,6 +21,7 @@ import {
 
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
+import TenantIdFilter from '../TenantIdFilter';
 
 const propTypes = {
   activeFilters: PropTypes.objectOf(PropTypes.array),
@@ -39,6 +40,7 @@ const defaultProps = {
 const HoldingsRecordFilters = ({
   activeFilters: {
     shared = [],
+    tenantId = [],
     discoverySuppress = [],
     effectiveLocation = [],
     holdingsPermanentLocation = [],
@@ -69,16 +71,23 @@ const HoldingsRecordFilters = ({
     },
   ];
 
-  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   return (
     <>
-      {showSharedFacet && (
-        <SharedFilter
-          activeFilters={shared}
-          onClear={() => onClear('shared')}
-          onChange={onChange}
-        />
+      {isUserInMemberTenant && (
+        <>
+          <SharedFilter
+            activeFilters={shared}
+            onClear={() => onClear('shared')}
+            onChange={onChange}
+          />
+          <TenantIdFilter
+            activeFilters={tenantId}
+            onClear={() => onClear('tenantId')}
+            onChange={onChange}
+          />
+        </>
       )}
       <Accordion
         label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
