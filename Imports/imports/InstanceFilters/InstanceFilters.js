@@ -24,12 +24,14 @@ import {
 } from '../utils';
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
+import TenantIdFilter from '../TenantIdFilter';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
 const InstanceFilters = ({
   activeFilters: {
     shared = [],
+    tenantId = [],
     effectiveLocation = [],
     resource = [],
     language = [],
@@ -58,7 +60,7 @@ const InstanceFilters = ({
   const stripes = useStripes();
   const langOptions = languageOptions(intl, stripes.locale);
 
-  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   const effectiveLocationOptions = locations.map(({ name, id }) => ({
     label: name,
@@ -109,12 +111,19 @@ const InstanceFilters = ({
 
   return (
     <>
-      {showSharedFacet && (
-        <SharedFilter
-          activeFilters={shared}
-          onClear={() => onClear('shared')}
-          onChange={onChange}
-        />
+      {isUserInMemberTenant && (
+        <>
+          <SharedFilter
+            activeFilters={shared}
+            onClear={() => onClear('shared')}
+            onChange={onChange}
+          />
+          <TenantIdFilter
+            activeFilters={tenantId}
+            onClear={() => onClear('tenantId')}
+            onChange={onChange}
+          />
+        </>
       )}
       <Accordion
         label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
