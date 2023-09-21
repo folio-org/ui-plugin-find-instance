@@ -22,6 +22,7 @@ import {
 import { filterItemsBy } from '../utils';
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
+import TenantIdFilter from '../TenantIdFilter';
 
 const propTypes = {
   activeFilters: PropTypes.objectOf(PropTypes.array),
@@ -42,6 +43,7 @@ const defaultProps = {
 const ItemFilters = ({
   activeFilters: {
     shared = [],
+    tenantId = [],
     materialType = [],
     itemStatus = [],
     effectiveLocation = [],
@@ -86,16 +88,23 @@ const ItemFilters = ({
     },
   ];
 
-  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   return (
     <>
-      {showSharedFacet && (
-        <SharedFilter
-          activeFilters={shared}
-          onClear={() => onClear('shared')}
-          onChange={onChange}
-        />
+      {isUserInMemberTenant && (
+        <>
+          <SharedFilter
+            activeFilters={shared}
+            onClear={() => onClear('shared')}
+            onChange={onChange}
+          />
+          <TenantIdFilter
+            activeFilters={tenantId}
+            onClear={() => onClear('tenantId')}
+            onChange={onChange}
+          />
+        </>
       )}
       <Accordion
         label={<FormattedMessage id="ui-inventory.item.status" />}

@@ -13,6 +13,11 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
+    name: 'tenantId',
+    cql: 'holdings.tenantId',
+    values: [],
+  },
+  {
     name: 'effectiveLocation',
     cql: 'items.effectiveLocationId',
     values: [],
@@ -130,6 +135,11 @@ export const holdingFilterConfig = [
     values: [],
   },
   {
+    name: 'tenantId',
+    cql: 'holdings.tenantId',
+    values: [],
+  },
+  {
     name: 'effectiveLocation',
     cql: 'items.effectiveLocationId',
     values: [],
@@ -173,6 +183,11 @@ export const itemFilterConfig = [
   {
     name: 'shared',
     cql: 'shared',
+    values: [],
+  },
+  {
+    name: 'tenantId',
+    cql: 'holdings.tenantId',
     values: [],
   },
   {
