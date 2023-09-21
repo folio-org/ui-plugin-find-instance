@@ -36,8 +36,7 @@ const InstanceSearch = ({
     renderer,
   } = getFilterConfig(segment);
 
-  const instantceIds = instances.filter(inst => inst).map(inst => inst.id);
-  const results = useInstancesQuery(instantceIds);
+  const results = useInstancesQuery(instances);
   const isLoading = results.some(result => result.isLoading);
 
   useEffect(() => {

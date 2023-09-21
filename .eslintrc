@@ -10,13 +10,13 @@
       "files": ["*test.js", "test/**"],
       "rules": {
         "react/prop-types": "off",
-        "import/prefer-default-export": "off"
       }
     },
     {
       "files": [ "**"],
       "rules": {
-        "react-hooks/exhaustive-deps": "off"
+        "react-hooks/exhaustive-deps": "off",
+        "import/prefer-default-export": "off"
       }
     }
   ],
