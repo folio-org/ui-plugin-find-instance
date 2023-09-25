@@ -8,6 +8,7 @@
 * Add Shared filter. Refs UIPFI-119.
 * *BREAKING* bump `react-intl` to `v6.4.4`. Refs UIPFI-126.
 * Add Held By filter. Refs UIPFI-125.
+* Allow users to select Shared instances. Refs UIPFI-130.
 
 ## [6.5.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.4.0) (2023-03-20)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.4.0...v6.5.0)
