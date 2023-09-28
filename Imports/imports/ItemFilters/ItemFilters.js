@@ -9,6 +9,7 @@ import { isEmpty } from 'lodash';
 import {
   useStripes,
   checkIfUserInMemberTenant,
+  IfInterface,
 } from '@folio/stripes/core';
 import {
   Accordion,
@@ -93,19 +94,19 @@ const ItemFilters = ({
   return (
     <>
       {isUserInMemberTenant && (
-        <>
-          <SharedFilter
-            activeFilters={shared}
-            onClear={() => onClear('shared')}
-            onChange={onChange}
-          />
-          <TenantIdFilter
-            activeFilters={tenantId}
-            onClear={() => onClear('tenantId')}
-            onChange={onChange}
-          />
-        </>
+        <SharedFilter
+          activeFilters={shared}
+          onClear={() => onClear('shared')}
+          onChange={onChange}
+        />
       )}
+      <IfInterface name="consortia">
+        <TenantIdFilter
+          activeFilters={tenantId}
+          onClear={() => onClear('tenantId')}
+          onChange={onChange}
+        />
+      </IfInterface>
       <Accordion
         label={<FormattedMessage id="ui-inventory.item.status" />}
         id="itemFilterAccordion"

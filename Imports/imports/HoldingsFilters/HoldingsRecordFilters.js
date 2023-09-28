@@ -13,6 +13,7 @@ import {
 import {
   useStripes,
   checkIfUserInMemberTenant,
+  IfInterface,
 } from '@folio/stripes/core';
 
 import {
@@ -76,19 +77,19 @@ const HoldingsRecordFilters = ({
   return (
     <>
       {isUserInMemberTenant && (
-        <>
-          <SharedFilter
-            activeFilters={shared}
-            onClear={() => onClear('shared')}
-            onChange={onChange}
-          />
-          <TenantIdFilter
-            activeFilters={tenantId}
-            onClear={() => onClear('tenantId')}
-            onChange={onChange}
-          />
-        </>
+        <SharedFilter
+          activeFilters={shared}
+          onClear={() => onClear('shared')}
+          onChange={onChange}
+        />
       )}
+      <IfInterface name="consortia">
+        <TenantIdFilter
+          activeFilters={tenantId}
+          onClear={() => onClear('tenantId')}
+          onChange={onChange}
+        />
+      </IfInterface>
       <Accordion
         label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
         id="holdingsEffectiveLocationAccordion"
