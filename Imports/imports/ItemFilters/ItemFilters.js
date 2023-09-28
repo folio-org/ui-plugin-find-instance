@@ -9,6 +9,7 @@ import { isEmpty } from 'lodash';
 import {
   useStripes,
   checkIfUserInMemberTenant,
+  IfInterface,
 } from '@folio/stripes/core';
 import {
   Accordion,
@@ -23,7 +24,6 @@ import { filterItemsBy } from '../utils';
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
-import { isConsortiaEnv } from '../../../InstanceSearch/utils';
 
 const propTypes = {
   activeFilters: PropTypes.objectOf(PropTypes.array),
@@ -63,7 +63,6 @@ const ItemFilters = ({
 }) => {
   const stripes = useStripes();
   const intl = useIntl();
-  const isConsortia = isConsortiaEnv(stripes);
 
   const materialTypesOptions = materialTypes.map(({ name, id }) => ({
     label: name,
@@ -95,23 +94,19 @@ const ItemFilters = ({
   return (
     <>
       {isUserInMemberTenant && (
-        <>
-          <SharedFilter
-            activeFilters={shared}
-            onClear={() => onClear('shared')}
-            onChange={onChange}
-          />
-        </>
+        <SharedFilter
+          activeFilters={shared}
+          onClear={() => onClear('shared')}
+          onChange={onChange}
+        />
       )}
-      {isConsortia && (
-        <>
-          <TenantIdFilter
-            activeFilters={tenantId}
-            onClear={() => onClear('tenantId')}
-            onChange={onChange}
-          />
-        </>
-      )}
+      <IfInterface name="consortia">
+        <TenantIdFilter
+          activeFilters={tenantId}
+          onClear={() => onClear('tenantId')}
+          onChange={onChange}
+        />
+      </IfInterface>
       <Accordion
         label={<FormattedMessage id="ui-inventory.item.status" />}
         id="itemFilterAccordion"

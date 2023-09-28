@@ -5,6 +5,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import {
   checkIfUserInMemberTenant,
   useStripes,
+  IfInterface,
 } from '@folio/stripes/core';
 import {
   Accordion,
@@ -25,7 +26,6 @@ import {
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
-import { isConsortiaEnv } from '../../../InstanceSearch/utils';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -62,7 +62,6 @@ const InstanceFilters = ({
   const langOptions = languageOptions(intl, stripes.locale);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
-  const isConsortia = isConsortiaEnv(stripes);
 
   const effectiveLocationOptions = locations.map(({ name, id }) => ({
     label: name,
@@ -114,23 +113,19 @@ const InstanceFilters = ({
   return (
     <>
       {isUserInMemberTenant && (
-        <>
-          <SharedFilter
-            activeFilters={shared}
-            onClear={() => onClear('shared')}
-            onChange={onChange}
-          />
-        </>
+        <SharedFilter
+          activeFilters={shared}
+          onClear={() => onClear('shared')}
+          onChange={onChange}
+        />
       )}
-      {isConsortia && (
-        <>
-          <TenantIdFilter
-            activeFilters={tenantId}
-            onClear={() => onClear('tenantId')}
-            onChange={onChange}
-          />
-        </>
-      )}
+      <IfInterface name="consortia">
+        <TenantIdFilter
+          activeFilters={tenantId}
+          onClear={() => onClear('tenantId')}
+          onChange={onChange}
+        />
+      </IfInterface>
       <Accordion
         label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
         id="effectiveLocation"

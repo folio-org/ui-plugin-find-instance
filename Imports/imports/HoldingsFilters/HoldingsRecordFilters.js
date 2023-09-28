@@ -13,6 +13,7 @@ import {
 import {
   useStripes,
   checkIfUserInMemberTenant,
+  IfInterface,
 } from '@folio/stripes/core';
 
 import {
@@ -22,7 +23,6 @@ import {
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
-import { isConsortiaEnv } from '../../../InstanceSearch/utils';
 
 const propTypes = {
   activeFilters: PropTypes.objectOf(PropTypes.array),
@@ -73,28 +73,23 @@ const HoldingsRecordFilters = ({
   ];
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
-  const isConsortia = isConsortiaEnv(stripes);
 
   return (
     <>
       {isUserInMemberTenant && (
-        <>
-          <SharedFilter
-            activeFilters={shared}
-            onClear={() => onClear('shared')}
-            onChange={onChange}
-          />
-        </>
+        <SharedFilter
+          activeFilters={shared}
+          onClear={() => onClear('shared')}
+          onChange={onChange}
+        />
       )}
-      {isConsortia && (
-        <>
-          <TenantIdFilter
-            activeFilters={tenantId}
-            onClear={() => onClear('tenantId')}
-            onChange={onChange}
-          />
-        </>
-      )}
+      <IfInterface name="consortia">
+        <TenantIdFilter
+          activeFilters={tenantId}
+          onClear={() => onClear('tenantId')}
+          onChange={onChange}
+        />
+      </IfInterface>
       <Accordion
         label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
         id="holdingsEffectiveLocationAccordion"
