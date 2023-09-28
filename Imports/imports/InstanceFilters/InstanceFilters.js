@@ -25,7 +25,7 @@ import {
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
-import {isConsortiaEnv} from "../../../InstanceSearch/utils";
+import { isConsortiaEnv } from '../../../InstanceSearch/utils';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 

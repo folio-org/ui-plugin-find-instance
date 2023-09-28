@@ -23,7 +23,7 @@ import { filterItemsBy } from '../utils';
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
-import {isConsortiaEnv} from "../../../InstanceSearch/utils";
+import { isConsortiaEnv } from '../../../InstanceSearch/utils';
 
 const propTypes = {
   activeFilters: PropTypes.objectOf(PropTypes.array),
