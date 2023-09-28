@@ -25,6 +25,7 @@ import {
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
+import {isConsortiaEnv} from "../../../InstanceSearch/utils";
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -61,6 +62,7 @@ const InstanceFilters = ({
   const langOptions = languageOptions(intl, stripes.locale);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
+  const isConsortia = isConsortiaEnv(stripes);
 
   const effectiveLocationOptions = locations.map(({ name, id }) => ({
     label: name,
@@ -118,6 +120,10 @@ const InstanceFilters = ({
             onClear={() => onClear('shared')}
             onChange={onChange}
           />
+        </>
+      )}
+      {isConsortia && (
+        <>
           <TenantIdFilter
             activeFilters={tenantId}
             onClear={() => onClear('tenantId')}

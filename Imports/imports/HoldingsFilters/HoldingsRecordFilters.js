@@ -22,6 +22,7 @@ import {
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
+import { isConsortiaEnv } from '../../../InstanceSearch/utils';
 
 const propTypes = {
   activeFilters: PropTypes.objectOf(PropTypes.array),
@@ -72,6 +73,7 @@ const HoldingsRecordFilters = ({
   ];
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
+  const isConsortia = isConsortiaEnv(stripes);
 
   return (
     <>
@@ -82,6 +84,10 @@ const HoldingsRecordFilters = ({
             onClear={() => onClear('shared')}
             onChange={onChange}
           />
+        </>
+      )}
+      {isConsortia && (
+        <>
           <TenantIdFilter
             activeFilters={tenantId}
             onClear={() => onClear('tenantId')}
