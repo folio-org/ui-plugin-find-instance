@@ -29,6 +29,7 @@ export default class CheckboxFacet extends React.Component {
   static defaultProps = {
     selectedValues: [],
     isFilterable: false,
+    onFetch: () => {},
   }
 
   state = {

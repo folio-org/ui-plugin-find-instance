@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useQuery } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -14,7 +13,6 @@ import {
 
 import useTenantKy from '../../../temp/useTenantKy';
 import CheckboxFacet from '../CheckboxFacet';
-import { DEFAULT_FILTERS_NUMBER } from '../constants';
 
 const propTypes = {
   activeFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -29,19 +27,14 @@ const TenantIdFilter = ({
 }) => {
   const namespace = useNamespace();
   const stripes = useStripes();
-  const limit = useRef(DEFAULT_FILTERS_NUMBER);
 
   const { centralTenantId, id: consortiumId } = stripes.user.user.consortium || {};
 
   const ky = useTenantKy({ tenantId: centralTenantId });
 
-  const { data, isFetching, refetch } = useQuery(
+  const { data, isFetching } = useQuery(
     [namespace, consortiumId],
-    () => ky.get(`consortia/${consortiumId}/tenants`, {
-      searchParams: {
-        ...(limit.current && { limit: limit.current }),
-      },
-    }).json(),
+    () => ky.get(`consortia/${consortiumId}/tenants`).json(),
     {
       enabled: Boolean(consortiumId),
     },
@@ -68,14 +61,10 @@ const TenantIdFilter = ({
       <CheckboxFacet
         name={name}
         dataOptions={dataOptions || []}
-        selectedValues={activeFilters[name]}
+        selectedValues={activeFilters}
         isPending={isFetching}
         onChange={onChange}
         isFilterable
-        onFetch={() => {
-          limit.current = undefined;
-          refetch();
-        }}
       />
     </Accordion>
   );
