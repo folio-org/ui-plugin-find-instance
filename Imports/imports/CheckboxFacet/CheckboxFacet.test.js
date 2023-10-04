@@ -1,5 +1,4 @@
-import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
-import Harness from '../../../test/jest/helpers/harness';
+import { screen, render, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import CheckboxFacet from './CheckboxFacet';
 
 const defaultProps = {
@@ -56,22 +55,20 @@ const defaultProps = {
   isFilterable: true
 };
 
-const renderCheckboxFacet = (props) => (
-  <Harness>
-    <CheckboxFacet {...props} />
-  </Harness>
-);
+const getComponent = (props) => <CheckboxFacet {...props} />;
+
+const renderCheckboxFacet = (props) => render(getComponent(props));
 
 describe('CheckboxFacet', () => {
   it('Component should render', () => {
     renderCheckboxFacet(defaultProps);
     expect(screen.getByRole('searchbox', { name: 'Test Name-field' })).toBeInTheDocument();
     expect(screen.getAllByRole('checkbox')).toHaveLength(5);
-    expect(screen.getByRole('button', { name: 'More' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'ui-inventory.more' })).toBeInTheDocument();
   });
   it('More options should render when More button is click', () => {
     renderCheckboxFacet(defaultProps);
-    fireEvent.click(screen.getByRole('button', { name: 'More' }));
+    fireEvent.click(screen.getByRole('button', { name: 'ui-inventory.more' }));
     expect(screen.getAllByRole('checkbox')).toHaveLength(6);
   });
   it('components.readonly should be render when readonly property is true', () => {
@@ -90,7 +87,7 @@ describe('CheckboxFacet', () => {
       isPending: false
     };
     renderCheckboxFacet(props);
-    expect(screen.getByText('Read-only')).toBeInTheDocument();
+    expect(screen.getByText('stripes-components.readonly')).toBeInTheDocument();
   });
   it('No matching options should be render when required search is not found', () => {
     const { rerender } = renderCheckboxFacet(defaultProps);
@@ -98,7 +95,7 @@ describe('CheckboxFacet', () => {
 
     renderCheckboxFacet(defaultProps, rerender);
 
-    expect(screen.getByText('No matching options')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.noMatchingOptions')).toBeInTheDocument();
   });
   it('component should re-render ', () => {
     const props = {
@@ -170,8 +167,8 @@ describe('CheckboxFacet', () => {
     };
     const { rerender } = renderCheckboxFacet(defaultProps);
 
-    fireEvent.click(screen.getByRole('button', { name: 'More' }));
-    renderCheckboxFacet(props, rerender);
+    fireEvent.click(screen.getByRole('button', { name: 'ui-inventory.more' }));
+    rerender(getComponent(props));
 
     fireEvent.click(screen.getByRole('checkbox', { name: 'TestOption3 4' }));
     fireEvent.click(screen.getByRole('checkbox', { name: 'TestOption7 19' }));

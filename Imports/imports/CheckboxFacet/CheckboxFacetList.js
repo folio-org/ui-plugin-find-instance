@@ -68,7 +68,6 @@ function CheckboxFacetList({
       </div>
 
       {!isPending && showMore && (
-
         <FormattedMessage id="ui-inventory.showMoreOptions">
           { ({ label }) => (
             <Button

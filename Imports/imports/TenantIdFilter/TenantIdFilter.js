@@ -11,7 +11,6 @@ import {
   Accordion,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
-// import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 import useTenantKy from '../../../temp/useTenantKy';
 import CheckboxFacet from '../CheckboxFacet';
