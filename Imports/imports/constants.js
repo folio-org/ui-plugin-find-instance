@@ -41,3 +41,5 @@ export const AVAILABLE_SEGMENTS_TYPES = PropTypes.arrayOf(
 export const CONFIG_TYPES = PropTypes.shape({
   availableSegments: AVAILABLE_SEGMENTS_TYPES,
 });
+
+export const DEFAULT_FILTERS_NUMBER = 6;
