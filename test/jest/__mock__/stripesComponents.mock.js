@@ -1,6 +1,7 @@
 import React from 'react';
 
 jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
   Button: jest.fn(({
     children,
     onClick,
@@ -34,48 +35,6 @@ jest.mock('@folio/stripes/components', () => ({
         </button>
       </div>
       <div data-testid={`accordion-${name}`} />
-    </div>
-  )),
-  Checkbox: jest.fn(({
-    checked,
-    disabled,
-    label,
-    name,
-    readOnly,
-    required,
-    value,
-    vertical,
-    error,
-  }) => (
-    <div data-test-checkbox>
-      <label
-        tagName={label ? 'label' : 'span'}
-        htmlFor={label ? this.id : null}
-        className={this.getLabelClasses()}
-      >
-        {(vertical && label) && this.renderLabelText()}
-        <span>
-          <input
-            id={this.id}
-            type="checkbox"
-            checked={checked}
-            name={name}
-            onChange={this.handleChange}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            disabled={disabled}
-            ref={this.input}
-            value={value}
-            aria-invalid={!!error}
-            required={required}
-          />
-          {(!vertical && (label || readOnly)) && this.renderLabelText()}
-          {this.renderLabelInfo()}
-        </span>
-      </label>
-      <div role="alert">
-        {this.renderFeedbackElement()}
-      </div>
     </div>
   )),
   FilterGroups: jest.fn(({
@@ -217,36 +176,6 @@ jest.mock('@folio/stripes/components', () => ({
         value={value || ''}
         readOnly={loading || rest.readOnly}
       />
-    </div>
-  )),
-  TextField: jest.fn(({
-    label,
-    required,
-    readOnly,
-    component = <input type="text" />,
-    warningElement,
-    errorElement,
-  }) => (
-    <div>
-      {label && (
-      <label
-        htmlFor={this.testId}
-        required={required}
-        readOnly={readOnly}
-      >
-        {label}
-      </label>
-      )}
-      <div
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-      >
-        {component}
-      </div>
-      <div role="alert">
-        {warningElement}
-        {errorElement}
-      </div>
     </div>
   )),
 }));
