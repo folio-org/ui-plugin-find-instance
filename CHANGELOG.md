@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## 7.0.0 IN PROGRESS
+## [7.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.0) (2023-10-12)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.5.0...v7.0.0)
 
 * *BREAKING* Bump `react` to `v18`. Refs UIPFI-121.
 * Update Node.js to v18 in GitHub Actions. Refs UIPFI-122.
@@ -10,7 +11,7 @@
 * Add Held By filter. Refs UIPFI-125.
 * Allow users to select Shared instances. Refs UIPFI-130.
 
-## [6.5.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.4.0) (2023-03-20)
+## [6.5.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v6.5.0) (2023-03-20)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.4.0...v6.5.0)
 
 * Fix pagination issues when applying filters and search query. Fixes UIPFI-116.
