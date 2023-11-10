@@ -51,7 +51,7 @@ const TenantIdFilter = ({
     <Accordion
       id={name}
       name={name}
-      label={<FormattedMessage id="ui-inventory.filters.tenantId" />}
+      label={<FormattedMessage id="ui-plugin-find-instance.filters.tenantId" />}
       closedByDefault
       separator={false}
       header={FilterAccordionHeader}

@@ -90,22 +90,22 @@ const InstanceFilters = ({
 
   const suppressedOptions = [
     {
-      label: <FormattedMessage id="ui-inventory.yes" />,
+      label: <FormattedMessage id="ui-plugin-find-instance.yes" />,
       value: 'true',
     },
     {
-      label: <FormattedMessage id="ui-inventory.no" />,
+      label: <FormattedMessage id="ui-plugin-find-instance.no" />,
       value: 'false',
     },
   ];
 
   const sourceOptions = [
     {
-      label: <FormattedMessage id="ui-inventory.folio" />,
+      label: <FormattedMessage id="ui-plugin-find-instance.folio" />,
       value: 'FOLIO',
     },
     {
-      label: <FormattedMessage id="ui-inventory.marc" />,
+      label: <FormattedMessage id="ui-plugin-find-instance.marc" />,
       value: 'MARC',
     },
   ];
@@ -127,7 +127,7 @@ const InstanceFilters = ({
         />
       </IfInterface>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.filters.effectiveLocation" />}
         id="effectiveLocation"
         name="effectiveLocation"
         separator={false}
@@ -144,7 +144,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.instances.language" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.instances.language" />}
         id="language"
         name="language"
         separator={false}
@@ -161,7 +161,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.instances.resourceType" />}
         id="resource"
         name="resource"
         closedByDefault
@@ -178,7 +178,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.instanceFormat" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.instanceFormat" />}
         id="format"
         name="format"
         closedByDefault
@@ -195,7 +195,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.modeOfIssuance" />}
         id="mode"
         name="mode"
         closedByDefault
@@ -212,7 +212,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.natureOfContentTerms" />}
         id="natureOfContent"
         name="natureOfContent"
         closedByDefault
@@ -229,7 +229,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.staffSuppress" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.staffSuppress" />}
         id="staffSuppress"
         name="staffSuppress"
         closedByDefault
@@ -246,7 +246,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.discoverySuppress" />}
         id="discoverySuppress"
         name="discoverySuppress"
         closedByDefault
@@ -263,7 +263,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.createdDate" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.createdDate" />}
         id="createdDate"
         name="createdDate"
         closedByDefault
@@ -280,7 +280,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.updatedDate" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.updatedDate" />}
         id="updatedDate"
         name="updatedDate"
         closedByDefault
@@ -297,7 +297,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.source" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.source" />}
         id="source"
         name="source"
         closedByDefault

@@ -39,13 +39,13 @@ const SharedFilter = ({
   }).json());
 
   const dataOptions = data?.facets?.shared?.values?.map(({ id }) => ({
-    label: <FormattedMessage id={`ui-inventory.${getSuppressedLabel(id)}`} />,
+    label: <FormattedMessage id={`ui-plugin-find-instance.${getSuppressedLabel(id)}`} />,
     value: id,
   })) || [];
 
   return (
     <Accordion
-      label={<FormattedMessage id="ui-inventory.filters.shared" />}
+      label={<FormattedMessage id="ui-plugin-find-instance.filters.shared" />}
       id="shared"
       name="shared"
       separator={false}

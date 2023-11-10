@@ -58,7 +58,7 @@ describe('CheckboxFacetList', () => {
     );
     expect(screen.getAllByRole('checkbox')).toHaveLength(2);
     expect(screen.getByLabelText(`${fieldName}-field`)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'ui-inventory.more' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'ui-plugin-find-instance.more' })).toBeInTheDocument();
   });
 
   it('onSearch to be triggered when typing in the search field', async () => {
@@ -93,7 +93,7 @@ describe('CheckboxFacetList', () => {
         isPending={isPending}
       />,
     );
-    expect(screen.getByText('ui-inventory.noMatchingOptions')).toBeInTheDocument();
+    expect(screen.getByText('ui-plugin-find-instance.noMatchingOptions')).toBeInTheDocument();
   });
   it('checkbox should not render when isPending is true', () => {
     render(

@@ -63,11 +63,11 @@ const HoldingsRecordFilters = ({
 
   const suppressedOptions = [
     {
-      label: <FormattedMessage id="ui-inventory.yes" />,
+      label: <FormattedMessage id="ui-plugin-find-instance.yes" />,
       value: 'true',
     },
     {
-      label: <FormattedMessage id="ui-inventory.no" />,
+      label: <FormattedMessage id="ui-plugin-find-instance.no" />,
       value: 'false',
     },
   ];
@@ -91,7 +91,7 @@ const HoldingsRecordFilters = ({
         />
       </IfInterface>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.filters.effectiveLocation" />}
         id="holdingsEffectiveLocationAccordion"
         name="effectiveLocation"
         separator={false}
@@ -108,7 +108,7 @@ const HoldingsRecordFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.holdings.permanentLocation" />}
         id="holdingsPermanentLocationAccordion"
         name="holdingsPermanentLocation"
         closedByDefault
@@ -126,7 +126,7 @@ const HoldingsRecordFilters = ({
       </Accordion>
       <Accordion
         data-test-filter-holding-discovery-suppress
-        label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.discoverySuppress" />}
         id="holdingDiscoverySuppress"
         name="discoverySuppress"
         closedByDefault

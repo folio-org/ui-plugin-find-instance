@@ -33,9 +33,9 @@ const columnWidths = {
 };
 const visibleColumns = ['title', 'contributors', 'publishers'];
 const columnMapping = {
-  title: <FormattedMessage id="ui-inventory.instances.columns.title" />,
-  contributors: <FormattedMessage id="ui-inventory.instances.columns.contributors" />,
-  publishers: <FormattedMessage id="ui-inventory.instances.columns.publishers" />,
+  title: <FormattedMessage id="ui-plugin-find-instance.instances.columns.title" />,
+  contributors: <FormattedMessage id="ui-plugin-find-instance.instances.columns.contributors" />,
+  publishers: <FormattedMessage id="ui-plugin-find-instance.instances.columns.publishers" />,
 };
 
 const idPrefix = 'uiPluginFindInstance-';

@@ -64,11 +64,11 @@ describe('CheckboxFacet', () => {
     renderCheckboxFacet(defaultProps);
     expect(screen.getByRole('searchbox', { name: 'Test Name-field' })).toBeInTheDocument();
     expect(screen.getAllByRole('checkbox')).toHaveLength(5);
-    expect(screen.getByRole('button', { name: 'ui-inventory.more' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'ui-plugin-find-instance.more' })).toBeInTheDocument();
   });
   it('More options should render when More button is click', () => {
     renderCheckboxFacet(defaultProps);
-    fireEvent.click(screen.getByRole('button', { name: 'ui-inventory.more' }));
+    fireEvent.click(screen.getByRole('button', { name: 'ui-plugin-find-instance.more' }));
     expect(screen.getAllByRole('checkbox')).toHaveLength(6);
   });
   it('components.readonly should be render when readonly property is true', () => {
@@ -95,7 +95,7 @@ describe('CheckboxFacet', () => {
 
     renderCheckboxFacet(defaultProps, rerender);
 
-    expect(screen.getByText('ui-inventory.noMatchingOptions')).toBeInTheDocument();
+    expect(screen.getByText('ui-plugin-find-instance.noMatchingOptions')).toBeInTheDocument();
   });
   it('component should re-render ', () => {
     const props = {
@@ -167,7 +167,7 @@ describe('CheckboxFacet', () => {
     };
     const { rerender } = renderCheckboxFacet(defaultProps);
 
-    fireEvent.click(screen.getByRole('button', { name: 'ui-inventory.more' }));
+    fireEvent.click(screen.getByRole('button', { name: 'ui-plugin-find-instance.more' }));
     rerender(getComponent(props));
 
     fireEvent.click(screen.getByRole('checkbox', { name: 'TestOption3 4' }));
