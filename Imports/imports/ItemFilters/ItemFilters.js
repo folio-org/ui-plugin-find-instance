@@ -80,11 +80,11 @@ const ItemFilters = ({
   }));
   const suppressedOptions = [
     {
-      label: <FormattedMessage id="ui-inventory.yes" />,
+      label: <FormattedMessage id="ui-plugin-find-instance.yes" />,
       value: 'true',
     },
     {
-      label: <FormattedMessage id="ui-inventory.no" />,
+      label: <FormattedMessage id="ui-plugin-find-instance.no" />,
       value: 'false',
     },
   ];
@@ -108,7 +108,7 @@ const ItemFilters = ({
         />
       </IfInterface>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.item.status" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.item.status" />}
         id="itemFilterAccordion"
         name="itemFilterAccordion"
         header={FilterAccordionHeader}
@@ -124,7 +124,7 @@ const ItemFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.filters.effectiveLocation" />}
         id="itemEffectiveLocationAccordion"
         name="effectiveLocation"
         separator
@@ -141,7 +141,7 @@ const ItemFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.holdings.permanentLocation" />}
         id="holdingsPermanentLocationAccordion"
         name="holdingsPermanentLocationAccordion"
         closedByDefault
@@ -158,7 +158,7 @@ const ItemFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.materialType" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.materialType" />}
         id="materialTypeAccordion"
         name="materialTypeAccordion"
         separator
@@ -177,7 +177,7 @@ const ItemFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+        label={<FormattedMessage id="ui-plugin-find-instance.discoverySuppress" />}
         id="itemDiscoverySuppressAccordion"
         name="discoverySuppress"
         closedByDefault

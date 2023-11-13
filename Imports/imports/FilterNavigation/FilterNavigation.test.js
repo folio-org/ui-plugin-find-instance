@@ -23,7 +23,7 @@ describe('FilterNavigation', () => {
     reset: mockedReset,
     setSegment: mockedSetSegment,
   };
-  const getButton = (segment) => within(screen.getByTestId(buttonGroupTestId)).getByText(`ui-inventory.filters.${segment}`);
+  const getButton = (segment) => within(screen.getByTestId(buttonGroupTestId)).getByText(`ui-plugin-find-instance.filters.${segment}`);
   const testSegments = (segmentsForTest, activeSegment) => {
     segmentsForTest.forEach((segment, index) => {
       const number = index + 1;

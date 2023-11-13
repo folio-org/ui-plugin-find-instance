@@ -148,7 +148,7 @@ describe('InstanceFilters', () => {
     });
 
     it('should render Shared filter', () => {
-      expect(screen.getByText('ui-inventory.filters.shared')).toBeInTheDocument();
+      expect(screen.getByText('ui-plugin-find-instance.filters.shared')).toBeInTheDocument();
     });
   });
 

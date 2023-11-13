@@ -48,12 +48,12 @@ describe('SharedFilter', () => {
   });
 
   it('should render filter with specified options', () => {
-    expect(screen.getByText('ui-inventory.yes')).toBeInTheDocument();
-    expect(screen.getByText('ui-inventory.no')).toBeInTheDocument();
+    expect(screen.getByText('ui-plugin-find-instance.yes')).toBeInTheDocument();
+    expect(screen.getByText('ui-plugin-find-instance.no')).toBeInTheDocument();
   });
 
   it('should call \'onChange\' when filter was changed', async () => {
-    const yesOption = screen.getByText('ui-inventory.yes');
+    const yesOption = screen.getByText('ui-plugin-find-instance.yes');
 
     await act(() => user.click(yesOption));
 

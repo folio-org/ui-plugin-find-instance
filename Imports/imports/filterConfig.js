@@ -94,16 +94,16 @@ export const instanceFilterConfig = [
 ];
 
 export const instanceIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
-  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
-  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
-  { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
-  { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-plugin-find-instance.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-plugin-find-instance.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
+  { label: 'ui-plugin-find-instance.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
 export const instanceSortMap = {
@@ -113,17 +113,17 @@ export const instanceSortMap = {
 };
 
 export const holdingIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
-  { label: 'ui-inventory.callNumberEyeReadable',
+  { label: 'ui-plugin-find-instance.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-plugin-find-instance.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.callNumberEyeReadable',
     value: 'holdingsFullCallNumbers',
     queryTemplate: 'holdingsFullCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.callNumberNormalized',
+  { label: 'ui-plugin-find-instance.callNumberNormalized',
     value: 'callNumberNormalized',
     queryTemplate: 'holdingsNormalizedCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-plugin-find-instance.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
 export const holdingSortMap = {};
@@ -164,18 +164,18 @@ export const holdingFilterConfig = [
 ];
 
 export const itemIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.barcode', value: 'items.barcode', queryTemplate: 'items.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
-  { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
+  { label: 'ui-plugin-find-instance.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-plugin-find-instance.barcode', value: 'items.barcode', queryTemplate: 'items.barcode=="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.itemEffectiveCallNumberEyeReadable',
     value: 'itemFullCallNumbers',
     queryTemplate: 'itemFullCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.itemEffectiveCallNumberNormalized',
+  { label: 'ui-plugin-find-instance.itemEffectiveCallNumberNormalized',
     value: 'itemNormalizedCallNumbers',
     queryTemplate: 'itemNormalizedCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-plugin-find-instance.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 
 ];
 

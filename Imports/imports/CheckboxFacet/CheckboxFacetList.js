@@ -45,7 +45,7 @@ function CheckboxFacetList({
           <Icon icon="spinner-ellipsis" size="small" />
         }
         {!isPending && dataOptions.length < 1 &&
-          <FormattedMessage id="ui-inventory.noMatchingOptions" />
+          <FormattedMessage id="ui-plugin-find-instance.noMatchingOptions" />
         }
 
         {!isPending && dataOptions.map(({ count, value, label, disabled, readOnly }) => {
@@ -68,7 +68,7 @@ function CheckboxFacetList({
       </div>
 
       {!isPending && showMore && (
-        <FormattedMessage id="ui-inventory.showMoreOptions">
+        <FormattedMessage id="ui-plugin-find-instance.showMoreOptions">
           { ({ label }) => (
             <Button
               buttonStyle="link bottomMargin0"
@@ -83,7 +83,7 @@ function CheckboxFacetList({
                 icon="plus-sign"
                 size="small"
               />
-              <FormattedMessage id="ui-inventory.more" />
+              <FormattedMessage id="ui-plugin-find-instance.more" />
             </Button>
           )}
         </FormattedMessage>
