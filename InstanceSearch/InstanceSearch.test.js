@@ -9,13 +9,13 @@ import {
 import InstanceSearch from './InstanceSearch';
 
 jest.mock('../hooks/useInstancesQuery', () => {
-  return jest.fn().mockReturnValue([{
+  return jest.fn().mockReturnValue({
     isLoading: true,
     data: null,
-  }]).mockReturnValue([{
+  }).mockReturnValue({
     isLoading: false,
-    data: { id: 'instance-1' },
-  }]);
+    data: { instances: [{ id: 'instance-1' }] },
+  });
 });
 
 const queryClient = new QueryClient();

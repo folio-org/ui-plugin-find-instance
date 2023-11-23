@@ -1,5 +1,9 @@
 # Change history for ui-plugin-find-instance
 
+## [7.0.1] (IN PROGRESS)
+
+* Fetch instances from mod-search instead of mod-inventory-storage. Refs UIPFI-131.
+
 ## [7.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.0) (2023-10-12)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v6.5.0...v7.0.0)
 

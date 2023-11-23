@@ -92,6 +92,10 @@ jest.mock('@folio/stripes/core', () => {
 
     useNamespace: () => ['@folio/inventory'],
 
+    useCallout: jest.fn(() => ({
+      sendCallout: jest.fn(() => {})
+    })),
+
     checkIfUserInMemberTenant: () => true,
   };
 }, { virtual: true });
