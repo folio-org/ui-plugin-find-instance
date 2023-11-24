@@ -72,5 +72,6 @@
     "itemHrid": "HRID jednotky",
     "instances.columns.title": "Název",
     "instances.columns.contributors": "Autoři",
-    "instances.columns.publishers": "Vydavatelé"
+    "instances.columns.publishers": "Vydavatelé",
+    "communicationProblem": "Server communication problem. Please try again"
 }
