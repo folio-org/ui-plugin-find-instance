@@ -42,13 +42,11 @@ const InstanceSearch = ({
     renderer,
   } = getFilterConfig(segment);
 
-  const results = useInstancesQuery(instances);
-  const isLoading = results?.isLoading;
-  const isError = results?.isError;
+  const { isLoading, isError, error = {}, data = {} } = useInstancesQuery(instances);
 
   useEffect(() => {
-    if (!isLoading && !isError && results?.data?.instances?.length) {
-      const result = isMultiSelect ? results.data.instances : results.data.instances[0];
+    if (!isLoading && !isError && data.instances?.length) {
+      const result = isMultiSelect ? data.instances : data.instances[0];
       selectInstance(result);
       setInstances([]);
 
@@ -56,11 +54,11 @@ const InstanceSearch = ({
         onClose();
       }
     }
-  }, [isLoading, results, isMultiSelect, selectInstance]);
+  }, [isLoading, isError, data, isMultiSelect, selectInstance]);
 
   useEffect(() => {
     const getError = async () => {
-      const response = await results?.error.response;
+      const response = await error.response;
       const httpError = await parseHttpError(response);
       const message = httpError?.message ? httpError.message : <FormattedMessage id="ui-plugin-find-instance.communicationProblem" />;
 
@@ -73,7 +71,7 @@ const InstanceSearch = ({
     if (isError) {
       getError().then();
     }
-  }, [isError]);
+  }, [isError, error]);
 
   return (
     <PluginFindRecord
@@ -83,7 +81,7 @@ const InstanceSearch = ({
     >
       {(modalProps) => (
         <DataContext.Consumer>
-          {data => (
+          {contextData => (
             <FindInstanceContainer segment={segment}>
               {(viewProps) => (
                 <PluginFindRecordModal
@@ -92,7 +90,7 @@ const InstanceSearch = ({
                   config={config}
                   isMultiSelect={isMultiSelect}
                   renderNewBtn={renderNewBtn}
-                  renderFilters={renderer({ ...data, query })}
+                  renderFilters={renderer({ ...contextData, query })}
                   segment={segment}
                   setSegment={setSegment}
                   searchIndexes={indexes}

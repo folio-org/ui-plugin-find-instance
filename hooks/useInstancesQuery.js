@@ -10,15 +10,15 @@ const useInstancesQuery = (instances = []) => {
   const [namespace] = useNamespace();
   const ky = useOkapiKy();
 
-  const instanceIds = instances
+  const instanceIdsQuery = instances
     .map(({ id }) => `id==${id}`)
     .join(' or ');
 
   const res = useQuery(
     {
-      queryKey: [namespace, 'instances', instanceIds],
-      queryFn: () => ky.get(`search/instances?query=(${instanceIds})&expandAll=true`).json(),
-      enabled: Boolean(instanceIds),
+      queryKey: [namespace, 'instances', instanceIdsQuery],
+      queryFn: () => ky.get(`search/instances?query=(${instanceIdsQuery})&expandAll=true`).json(),
+      enabled: Boolean(instanceIdsQuery),
     },
   );
 
