@@ -72,5 +72,6 @@
   "itemHrid": "Item HRID",
   "instances.columns.title": "Title",
   "instances.columns.contributors": "Contributors",
-  "instances.columns.publishers": "Publishers"
+  "instances.columns.publishers": "Publishers",
+  "communicationProblem": "Server communication problem. Please try again"
 }
