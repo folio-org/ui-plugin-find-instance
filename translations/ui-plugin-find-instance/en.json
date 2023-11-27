@@ -3,5 +3,6 @@
   "meta.title": "Instance-finder (plugin)",
   "totalSelected": "Total selected: {count}",
   "noSourceYet": "No source yet",
-  "resultsHeader": "Search results"
+  "resultsHeader": "Search results",
+  "communicationProblem": "Server communication problem. Please try again"
 }

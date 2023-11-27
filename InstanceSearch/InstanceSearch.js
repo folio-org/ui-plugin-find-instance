@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
+import { FormattedMessage } from 'react-intl';
 
 import { Icon } from '@folio/stripes/components';
+import { useCallout } from '@folio/stripes/core';
+
 import {
   PluginFindRecord,
   PluginFindRecordModal,
@@ -15,6 +18,7 @@ import { getFilterConfig } from '../Imports/imports/filterConfig';
 import useInstancesQuery from '../hooks/useInstancesQuery';
 
 import { CONFIG_TYPES } from '../Imports/imports/constants';
+import { parseHttpError } from '../utils';
 
 const query = {
   query: '',
@@ -29,6 +33,8 @@ const InstanceSearch = ({
   onClose,
   ...rest
 }) => {
+  const callout = useCallout();
+
   const [segment, setSegment] = useState('instances');
   const [instances, setInstances] = useState([]);
   const {
@@ -36,12 +42,11 @@ const InstanceSearch = ({
     renderer,
   } = getFilterConfig(segment);
 
-  const results = useInstancesQuery(instances);
-  const isLoading = results.some(result => result.isLoading);
+  const { isLoading, isError, error = {}, data = {} } = useInstancesQuery(instances);
 
   useEffect(() => {
-    if (!isLoading && results.length) {
-      const result = isMultiSelect ? results.map(r => r.data) : results?.[0]?.data;
+    if (!isLoading && !isError && data.instances?.length) {
+      const result = isMultiSelect ? data.instances : data.instances[0];
       selectInstance(result);
       setInstances([]);
 
@@ -49,7 +54,24 @@ const InstanceSearch = ({
         onClose();
       }
     }
-  }, [isLoading, results, isMultiSelect, selectInstance]);
+  }, [isLoading, isError, data, isMultiSelect, selectInstance]);
+
+  useEffect(() => {
+    const getError = async () => {
+      const response = await error.response;
+      const httpError = await parseHttpError(response);
+      const message = httpError?.message ? httpError.message : <FormattedMessage id="ui-plugin-find-instance.communicationProblem" />;
+
+      callout.sendCallout({
+        type: 'error',
+        message,
+      });
+    };
+
+    if (isError) {
+      getError().then();
+    }
+  }, [isError, error]);
 
   return (
     <PluginFindRecord
@@ -59,7 +81,7 @@ const InstanceSearch = ({
     >
       {(modalProps) => (
         <DataContext.Consumer>
-          {data => (
+          {contextData => (
             <FindInstanceContainer segment={segment}>
               {(viewProps) => (
                 <PluginFindRecordModal
@@ -68,7 +90,7 @@ const InstanceSearch = ({
                   config={config}
                   isMultiSelect={isMultiSelect}
                   renderNewBtn={renderNewBtn}
-                  renderFilters={renderer({ ...data, query })}
+                  renderFilters={renderer({ ...contextData, query })}
                   segment={segment}
                   setSegment={setSegment}
                   searchIndexes={indexes}
