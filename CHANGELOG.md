@@ -4,6 +4,10 @@
 
 * Remove eslint deps that are already listed in eslint-config-stripes. Refs UIPFI-124.
 * Remove the translation dependency from ui-inventory. Refs UIPFI-24.
+
+## [7.0.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.1) (2023-11-24)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.0.0...v7.0.1)
+
 * Fetch instances from mod-search instead of mod-inventory-storage. Refs UIPFI-131.
 
 ## [7.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.0) (2023-10-12)
