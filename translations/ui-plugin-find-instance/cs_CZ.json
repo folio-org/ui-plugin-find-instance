@@ -73,5 +73,5 @@
     "instances.columns.title": "Název",
     "instances.columns.contributors": "Autoři",
     "instances.columns.publishers": "Vydavatelé",
-    "communicationProblem": "Server communication problem. Please try again"
+    "communicationProblem": "Problém komunikace se serverem. Prosím zkuste to znovu"
 }
