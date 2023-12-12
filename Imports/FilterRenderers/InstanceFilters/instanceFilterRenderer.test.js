@@ -12,7 +12,7 @@ jest.mock('../../imports/InstanceFilters', () => {
       Mocked InstanceFilters Component
       <form>
         <button type="button" onClick={() => onClear('filterName')} data-testid="clear-button">
-        Clear
+          Clear
         </button>
       </form>
       <button type="button" onClick={() => onChange({ name: 'filterName', values: ['value1', 'value2'] })} data-testid="change-button">
