@@ -23,15 +23,11 @@
   "scripts": {
     "lint": "eslint .",
     "test": "yarn run test:jest",
-    "test:bigtest": "stripes test karma",
     "test:jest": "jest --ci --coverage --colors --silent",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-plugin-find-instance ./translations/ui-plugin-find-instance/compiled"
   },
   "devDependencies": {
-    "@bigtest/interactor": "^0.9.3",
-    "@bigtest/mocha": "^0.5.2",
-    "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^7.0.0",
     "@folio/jest-config-stripes": "^2.0.0",
     "@folio/stripes": "^9.0.0",
@@ -40,20 +36,15 @@
     "@folio/stripes-testing": "^3.0.0",
     "@formatjs/cli": "^6.1.3",
     "babel-eslint": "^10.0.1",
-    "chai": "^4.2.0",
     "core-js": "^3.6.1",
     "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-jest": "^25.2.2",
-    "faker": "^4.1.0",
     "identity-obj-proxy": "^3.0.0",
-    "miragejs": "^0.1.33",
-    "mocha": "^5.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.4.4",
     "react-router-dom": "^5.2.0",
-    "regenerator-runtime": "^0.13.3",
-    "sinon": "^9.0.2"
+    "regenerator-runtime": "^0.13.3"
   },
   "dependencies": {
     "classnames": "^2.2.6",

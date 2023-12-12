@@ -4,6 +4,7 @@
 
 * Remove eslint deps that are already listed in eslint-config-stripes. Refs UIPFI-124.
 * Remove the translation dependency from ui-inventory. Refs UIPFI-24.
+* Remove bigtest tests. Refs UIPFI-134.
 * Cover <TagsFilter> component with tests. Refs UIPFI-127.
 
 ## [7.0.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.1) (2023-11-24)
