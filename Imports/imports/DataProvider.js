@@ -1,18 +1,52 @@
 import keyBy from 'lodash/keyBy';
-import React, { useCallback, useMemo } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  useStripes,
+} from '@folio/stripes/core';
 
 import DataContext from './DataContext';
+import { useLocationsForTenants } from '../../hooks';
+import { isUserInConsortiumMode } from './utils';
+import { OKAPI_TENANT_HEADER } from '../../constants';
 
 // Provider which loads dictionary data used in various places in ui-inventory.
 // The data is fetched once when the ui-inventory module is loaded.
 const DataProvider = ({
   children,
   resources,
+  mutator,
 }) => {
+  const stripes = useStripes();
   const { manifest } = DataProvider;
+
+  const { consortium } = stripes.user.user;
+
+  useEffect(() => {
+    if (!consortium) {
+      return;
+    }
+
+    mutator.consortiaTenants.GET({
+      path: `consortia/${consortium?.id}/tenants?limit=1000`,
+      headers: {
+        [OKAPI_TENANT_HEADER]: consortium?.centralTenantId,
+      },
+    });
+  }, [consortium?.id]);
+
+  const tenantIds = resources.consortiaTenants.records.map(tenant => tenant.id);
+
+  const {
+    data: locationsOfAllTenants,
+    isLoading: isLoadingLocationsForTenants,
+  } = useLocationsForTenants({ tenantIds });
 
   const isLoading = useCallback(() => {
     for (const key in manifest) {
@@ -20,8 +54,13 @@ const DataProvider = ({
         return true;
       }
     }
+
+    if (isLoadingLocationsForTenants) {
+      return true;
+    }
+
     return false;
-  }, [resources, manifest]);
+  }, [resources, manifest, isLoadingLocationsForTenants]);
 
   const data = useMemo(() => {
     const loadedData = {};
@@ -30,6 +69,10 @@ const DataProvider = ({
       loadedData[key] = resources?.[key]?.records ?? [];
     });
 
+    if (isUserInConsortiumMode(stripes)) {
+      loadedData.locations = locationsOfAllTenants;
+    }
+
     const {
       locations,
     } = loadedData;
@@ -37,7 +80,7 @@ const DataProvider = ({
     loadedData.locationsById = keyBy(locations, 'id');
 
     return loadedData;
-  }, [resources, manifest]);
+  }, [resources, manifest, isLoading()]);
 
   if (isLoading()) {
     return null;
@@ -53,9 +96,16 @@ const DataProvider = ({
 DataProvider.propTypes = {
   resources: PropTypes.object.isRequired,
   children: PropTypes.object,
+  mutator: PropTypes.object.isRequired,
 };
 
 DataProvider.manifest = {
+  consortiaTenants: {
+    type: 'okapi',
+    records: 'tenants',
+    accumulate: true,
+    throwErrors: false,
+  },
   instanceFormats: {
     type: 'okapi',
     records: 'instanceFormats',
