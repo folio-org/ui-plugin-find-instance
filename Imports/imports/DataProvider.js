@@ -1,6 +1,5 @@
 import keyBy from 'lodash/keyBy';
 import {
-  useCallback,
   useEffect,
   useMemo,
 } from 'react';
@@ -48,22 +47,23 @@ const DataProvider = ({
     isLoading: isLoadingLocationsForTenants,
   } = useLocationsForTenants({ tenantIds });
 
-  const isLoading = useCallback(() => {
+  const isLoading = useMemo(() => {
+    // eslint-disable-next-line guard-for-in
     for (const key in manifest) {
-      if (manifest[key].type === 'okapi' && !(resources?.[key]?.hasLoaded)) {
+      const isResourceLoading = !resources?.[key]?.hasLoaded && !resources?.[key]?.failed && resources?.[key]?.isPending;
+
+      if (manifest[key].type === 'okapi' && isResourceLoading) {
         return true;
       }
     }
 
-    if (isLoadingLocationsForTenants) {
-      return true;
-    }
-
     return false;
-  }, [resources, manifest, isLoadingLocationsForTenants]);
+  }, [resources, manifest]);
 
   const data = useMemo(() => {
-    const loadedData = {};
+    const loadedData = {
+      isLoadingLocationsForTenants,
+    };
 
     Object.keys(manifest).forEach(key => {
       loadedData[key] = resources?.[key]?.records ?? [];
@@ -80,9 +80,9 @@ const DataProvider = ({
     loadedData.locationsById = keyBy(locations, 'id');
 
     return loadedData;
-  }, [resources, manifest, isLoading()]);
+  }, [resources, manifest, isLoading, isLoadingLocationsForTenants]);
 
-  if (isLoading()) {
+  if (isLoading) {
     return null;
   }
 
