@@ -11,6 +11,7 @@ import {
   Accordion,
   FilterAccordionHeader,
   languageOptions,
+  Loading,
 } from '@folio/stripes/components';
 import {
   CheckboxFilter,
@@ -53,6 +54,7 @@ const InstanceFilters = ({
     modesOfIssuance,
     natureOfContentTerms,
     tagsRecords,
+    isLoadingLocationsForTenants,
   },
   onChange,
   onClear,
@@ -135,13 +137,20 @@ const InstanceFilters = ({
         displayClearButton={effectiveLocation.length > 0}
         onClearFilter={() => onClear('effectiveLocation')}
       >
-        <MultiSelectionFilter
-          name="effectiveLocation"
-          dataOptions={effectiveLocationOptions}
-          selectedValues={effectiveLocation}
-          filter={filterItemsBy('label')}
-          onChange={onChange}
-        />
+        {isLoadingLocationsForTenants
+          ? (
+            <Loading />
+          )
+          : (
+            <MultiSelectionFilter
+              name="effectiveLocation"
+              dataOptions={effectiveLocationOptions}
+              selectedValues={effectiveLocation}
+              filter={filterItemsBy('label')}
+              onChange={onChange}
+            />
+          )
+        }
       </Accordion>
       <Accordion
         label={<FormattedMessage id="ui-inventory.instances.language" />}
