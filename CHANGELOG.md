@@ -6,6 +6,7 @@
 * Remove the translation dependency from ui-inventory. Refs UIPFI-24.
 * Remove bigtest tests. Refs UIPFI-134.
 * Cover <TagsFilter> component with tests. Refs UIPFI-127.
+* Cover `PluginFindRecord`, `InstanceSearch`, and `DataProvider` with tests. Refs UIPFI-128.
 
 ## [7.0.2] (IN PROGRESS)
 
