@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## [7.0.2] (IN PROGRESS)
+## [7.0.2](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.2) (2024-01-10)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.0.1...v7.0.2)
 
 * ECS: Effective location facet is not showing other member tenants. Fixes UIPFI-136.
 
