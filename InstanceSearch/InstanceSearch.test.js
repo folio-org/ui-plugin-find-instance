@@ -5,11 +5,11 @@ import {
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { runAxeTest } from '@folio/stripes-testing';
 
+import { useCallout } from '@folio/stripes/core';
 import Harness from '../test/jest/helpers/harness';
 import InstanceSearch from './InstanceSearch';
 import { useInstancesQuery } from '../hooks';
 
-import { useCallout } from '@folio/stripes/core';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -82,6 +82,11 @@ jest.mock('../hooks', () => ({
 
 const mockSelectInstance = jest.fn();
 const mockOnClose = jest.fn();
+const mockSendCallout = jest.fn();
+
+jest.spyOn({ useCallout }, 'useCallout').mockReturnValue({
+  sendCallout: mockSendCallout,
+});
 
 const getInstanceSearch = (props = {}) => (
   <Harness>
@@ -140,7 +145,7 @@ describe('InstanceSearch', () => {
     });
   });
 
-  describe('when the useInstancesQuery returns data', () => {
+  describe('when the useInstancesQuery returns data and isMultiSelect is true', () => {
     it('should call callbacks', async () => {
       const data = {
         instances: [{
@@ -166,14 +171,30 @@ describe('InstanceSearch', () => {
     });
   });
 
-  describe('when the useInstancesQuery returns an error', () => {
-    it('should display the "communication problem" error message', async () => {
-      const mockSendCallout = jest.fn();
+  describe('when the useInstancesQuery returns data and isMultiSelect is false', () => {
+    it('should call callbacks', async () => {
+      const data = {
+        instances: [{
+          id: 'instance-id',
+        }],
+      };
 
-      jest.spyOn({ useCallout }, 'useCallout').mockReturnValue({
-        sendCallout: mockSendCallout,
+      useInstancesQuery.mockReturnValue({
+        isLoading: false,
+        isError: false,
+        data,
       });
 
+      renderInstanceSearch();
+
+      expect(mockSelectInstance).toHaveBeenCalledWith(data.instances[0]);
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(useInstancesQuery).toHaveBeenCalledWith([]);
+    });
+  });
+
+  describe('when the useInstancesQuery returns an error', () => {
+    it('should display the "communication problem" error message', async () => {
       useInstancesQuery.mockReturnValue({
         isError: true,
         error: {
@@ -194,12 +215,7 @@ describe('InstanceSearch', () => {
 
   describe('when the useInstancesQuery returns an error', () => {
     it('should display an error message', async () => {
-      const mockSendCallout = jest.fn();
       const message = 'some error';
-
-      jest.spyOn({ useCallout }, 'useCallout').mockReturnValue({
-        sendCallout: mockSendCallout,
-      });
 
       useInstancesQuery.mockReturnValue({
         isError: true,

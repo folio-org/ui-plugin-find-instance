@@ -61,9 +61,7 @@ const InstanceSearch = ({
     const getError = async () => {
       const response = await error.response;
       const httpError = await parseHttpError(response);
-      const message = httpError?.message
-        ? httpError.message
-        : intl.formatMessage({ id: 'ui-plugin-find-instance.communicationProblem' });
+      const message = httpError?.message || intl.formatMessage({ id: 'ui-plugin-find-instance.communicationProblem' });
 
       callout.sendCallout({
         type: 'error',
