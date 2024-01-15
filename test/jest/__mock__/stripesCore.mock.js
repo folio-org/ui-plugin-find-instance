@@ -1,45 +1,48 @@
 import React from 'react';
 
-jest.mock('@folio/stripes/core', () => {
-  const STRIPES = {
-    actionNames: [],
-    clone: () => ({ ...STRIPES }),
-    connect: Comp => Comp,
-    config: {},
-    currency: 'USD',
-    hasInterface: () => true,
-    hasPerm: jest.fn().mockReturnValue(true),
-    locale: 'en-US',
-    logger: {
-      log: () => { },
-    },
-    okapi: {
-      tenant: 'diku',
-      url: 'https://folio-testing-okapi.dev.folio.org',
-    },
-    plugins: {},
-    setBindings: () => { },
-    setCurrency: () => { },
-    setLocale: () => { },
-    setSinglePlugin: () => { },
-    setTimezone: () => { },
-    setToken: () => { },
-    store: {
-      getState: () => { },
-      dispatch: () => { },
-      subscribe: () => { },
-      replaceReducer: () => { },
-    },
-    timezone: 'UTC',
+export const buildStripes = (otherProperties = {}) => ({
+  actionNames: [],
+  clone: buildStripes,
+  connect: Comp => Comp,
+  config: {},
+  currency: 'USD',
+  hasInterface: () => true,
+  hasPerm: jest.fn().mockReturnValue(true),
+  locale: 'en-US',
+  logger: {
+    log: () => { },
+  },
+  okapi: {
+    tenant: 'diku',
+    url: 'https://folio-testing-okapi.dev.folio.org',
+  },
+  plugins: {},
+  setBindings: () => { },
+  setCurrency: () => { },
+  setLocale: () => { },
+  setSinglePlugin: () => { },
+  setTimezone: () => { },
+  setToken: () => { },
+  store: {
+    getState: () => { },
+    dispatch: () => { },
+    subscribe: () => { },
+    replaceReducer: () => { },
+  },
+  timezone: 'UTC',
+  user: {
+    perms: {},
     user: {
-      perms: {},
-      user: {
-        id: 'b1add99d-530b-5912-94f3-4091b4d87e2c',
-        username: 'diku_admin',
-      },
+      id: 'b1add99d-530b-5912-94f3-4091b4d87e2c',
+      username: 'diku_admin',
     },
-    withOkapi: true,
-  };
+  },
+  withOkapi: true,
+  ...otherProperties,
+});
+
+jest.mock('@folio/stripes/core', () => {
+  const STRIPES = buildStripes();
 
   return {
     AppIcon: jest.fn(({ children }) => <span>{children}</span>),
@@ -75,7 +78,7 @@ jest.mock('@folio/stripes/core', () => {
 
     useOkapiKy: jest.fn(),
 
-    useStripes: () => STRIPES,
+    useStripes: jest.fn(() => STRIPES),
 
     withStripes: Component => ({ stripes, ...rest }) => {
       const fakeStripes = stripes || STRIPES;
