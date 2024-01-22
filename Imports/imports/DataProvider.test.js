@@ -5,11 +5,12 @@ import {
 import { useStripes } from '@folio/stripes/core';
 
 import { buildStripes } from '../../test/jest/__mock__/stripesCore.mock';
-import Harness from '../../test/jest/helpers/harness';
 import DataProvider from './DataProvider';
 import DataContext from './DataContext';
-import { OKAPI_TENANT_HEADER } from '../../constants';
-import { useLocationsForTenants } from '../../hooks';
+import {
+  useLocationsForTenants,
+  useConsortiaTenants,
+} from '../../hooks';
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -17,19 +18,13 @@ jest.mock('../../hooks', () => ({
     data: [],
     isLoading: false,
   }),
+  useConsortiaTenants: jest.fn().mockResolvedValue({
+    data: [],
+    isLoading: false,
+  }),
 }));
 
-const mutator = {
-  consortiaTenants: {
-    GET: jest.fn(),
-  },
-};
-
 const resources = {
-  consortiaTenants: {
-    type: 'okapi',
-    records: [],
-  },
   instanceFormats: {
     type: 'okapi',
     records: [],
@@ -61,34 +56,31 @@ const resources = {
 };
 
 const renderDataProvider = (props = {}) => render(
-  <Harness>
-    <DataProvider
-      mutator={mutator}
-      resource={resources}
-      {...props}
-    >
-      <DataContext.Consumer>
-        {data => {
-          return (
-            <div data-testid="children">
-              {Object.keys(data).map(resource => (
-                <div key={resource}>
-                  {`${resource}: ${JSON.stringify(data[resource])}`}
-                </div>
-              ))}
-            </div>
-          );
-        }}
-      </DataContext.Consumer>
-    </DataProvider>
-  </Harness>
+  <DataProvider
+    mutator={{}}
+    resource={resources}
+    {...props}
+  >
+    <DataContext.Consumer>
+      {data => {
+        return (
+          <div data-testid="children">
+            {Object.keys(data).map(resource => (
+              <div key={resource}>
+                {`${resource}: ${JSON.stringify(data[resource])}`}
+              </div>
+            ))}
+          </div>
+        );
+      }}
+    </DataContext.Consumer>
+  </DataProvider>
 );
 
 describe('DataProvider', () => {
   it('should pass data to children component', () => {
     const { getByText } = renderDataProvider();
 
-    expect(getByText('consortiaTenants: []')).toBeVisible();
     expect(getByText('instanceFormats: []')).toBeVisible();
     expect(getByText('instanceTypes: []')).toBeVisible();
     expect(getByText('locations: []')).toBeVisible();
@@ -174,13 +166,6 @@ describe('DataProvider', () => {
     });
   });
 
-  describe('when env is not consortia', () => {
-    it('should not fetch consortiaTenants', () => {
-      renderDataProvider();
-      expect(mutator.consortiaTenants.GET).not.toHaveBeenCalled();
-    });
-  });
-
   describe('when env is consortia', () => {
     const consortium = {
       id: '1f06c60e-4431-432d-97a4-ca2bc6b152cb',
@@ -197,24 +182,32 @@ describe('DataProvider', () => {
       }));
     });
 
-    it('should fetch consortiaTenants', () => {
-      renderDataProvider();
+    it('should pass consortiaTenants to children', () => {
+      const consortiaTenants = [
+        { id: 'tenant-1' },
+        { id: 'tenant-2' },
+      ];
 
-      expect(mutator.consortiaTenants.GET).toHaveBeenCalledWith({
-        path: `consortia/${consortium.id}/tenants?limit=1000`,
-        headers: {
-          [OKAPI_TENANT_HEADER]: consortium.centralTenantId,
-        },
+      useConsortiaTenants.mockReturnValue({
+        data: consortiaTenants,
+        isLoading: false,
       });
+
+      const { getByText } = renderDataProvider();
+
+      expect(getByText(`consortiaTenants: ${JSON.stringify(consortiaTenants)}`)).toBeVisible();
     });
 
     it('should fetch locations for all tenants', () => {
-      const newResources = {
-        consortiaTenants: {
-          type: 'okapi',
-          records: [{ id: 'tenant-1' }, { id: 'tenant-2' }],
-        },
-      };
+      const consortiaTenants = [
+        { id: 'tenant-1' },
+        { id: 'tenant-2' },
+      ];
+
+      useConsortiaTenants.mockReturnValue({
+        data: consortiaTenants,
+        isLoading: false,
+      });
 
       const data = [
         { id: '1', name: 'Annex' },
@@ -226,9 +219,7 @@ describe('DataProvider', () => {
         isLoading: false,
       });
 
-      const { getByText } = renderDataProvider({
-        resources: newResources,
-      });
+      const { getByText } = renderDataProvider();
 
       expect(useLocationsForTenants).toHaveBeenCalledWith({
         tenantIds: ['tenant-1', 'tenant-2'],
@@ -246,6 +237,18 @@ describe('DataProvider', () => {
       const { getByText } = renderDataProvider();
 
       expect(getByText('isLoadingLocationsForTenants: true')).toBeVisible();
+    });
+
+    describe('when consortia tenants are loading', () => {
+      it('should not display children component', () => {
+        useConsortiaTenants.mockReturnValue({
+          isLoading: true,
+        });
+
+        const { queryByTestId } = renderDataProvider();
+
+        expect(queryByTestId('children')).toBeNull();
+      });
     });
   });
 });
