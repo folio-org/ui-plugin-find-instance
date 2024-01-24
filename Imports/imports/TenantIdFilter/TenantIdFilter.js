@@ -1,18 +1,14 @@
-import { useQuery } from 'react-query';
+import { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import {
-  useNamespace,
-  useStripes,
-} from '@folio/stripes/core';
 import {
   Accordion,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 
-import useTenantKy from '../../../temp/useTenantKy';
 import CheckboxFacet from '../CheckboxFacet';
+import DataContext from '../DataContext';
 
 const propTypes = {
   activeFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -25,22 +21,9 @@ const TenantIdFilter = ({
   onClear,
   onChange,
 }) => {
-  const namespace = useNamespace();
-  const stripes = useStripes();
+  const { consortiaTenants } = useContext(DataContext);
 
-  const { centralTenantId, id: consortiumId } = stripes.user.user.consortium || {};
-
-  const ky = useTenantKy({ tenantId: centralTenantId });
-
-  const { data, isFetching } = useQuery(
-    [namespace, consortiumId],
-    () => ky.get(`consortia/${consortiumId}/tenants`).json(),
-    {
-      enabled: Boolean(consortiumId),
-    },
-  );
-
-  const dataOptions = data?.tenants?.map(({ id, name }) => ({
+  const dataOptions = consortiaTenants?.map(({ id, name }) => ({
     label: name,
     value: id,
   })) || [];
@@ -62,7 +45,6 @@ const TenantIdFilter = ({
         name={name}
         dataOptions={dataOptions || []}
         selectedValues={activeFilters}
-        isPending={isFetching}
         onChange={onChange}
         isFilterable
       />
