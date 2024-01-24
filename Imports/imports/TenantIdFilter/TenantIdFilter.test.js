@@ -9,18 +9,21 @@ import TenantIdFilter from './TenantIdFilter';
 import Harness from '../../../test/jest/helpers/harness';
 
 jest.unmock('@folio/stripes/smart-components');
-jest.mock('react-query', () => ({
-  ...jest.requireActual('react-query'),
-  useQuery: jest.fn().mockReturnValue({
-    data: {
-      tenants: [
-        { id: 'consortium', name: 'Consortium' },
-        { id: 'university', name: 'University' },
-        { id: 'college', name: 'College' },
-      ],
-    },
-  }),
-}));
+
+const consortiaTenants = [
+  {
+    'id': 'cs00000int_0001',
+    'name': 'College',
+  },
+  {
+    'id': 'cs00000int',
+    'name': 'Central Office',
+  },
+  {
+    'id': 'cs00000int_0002',
+    'name': 'Professional',
+  },
+];
 
 const defaultProps = {
   activeFilters: [],
@@ -28,8 +31,8 @@ const defaultProps = {
   onClear: jest.fn(),
 };
 
-const renderTenantIdFilter = (props = {}) => render(
-  <Harness>
+const renderTenantIdFilter = (props = {}, { dataContext } = {}) => render(
+  <Harness dataContext={dataContext}>
     <TenantIdFilter
       {...defaultProps}
       {...props}
@@ -40,23 +43,42 @@ const renderTenantIdFilter = (props = {}) => render(
 describe('TenantIdFilter', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    renderTenantIdFilter();
   });
 
-  it('should render filter with specified options', () => {
-    expect(screen.getByText('Consortium')).toBeInTheDocument();
-    expect(screen.getByText('University')).toBeInTheDocument();
+  it('should not display options', () => {
+    renderTenantIdFilter();
+
+    expect(screen.queryByText('Central Office')).not.toBeInTheDocument();
+    expect(screen.queryByText('Professional')).not.toBeInTheDocument();
+    expect(screen.queryByText('College')).not.toBeInTheDocument();
+  });
+
+  it('should display options', () => {
+    renderTenantIdFilter({}, {
+      dataContext: {
+        consortiaTenants,
+      },
+    });
+
+    expect(screen.getByText('Central Office')).toBeInTheDocument();
+    expect(screen.getByText('Professional')).toBeInTheDocument();
     expect(screen.getByText('College')).toBeInTheDocument();
   });
 
   it('should call \'onChange\' when filter was changed', async () => {
+    renderTenantIdFilter({}, {
+      dataContext: {
+        consortiaTenants,
+      },
+    });
+
     const collegeOption = screen.getByText('College');
 
     await act(() => user.click(collegeOption));
 
     expect(defaultProps.onChange).toHaveBeenCalledWith({
       name: 'tenantId',
-      values: ['college'],
+      values: ['cs00000int_0001'],
     });
   });
 });

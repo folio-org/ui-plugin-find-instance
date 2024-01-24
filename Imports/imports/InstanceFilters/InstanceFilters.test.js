@@ -56,8 +56,10 @@ const data = {
 
 const mockClear = jest.fn();
 const onChange = jest.fn();
-const renderInstanceFilters = (props = {}) => render(
-  <Harness>
+const renderInstanceFilters = (props = {}, { dataContext } = {}) => render(
+  <Harness
+    dataContext={dataContext}
+  >
     <InstanceFilters
       activeFilters={activeFilters}
       data={data}
