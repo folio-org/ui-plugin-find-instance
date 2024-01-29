@@ -11,7 +11,6 @@ import {
   Accordion,
   FilterAccordionHeader,
   languageOptions,
-  Loading,
 } from '@folio/stripes/components';
 import {
   CheckboxFilter,
@@ -27,6 +26,7 @@ import {
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
+import { LocationFilter } from '../LocationFilter';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -64,11 +64,6 @@ const InstanceFilters = ({
   const langOptions = languageOptions(intl, stripes.locale);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
-
-  const effectiveLocationOptions = locations.map(({ name, id }) => ({
-    label: name,
-    value: id,
-  }));
 
   const resourceTypeOptions = resourceTypes.map(({ name, id }) => ({
     label: name,
@@ -128,30 +123,16 @@ const InstanceFilters = ({
           onChange={onChange}
         />
       </IfInterface>
-      <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.filters.effectiveLocation" />}
+      <LocationFilter
         id="effectiveLocation"
         name="effectiveLocation"
-        separator={false}
-        header={FilterAccordionHeader}
-        displayClearButton={effectiveLocation.length > 0}
-        onClearFilter={() => onClear('effectiveLocation')}
-      >
-        {isLoadingLocationsForTenants
-          ? (
-            <Loading />
-          )
-          : (
-            <MultiSelectionFilter
-              name="effectiveLocation"
-              dataOptions={effectiveLocationOptions}
-              selectedValues={effectiveLocation}
-              filter={filterItemsBy('label')}
-              onChange={onChange}
-            />
-          )
-        }
-      </Accordion>
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.filters.effectiveLocation' })}
+        isLoadingOptions={isLoadingLocationsForTenants}
+        locations={locations}
+        selectedValues={effectiveLocation}
+        onChange={onChange}
+        onClear={onClear}
+      />
       <Accordion
         label={<FormattedMessage id="ui-plugin-find-instance.instances.language" />}
         id="language"
@@ -333,7 +314,7 @@ const InstanceFilters = ({
 };
 
 InstanceFilters.propTypes = {
-  activeFilters: PropTypes.objectOf(PropTypes.array),
+  activeFilters: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   data: PropTypes.object,

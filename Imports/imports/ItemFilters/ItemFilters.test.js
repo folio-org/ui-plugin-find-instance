@@ -26,6 +26,7 @@ const data = {
       id: 'locationid1'
     }
   ],
+  isLoadingLocationsForTenants: false,
   itemStatuses: [{
     label: 'itemStatuses1',
     value: 'itemStatusesValue1'
@@ -85,8 +86,7 @@ describe('ItemFilters', () => {
     });
 
     it('Should Clear selected filters for holdingsPermanentLocation', () => {
-      const clearholdingsPermanentLocation = document.querySelector('[data-testid="clear-holdingsPermanentLocationAccordion"]');
-      fireEvent.click(clearholdingsPermanentLocation);
+      fireEvent.click(screen.getByTestId('clear-holdingsPermanentLocation'));
       expect(mockClear).toBeCalled();
     });
 
