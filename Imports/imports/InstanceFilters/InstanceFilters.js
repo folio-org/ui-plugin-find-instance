@@ -22,6 +22,7 @@ import {
   filterItemsBy,
   retrieveDatesFromDateRangeFilterString,
   makeDateRangeFilterString,
+  getLocationFilterOptions,
 } from '../utils';
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
@@ -55,6 +56,7 @@ const InstanceFilters = ({
     natureOfContentTerms,
     tagsRecords,
     isLoadingLocationsForTenants,
+    consortiaTenants,
   },
   onChange,
   onClear,
@@ -64,6 +66,8 @@ const InstanceFilters = ({
   const langOptions = languageOptions(intl, stripes.locale);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
+
+  const locationOptions = getLocationFilterOptions(locations, consortiaTenants, stripes);
 
   const resourceTypeOptions = resourceTypes.map(({ name, id }) => ({
     label: name,
@@ -128,7 +132,7 @@ const InstanceFilters = ({
         name="effectiveLocation"
         label={intl.formatMessage({ id: 'ui-plugin-find-instance.filters.effectiveLocation' })}
         isLoadingOptions={isLoadingLocationsForTenants}
-        locations={locations}
+        dataOptions={locationOptions}
         selectedValues={effectiveLocation}
         onChange={onChange}
         onClear={onClear}

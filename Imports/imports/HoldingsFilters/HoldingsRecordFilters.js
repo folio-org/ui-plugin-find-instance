@@ -20,6 +20,7 @@ import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
 import { LocationFilter } from '../LocationFilter';
+import { getLocationFilterOptions } from '../utils';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -48,12 +49,15 @@ const HoldingsRecordFilters = ({
     isLoadingLocationsForTenants,
     locations,
     tagsRecords,
+    consortiaTenants,
   },
   onChange,
   onClear,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
+
+  const locationOptions = getLocationFilterOptions(locations, consortiaTenants, stripes);
 
   const suppressedOptions = [
     {
@@ -89,7 +93,7 @@ const HoldingsRecordFilters = ({
         name="effectiveLocation"
         label={intl.formatMessage({ id: 'ui-plugin-find-instance.filters.effectiveLocation' })}
         isLoadingOptions={isLoadingLocationsForTenants}
-        locations={locations}
+        dataOptions={locationOptions}
         selectedValues={effectiveLocation}
         onChange={onChange}
         onClear={onClear}
@@ -100,7 +104,7 @@ const HoldingsRecordFilters = ({
         label={intl.formatMessage({ id: 'ui-plugin-find-instance.holdings.permanentLocation' })}
         closedByDefault
         isLoadingOptions={isLoadingLocationsForTenants}
-        locations={locations}
+        dataOptions={locationOptions}
         selectedValues={holdingsPermanentLocation}
         onChange={onChange}
         onClear={onClear}

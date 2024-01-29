@@ -43,8 +43,8 @@ describe('useLocationsForTenants', () => {
     await act(() => !result.current.isLoading);
 
     expect(result.current.data).toEqual([
-      { id: 'location-id' },
-      { id: 'location-id' },
+      { id: 'location-id', _tenantId: 'cs00000int' },
+      { id: 'location-id', _tenantId: 'cs00000int_0002' },
     ]);
   });
 

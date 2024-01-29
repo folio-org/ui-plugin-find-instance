@@ -6,6 +6,7 @@ import {
   retrieveDatesFromDateRangeFilterString,
   getQueryTemplate,
   getIsbnIssnTemplate,
+  getLocationFilterOptions,
 } from './utils';
 
 describe('buildDateRangeQuery', () => {
@@ -148,5 +149,89 @@ describe('getIsbnIssnTemplate', () => {
     const queryIndex = 'other';
     const template = getIsbnIssnTemplate(mockQueryTemplate, mockIdentifierTypes, queryIndex);
     expect(template).toBe('Identifier type is ');
+  });
+});
+
+describe('getLocationFilterOptions', () => {
+  describe('when the mode is consortium', () => {
+    describe('and locations with duplicates', () => {
+      it('should remove locations with the same id and append tenant name to the label of duplicates', () => {
+        const locations = [
+          {
+            id: '53cf956f-c1df-410b-8bea-27f712cca7c0',
+            name: 'Annex',
+            _tenantId: 'cs00000int_0001',
+          },
+          {
+            id: '53cf956f-c1df-410b-8bea-27f712cca7c0',
+            name: 'Annex',
+            _tenantId: 'cs00000int',
+          },
+          {
+            id: '184aae84-a5bf-4c6a-85ba-4a7c73026cd5',
+            name: 'Online',
+            _tenantId: 'cs00000int_0003',
+          },
+          {
+            id: '8e9f7ced-d720-4cd4-b098-0f7c1f7c3ceb',
+            name: 'Annex',
+            _tenantId: 'cs00000int_0005',
+          },
+        ];
+
+        const consortiaTenants = [
+          {
+            id: 'cs00000int_0001',
+            name: 'College',
+          },
+          {
+            id: 'cs00000int',
+            name: 'Central Office',
+          },
+          {
+            id: 'cs00000int_0003',
+            name: 'School',
+          },
+          {
+            id: 'cs00000int_0005',
+            name: 'University',
+          },
+        ];
+
+        const stripes = {
+          hasInterface: () => true,
+        };
+
+        expect(getLocationFilterOptions(locations, consortiaTenants, stripes)).toEqual([
+          { label: 'Annex (College)', value: '53cf956f-c1df-410b-8bea-27f712cca7c0' },
+          { label: 'Online', value: '184aae84-a5bf-4c6a-85ba-4a7c73026cd5' },
+          { label: 'Annex (University)', value: '8e9f7ced-d720-4cd4-b098-0f7c1f7c3ceb' },
+        ]);
+      });
+    });
+
+    it('should return options for non-consortium', () => {
+      const locations = [
+        {
+          id: '53cf956f-c1df-410b-8bea-27f712cca7c0',
+          name: 'Annex',
+        },
+        {
+          id: '184aae84-a5bf-4c6a-85ba-4a7c73026cd5',
+          name: 'Online',
+        },
+      ];
+
+      const consortiaTenants = undefined;
+
+      const stripes = {
+        hasInterface: () => false,
+      };
+
+      expect(getLocationFilterOptions(locations, consortiaTenants, stripes)).toEqual([
+        { label: 'Annex', value: '53cf956f-c1df-410b-8bea-27f712cca7c0' },
+        { label: 'Online', value: '184aae84-a5bf-4c6a-85ba-4a7c73026cd5' },
+      ]);
+    });
   });
 });

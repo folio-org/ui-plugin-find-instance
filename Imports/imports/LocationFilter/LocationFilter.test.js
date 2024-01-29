@@ -8,22 +8,18 @@ import { LocationFilter } from './LocationFilter';
 
 jest.unmock('@folio/stripes/smart-components');
 
-const locations = [
+const dataOptions = [
   {
-    id: '53cf956f-c1df-410b-8bea-27f712cca7c0',
-    name: 'Annex',
+    value: '184aae84-a5bf-4c6a-85ba-4a7c73026cd5',
+    label: 'Online',
   },
   {
-    id: '184aae84-a5bf-4c6a-85ba-4a7c73026cd5',
-    name: 'Online',
+    value: '53cf956f-c1df-410b-8bea-27f712cca7c0',
+    label: 'Annex (College)',
   },
   {
-    id: '53cf956f-c1df-410b-8bea-27f712cca7c0',
-    name: 'Annex',
-  },
-  {
-    id: '8e9f7ced-d720-4cd4-b098-0f7c1f7c3ceb',
-    name: 'Annex',
+    value: '8e9f7ced-d720-4cd4-b098-0f7c1f7c3ceb',
+    label: 'Annex (University)',
   },
 ];
 
@@ -40,7 +36,7 @@ const renderLocationFilter = (props = {}) => render(
     closedByDefault={false}
     separator={false}
     isLoadingOptions={false}
-    locations={locations}
+    dataOptions={dataOptions}
     selectedValues={[]}
     onChange={mockOnChange}
     onClear={mockOnClear}
@@ -70,11 +66,12 @@ describe('LocationFilter', () => {
     });
   });
 
-  it('should display only options with unique id', () => {
-    const { getByText, getAllByText } = renderLocationFilter();
+  it('should display options', () => {
+    const { getByText } = renderLocationFilter();
 
     expect(getByText('Online')).toBeInTheDocument();
-    expect(getAllByText('Annex')).toHaveLength(2);
+    expect(getByText('Annex (College)')).toBeInTheDocument();
+    expect(getByText('Annex (University)')).toBeInTheDocument();
   });
 
   it('should call "onChange"', async () => {
@@ -97,17 +94,5 @@ describe('LocationFilter', () => {
     await act(() => userEvent.click(getByText('Clear')));
 
     expect(mockOnClear).toHaveBeenCalledWith(name);
-  });
-
-  it('should have "label + id" accessible option announcement for duplicates only', async () => {
-    const { getByText, getAllByText } = renderLocationFilter();
-    const option = getByText('Online');
-    const duplicateOption = getAllByText('Annex')[0];
-
-    await act(() => userEvent.click(option));
-    await act(() => userEvent.click(duplicateOption));
-
-    expect(getByText('Online added to selection')).toBeInTheDocument();
-    expect(getByText('Annex id: 53cf956f-c1df-410b-8bea-27f712cca7c0 added to selection')).toBeInTheDocument();
   });
 });

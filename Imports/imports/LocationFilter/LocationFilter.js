@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import uniqBy from 'lodash/uniqBy';
-import groupBy from 'lodash/groupBy';
 
 import {
   Accordion,
@@ -18,7 +16,7 @@ const propTypes = {
   closedByDefault: PropTypes.bool,
   separator: PropTypes.bool,
   isLoadingOptions: PropTypes.bool.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dataOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedValues: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
@@ -31,32 +29,11 @@ export const LocationFilter = ({
   closedByDefault,
   separator,
   isLoadingOptions,
-  locations,
+  dataOptions,
   selectedValues,
   onChange,
   onClear,
 }) => {
-  const locationOptions = uniqBy(locations, 'id').map(({ name: locationName, id: locationId }) => ({
-    label: locationName,
-    value: locationId,
-  }));
-
-  const groupedLocations = groupBy(locationOptions, 'label');
-
-  // `itemToString` is used both as a `key` in the options list and for accessible announcements among options,
-  // so let's add `id` only for duplicates.
-  const getItemToString = option => {
-    if (!option) return '';
-
-    const isDuplicate = groupedLocations[option.label].length > 1;
-
-    if (isDuplicate) {
-      return `${option.label} id: ${option.value}`;
-    }
-
-    return option.label;
-  };
-
   return (
     <Accordion
       id={id}
@@ -73,10 +50,9 @@ export const LocationFilter = ({
         : (
           <MultiSelectionFilter
             name={name}
-            dataOptions={locationOptions}
+            dataOptions={dataOptions}
             selectedValues={selectedValues}
             filter={filterItemsBy('label')}
-            itemToString={getItemToString}
             onChange={onChange}
           />
         )

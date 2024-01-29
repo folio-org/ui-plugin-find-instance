@@ -1,5 +1,7 @@
 import { escapeRegExp, template } from 'lodash';
 import moment from 'moment';
+import uniqBy from 'lodash/uniqBy';
+import groupBy from 'lodash/groupBy';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -118,3 +120,26 @@ export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) 
 export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
+
+export const getLocationFilterOptions = (locations, consortiaTenants, stripes) => {
+  if (!isUserInConsortiumMode(stripes)) {
+    return locations.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
+  }
+
+  const uniqueLocations = uniqBy(locations, 'id');
+  const groupedLocations = groupBy(uniqueLocations, 'name');
+  const groupedConsortiaTenants = groupBy(consortiaTenants, 'id');
+
+  return uniqueLocations.map(({ name, id, _tenantId }) => {
+    const isDuplicate = groupedLocations[name].length > 1;
+    const tenantName = groupedConsortiaTenants[_tenantId][0].name;
+
+    return {
+      label: isDuplicate ? `${name} (${tenantName})` : name,
+      value: id,
+    };
+  });
+};

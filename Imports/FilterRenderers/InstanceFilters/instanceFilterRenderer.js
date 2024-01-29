@@ -13,6 +13,7 @@ const instanceFilterRenderer = data => onChange => {
     natureOfContentTerms,
     tags,
     isLoadingLocationsForTenants,
+    consortiaTenants,
   } = data;
 
   const activeFiltersObj = onChange.activeFilters.state;
@@ -33,6 +34,7 @@ const instanceFilterRenderer = data => onChange => {
         tagsRecords: tags,
         natureOfContentTerms,
         isLoadingLocationsForTenants,
+        consortiaTenants,
       }}
       onChange={onChangeHandler}
       onClear={(name) => onChangeHandler({ name, values: [] })}
