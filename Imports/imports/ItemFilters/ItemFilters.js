@@ -20,10 +20,7 @@ import {
   MultiSelectionFilter,
 } from '@folio/stripes/smart-components';
 
-import {
-  filterItemsBy,
-  getLocationFilterOptions,
-} from '../utils';
+import { filterItemsBy } from '../utils';
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
@@ -69,8 +66,6 @@ const ItemFilters = ({
 }) => {
   const stripes = useStripes();
   const intl = useIntl();
-
-  const locationOptions = getLocationFilterOptions(locations, consortiaTenants, stripes);
 
   const materialTypesOptions = materialTypes.map(({ name, id }) => ({
     label: name,
@@ -133,7 +128,8 @@ const ItemFilters = ({
         label={intl.formatMessage({ id: 'ui-plugin-find-instance.filters.effectiveLocation' })}
         separator
         isLoadingOptions={isLoadingLocationsForTenants}
-        dataOptions={locationOptions}
+        locations={locations}
+        consortiaTenants={consortiaTenants}
         selectedValues={effectiveLocation}
         onChange={onChange}
         onClear={onClear}
@@ -144,7 +140,8 @@ const ItemFilters = ({
         label={intl.formatMessage({ id: 'ui-plugin-find-instance.holdings.permanentLocation' })}
         closedByDefault
         isLoadingOptions={isLoadingLocationsForTenants}
-        dataOptions={locationOptions}
+        locations={locations}
+        consortiaTenants={consortiaTenants}
         selectedValues={holdingsPermanentLocation}
         onChange={onChange}
         onClear={onClear}
