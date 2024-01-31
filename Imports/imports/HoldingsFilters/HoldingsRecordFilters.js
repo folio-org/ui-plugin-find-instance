@@ -1,31 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   Accordion,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
-import {
-  CheckboxFilter,
-  MultiSelectionFilter,
-} from '@folio/stripes/smart-components';
+import { CheckboxFilter } from '@folio/stripes/smart-components';
 import {
   useStripes,
   checkIfUserInMemberTenant,
   IfInterface,
 } from '@folio/stripes/core';
 
-import {
-  filterItemsBy,
-} from '../utils';
-
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
+import { LocationFilter } from '../LocationFilter';
 
 const propTypes = {
-  activeFilters: PropTypes.objectOf(PropTypes.array),
+  activeFilters: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   data: PropTypes.object,
@@ -48,18 +45,16 @@ const HoldingsRecordFilters = ({
     tags,
   },
   data: {
+    isLoadingLocationsForTenants,
     locations,
     tagsRecords,
+    consortiaTenants,
   },
   onChange,
   onClear,
 }) => {
+  const intl = useIntl();
   const stripes = useStripes();
-
-  const locationOptions = locations.map(({ name, id }) => ({
-    label: name,
-    value: id,
-  }));
 
   const suppressedOptions = [
     {
@@ -90,40 +85,29 @@ const HoldingsRecordFilters = ({
           onChange={onChange}
         />
       </IfInterface>
-      <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.filters.effectiveLocation" />}
+      <LocationFilter
         id="holdingsEffectiveLocationAccordion"
         name="effectiveLocation"
-        separator={false}
-        header={FilterAccordionHeader}
-        displayClearButton={effectiveLocation.length > 0}
-        onClearFilter={() => onClear('effectiveLocation')}
-      >
-        <MultiSelectionFilter
-          name="effectiveLocation"
-          dataOptions={locationOptions}
-          selectedValues={effectiveLocation}
-          filter={filterItemsBy('label')}
-          onChange={onChange}
-        />
-      </Accordion>
-      <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.holdings.permanentLocation" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.filters.effectiveLocation' })}
+        isLoadingOptions={isLoadingLocationsForTenants}
+        locations={locations}
+        consortiaTenants={consortiaTenants}
+        selectedValues={effectiveLocation}
+        onChange={onChange}
+        onClear={onClear}
+      />
+      <LocationFilter
         id="holdingsPermanentLocationAccordion"
         name="holdingsPermanentLocation"
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.holdings.permanentLocation' })}
         closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={holdingsPermanentLocation.length > 0}
-        onClearFilter={() => onClear('holdingsPermanentLocation')}
-      >
-        <MultiSelectionFilter
-          name="holdingsPermanentLocation"
-          dataOptions={locationOptions}
-          selectedValues={holdingsPermanentLocation}
-          filter={filterItemsBy('label')}
-          onChange={onChange}
-        />
-      </Accordion>
+        isLoadingOptions={isLoadingLocationsForTenants}
+        locations={locations}
+        consortiaTenants={consortiaTenants}
+        selectedValues={holdingsPermanentLocation}
+        onChange={onChange}
+        onClear={onClear}
+      />
       <Accordion
         data-test-filter-holding-discovery-suppress
         label={<FormattedMessage id="ui-plugin-find-instance.discoverySuppress" />}

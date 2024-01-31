@@ -24,9 +24,10 @@ import { filterItemsBy } from '../utils';
 import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
+import { LocationFilter } from '../LocationFilter';
 
 const propTypes = {
-  activeFilters: PropTypes.objectOf(PropTypes.array),
+  activeFilters: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   data: PropTypes.object,
@@ -57,6 +58,8 @@ const ItemFilters = ({
     itemStatuses,
     locations,
     tagsRecords,
+    isLoadingLocationsForTenants,
+    consortiaTenants,
   },
   onChange,
   onClear,
@@ -74,10 +77,6 @@ const ItemFilters = ({
     value,
   })).sort((a, b) => a.label.localeCompare(b.label));
 
-  const locationOptions = locations.map(({ name, id }) => ({
-    label: name,
-    value: id,
-  }));
   const suppressedOptions = [
     {
       label: <FormattedMessage id="ui-plugin-find-instance.yes" />,
@@ -123,40 +122,30 @@ const ItemFilters = ({
           onChange={onChange}
         />
       </Accordion>
-      <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.filters.effectiveLocation" />}
+      <LocationFilter
         id="itemEffectiveLocationAccordion"
         name="effectiveLocation"
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.filters.effectiveLocation' })}
         separator
-        header={FilterAccordionHeader}
-        displayClearButton={effectiveLocation.length > 0}
-        onClearFilter={() => onClear('effectiveLocation')}
-      >
-        <MultiSelectionFilter
-          name="effectiveLocation"
-          dataOptions={locationOptions}
-          selectedValues={effectiveLocation}
-          onChange={onChange}
-          filter={filterItemsBy('label')}
-        />
-      </Accordion>
-      <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.holdings.permanentLocation" />}
+        isLoadingOptions={isLoadingLocationsForTenants}
+        locations={locations}
+        consortiaTenants={consortiaTenants}
+        selectedValues={effectiveLocation}
+        onChange={onChange}
+        onClear={onClear}
+      />
+      <LocationFilter
         id="holdingsPermanentLocationAccordion"
-        name="holdingsPermanentLocationAccordion"
+        name="holdingsPermanentLocation"
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.holdings.permanentLocation' })}
         closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={holdingsPermanentLocation.length > 0}
-        onClearFilter={() => onClear('holdingsPermanentLocation')}
-      >
-        <MultiSelectionFilter
-          name="holdingsPermanentLocation"
-          dataOptions={locationOptions}
-          selectedValues={holdingsPermanentLocation}
-          onChange={onChange}
-          filter={filterItemsBy('label')}
-        />
-      </Accordion>
+        isLoadingOptions={isLoadingLocationsForTenants}
+        locations={locations}
+        consortiaTenants={consortiaTenants}
+        selectedValues={holdingsPermanentLocation}
+        onChange={onChange}
+        onClear={onClear}
+      />
       <Accordion
         label={<FormattedMessage id="ui-plugin-find-instance.materialType" />}
         id="materialTypeAccordion"

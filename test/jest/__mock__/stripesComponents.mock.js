@@ -178,4 +178,5 @@ jest.mock('@folio/stripes/components', () => ({
       />
     </div>
   )),
+  Loading: jest.fn(({ 'data-testid': dataTestId }) => <div data-testid={dataTestId}>Loading</div>)
 }));

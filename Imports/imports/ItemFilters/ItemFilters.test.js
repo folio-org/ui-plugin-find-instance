@@ -22,10 +22,16 @@ const activeFilters = {
 const data = {
   locations: [
     {
+      _tenantId: 'cs00000int_0001',
       name: 'location1',
       id: 'locationid1'
     }
   ],
+  isLoadingLocationsForTenants: false,
+  consortiaTenants: [{
+    id: 'cs00000int_0001',
+    name: 'College',
+  }],
   itemStatuses: [{
     label: 'itemStatuses1',
     value: 'itemStatusesValue1'
@@ -85,8 +91,7 @@ describe('ItemFilters', () => {
     });
 
     it('Should Clear selected filters for holdingsPermanentLocation', () => {
-      const clearholdingsPermanentLocation = document.querySelector('[data-testid="clear-holdingsPermanentLocationAccordion"]');
-      fireEvent.click(clearholdingsPermanentLocation);
+      fireEvent.click(screen.getByTestId('clear-holdingsPermanentLocation'));
       expect(mockClear).toBeCalled();
     });
 

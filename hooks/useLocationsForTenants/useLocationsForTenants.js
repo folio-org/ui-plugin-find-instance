@@ -36,7 +36,15 @@ const useLocationsForTenants = ({ tenantIds = [] }) => {
             },
           ],
         },
-      }).json(),
+      })
+        .json()
+        .then(response => ({
+          ...response,
+          locations: response.locations.map(location => ({
+            ...location,
+            _tenantId: tenantId,
+          })),
+        })),
     };
   }));
 
