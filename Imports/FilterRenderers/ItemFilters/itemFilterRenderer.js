@@ -10,6 +10,8 @@ const itemFilterRenderer = data => onChange => {
     materialTypes,
     locations,
     tags,
+    consortiaTenants,
+    isLoadingLocationsForTenants,
   } = data;
 
   const activeFiltersObj = onChange.activeFilters.state;
@@ -27,6 +29,8 @@ const itemFilterRenderer = data => onChange => {
         itemStatuses,
         locations,
         tagsRecords: tags,
+        consortiaTenants,
+        isLoadingLocationsForTenants,
       }}
       onChange={onChangeHandler}
       onClear={(name) => onChangeHandler({ name, values: [] })}

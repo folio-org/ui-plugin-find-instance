@@ -20,14 +20,20 @@ const activeFilters = {
 const data = {
   locations: [
     {
+      _tenantId: 'cs00000int_0001',
       name: 'location1',
       id: 'locationid1'
     }
   ],
+  consortiaTenants: [{
+    id: 'cs00000int_0001',
+    name: 'College',
+  }],
   tagsRecords: [{
     name: 'tagsRecords1',
     id: 'tagsRecordsid1'
   }],
+  isLoadingLocationsForTenants: false,
 };
 
 const mockClear = jest.fn();

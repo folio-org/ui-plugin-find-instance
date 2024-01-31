@@ -4,7 +4,13 @@ import HoldingsRecordFilters from '../../imports/HoldingsFilters';
 
 // holdingsRecordFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
-const holdingsRecordFilterRenderer = ({ locations, tags }) => onChange => {
+const holdingsRecordFilterRenderer = data => onChange => {
+  const {
+    locations,
+    tags,
+    consortiaTenants,
+    isLoadingLocationsForTenants,
+  } = data;
   const activeFiltersObj = onChange.activeFilters.state;
 
   const onChangeHandler = (filterObj) => {
@@ -18,6 +24,8 @@ const holdingsRecordFilterRenderer = ({ locations, tags }) => onChange => {
       data={{
         locations,
         tagsRecords: tags,
+        isLoadingLocationsForTenants,
+        consortiaTenants,
       }}
       onChange={onChangeHandler}
       onClear={(name) => onChangeHandler({ name, values: [] })}
