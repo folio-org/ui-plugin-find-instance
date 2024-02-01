@@ -1,5 +1,10 @@
 # Change history for ui-plugin-find-instance
 
+## [7.0.4](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.4) (2024-02-01)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.0.3...v7.0.4)
+
+* ECS: Use a unique key for filters with locations of the same name. Refs UIPFI-140.
+
 ## [7.0.3](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.3) (2024-01-24)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.0.2...v7.0.3)
 
