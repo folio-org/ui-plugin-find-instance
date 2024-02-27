@@ -100,6 +100,7 @@ export const instanceIndexes = [
   { label: 'ui-plugin-find-instance.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"' },
   { label: 'ui-plugin-find-instance.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-plugin-find-instance.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.lccn', value: 'lccn', queryTemplate: 'lccn="%{query.query}"' },
   { label: 'ui-plugin-find-instance.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
   { label: 'ui-plugin-find-instance.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-plugin-find-instance.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
