@@ -58,6 +58,7 @@
   "title": "Title (all)",
   "identifierAll": "Identifier (all)",
   "issn": "ISSN",
+  "lccn": "LCCN, normalized",
   "isbn": "ISBN",
   "subject": "Subject",
   "instanceHrid": "Instance HRID",

@@ -6,6 +6,7 @@
 * Remove the translation dependency from ui-inventory. Refs UIPFI-24.
 * Remove bigtest tests. Refs UIPFI-134.
 * Cover <TagsFilter> component with tests. Refs UIPFI-127.
+* Add a new search option for instances called `LCCN normalization`. Refs UIPFI-135.
 
 ## [7.0.4](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.0.4) (2024-02-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.0.3...v7.0.4)
