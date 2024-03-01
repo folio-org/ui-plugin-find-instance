@@ -73,5 +73,6 @@
     "instances.columns.title": "Název",
     "instances.columns.contributors": "Autoři",
     "instances.columns.publishers": "Vydavatelé",
-    "communicationProblem": "Problém komunikace se serverem. Prosím zkuste to znovu"
+    "communicationProblem": "Problém komunikace se serverem. Prosím zkuste to znovu",
+    "lccn": "LCCN, normalized"
 }

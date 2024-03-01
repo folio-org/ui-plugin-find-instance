@@ -73,5 +73,6 @@
     "instances.columns.title": "Title",
     "instances.columns.contributors": "Contributors",
     "instances.columns.publishers": "Publishers",
-    "communicationProblem": "Server communication problem. Please try again"
+    "communicationProblem": "Server communication problem. Please try again",
+    "lccn": "LCCN, normalized"
 }
