@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { useQuery } from 'react-query';
 
 import {
@@ -23,6 +26,7 @@ const SharedFilter = ({
   onClear,
   onChange,
 }) => {
+  const intl = useIntl();
   const ky = useOkapiKy();
   const namespace = useNamespace();
 
@@ -45,7 +49,7 @@ const SharedFilter = ({
 
   return (
     <Accordion
-      label={<FormattedMessage id="ui-plugin-find-instance.filters.shared" />}
+      label={intl.formatMessage({ id: 'ui-plugin-find-instance.filters.shared' })}
       id="shared"
       name="shared"
       separator={false}

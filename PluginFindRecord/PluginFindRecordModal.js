@@ -334,6 +334,9 @@ class PluginFindRecordModal extends React.Component {
             initialSearch={initialSearch}
             initialSearchState={{ qindex: '', query: '' }}
             initialSortState={{ sort: 'title' }}
+            initialFilterState={{
+              staffSuppress: ['false'],
+            }}
             onComponentWillUnmount={onComponentWillUnmount}
             queryGetter={queryGetter}
             querySetter={querySetter}

@@ -43,3 +43,5 @@ export const CONFIG_TYPES = PropTypes.shape({
 });
 
 export const DEFAULT_FILTERS_NUMBER = 6;
+
+export const USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY = 'folio_find-instance_user_touched_staff_suppress';

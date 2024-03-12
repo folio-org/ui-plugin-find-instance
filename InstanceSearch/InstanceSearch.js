@@ -17,7 +17,10 @@ import DataContext from '../Imports/imports/DataContext';
 import { getFilterConfig } from '../Imports/imports/filterConfig';
 import { useInstancesQuery } from '../hooks';
 
-import { CONFIG_TYPES } from '../Imports/imports/constants';
+import {
+  CONFIG_TYPES,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+} from '../Imports/imports/constants';
 import { parseHttpError } from '../utils';
 
 const query = {
@@ -44,6 +47,10 @@ const InstanceSearch = ({
   } = getFilterConfig(segment);
 
   const { isLoading, isError, error = {}, data = {} } = useInstancesQuery(instances);
+
+  useEffect(() => {
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+  }, [segment]);
 
   useEffect(() => {
     if (!isLoading && !isError && data.instances?.length) {
