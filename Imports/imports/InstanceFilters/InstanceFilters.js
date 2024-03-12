@@ -109,17 +109,17 @@ const InstanceFilters = ({
     },
   ];
 
-  const clearStaffSuppressStorageFlag = useCallback(() => {
+  const setStaffSuppressStorageFlag = useCallback(() => {
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
   }, []);
 
   const handleChange = useCallback((...args) => {
-    clearStaffSuppressStorageFlag();
+    setStaffSuppressStorageFlag();
     onChange(...args);
   }, [onChange]);
 
   const handleClearFilter = useCallback((name) => {
-    clearStaffSuppressStorageFlag();
+    setStaffSuppressStorageFlag();
     onClear(name);
   }, [onClear]);
 

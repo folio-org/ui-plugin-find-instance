@@ -1,8 +1,5 @@
 import { useContext } from 'react';
-import {
-  FormattedMessage,
-  useIntl,
-} from 'react-intl';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {

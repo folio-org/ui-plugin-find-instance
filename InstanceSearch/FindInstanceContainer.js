@@ -189,7 +189,7 @@ class FindInstanceContainer extends React.Component {
       query: '',
       filters: staffSuppressFalse,
     });
-    window.addEventListener('beforeunload', this.handleBeforeUnload);
+    window.addEventListener('beforeunload', this.clearStaffSuppressStorageFlag);
   }
 
   componentDidUpdate() {
@@ -204,11 +204,11 @@ class FindInstanceContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.handleBeforeUnload);
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+    window.removeEventListener('beforeunload', this.clearStaffSuppressStorageFlag);
+    this.clearStaffSuppressStorageFlag();
   }
 
-  handleBeforeUnload = () => {
+  clearStaffSuppressStorageFlag = () => {
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 

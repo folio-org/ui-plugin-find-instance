@@ -33,7 +33,10 @@ import Filters from './Filters';
 import css from './PluginFindRecordModal.css';
 import FilterNavigation from '../Imports/imports/FilterNavigation';
 
-import { CONFIG_TYPES } from '../Imports/imports/constants';
+import {
+  CONFIG_TYPES,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+} from '../Imports/imports/constants';
 
 const RESULTS_HEADER = <FormattedMessage id="ui-plugin-find-instance.resultsHeader" />;
 
@@ -195,6 +198,11 @@ class PluginFindRecordModal extends React.Component {
     }
 
     return nextState;
+  }
+
+  handleResetAll = (cb) => () => {
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+    cb();
   }
 
   render() {
@@ -379,7 +387,7 @@ class PluginFindRecordModal extends React.Component {
                           availableSegments={availableSegments}
                           segment={segment}
                           setSegment={setSegment}
-                          reset={resetAll}
+                          reset={this.handleResetAll(resetAll)}
                         />
                         <form onSubmit={onSubmitSearch}>
                           <div className={css.searchGroupWrap}>
@@ -413,7 +421,7 @@ class PluginFindRecordModal extends React.Component {
                               disabled={disableReset()}
                               fullWidth
                               id="clickable-reset-all"
-                              onClick={resetAll}
+                              onClick={this.handleResetAll(resetAll)}
                             >
                               <Icon icon="times-circle-solid">
                                 <FormattedMessage id="stripes-smart-components.resetAll" />
