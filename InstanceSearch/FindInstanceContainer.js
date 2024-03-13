@@ -19,7 +19,10 @@ import {
   getQueryTemplate,
   getIsbnIssnTemplate,
 } from '../Imports/imports/utils';
-import { CQL_FIND_ALL } from '../Imports/imports/constants';
+import {
+  CQL_FIND_ALL,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+} from '../Imports/imports/constants';
 
 import css from './FindInstanceContainer.css';
 
@@ -39,6 +42,7 @@ const columnMapping = {
 };
 
 const idPrefix = 'uiPluginFindInstance-';
+const staffSuppressFalse = 'staffSuppress.false';
 const modalLabel = <FormattedMessage id="ui-plugin-find-instance.modal.title" />;
 const filterConfig = getFilterConfig().filters;
 
@@ -67,6 +71,15 @@ const contributorsFormatter = (r, contributorTypes) => {
   return formatted;
 };
 
+const applyDefaultStaffSuppressFilter = (query) => {
+  const isUserTouchedStaffSuppress = JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY));
+
+  if (!query.query && query.filters === staffSuppressFalse && !isUserTouchedStaffSuppress) {
+    // if query is empty and the only filter value is staffSuppress.false and search was not initiated by user action
+    // then we need to clear the query.filters here to not automatically search when Inventory search is opened
+    query.filters = undefined;
+  }
+};
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(props.segment);
@@ -87,6 +100,8 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
     query.sort = 'title';
   }
+
+  applyDefaultStaffSuppressFilter(query);
 
   resourceData.query = { ...query, qindex: '' };
 
@@ -110,7 +125,7 @@ class FindInstanceContainer extends React.Component {
     query: {
       initialValue: {
         query: '',
-        filters: '',
+        filters: staffSuppressFalse,
       },
     },
     records: {
@@ -169,7 +184,12 @@ class FindInstanceContainer extends React.Component {
 
   componentDidMount() {
     this.source = new StripesConnectedSource(this.props, this.logger);
-    this.props.mutator.query.replace('');
+    this.props.mutator.query.replace({
+      qindex: this.state.qindex,
+      query: '',
+      filters: staffSuppressFalse,
+    });
+    window.addEventListener('beforeunload', this.clearStaffSuppressStorageFlag);
   }
 
   componentDidUpdate() {
@@ -181,6 +201,15 @@ class FindInstanceContainer extends React.Component {
     setFilterValues(instanceTypes, 'resource', 'name', 'id');
 
     this.source.update(this.props);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.clearStaffSuppressStorageFlag);
+    this.clearStaffSuppressStorageFlag();
+  }
+
+  clearStaffSuppressStorageFlag = () => {
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 
   fetchMore = () => {

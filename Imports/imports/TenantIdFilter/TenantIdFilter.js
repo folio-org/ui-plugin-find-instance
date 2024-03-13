@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -21,6 +21,7 @@ const TenantIdFilter = ({
   onClear,
   onChange,
 }) => {
+  const intl = useIntl();
   const { consortiaTenants } = useContext(DataContext);
 
   const dataOptions = consortiaTenants?.map(({ id, name }) => ({
@@ -34,7 +35,7 @@ const TenantIdFilter = ({
     <Accordion
       id={name}
       name={name}
-      label={<FormattedMessage id="ui-plugin-find-instance.filters.tenantId" />}
+      label={intl.formatMessage({ id: 'ui-plugin-find-instance.filters.tenantId' })}
       closedByDefault
       separator={false}
       header={FilterAccordionHeader}

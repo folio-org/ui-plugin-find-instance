@@ -6,8 +6,16 @@ import {
 
 import InstanceFilters from './InstanceFilters';
 import Harness from '../../../test/jest/helpers/harness';
+import { USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../constants';
 
 jest.mock('../TagsFilter', () => jest.fn().mockReturnValue('TagsFilter'));
+jest.mock('@folio/stripes/smart-components', () => ({
+  ...jest.requireActual('@folio/stripes/smart-components'),
+  CheckboxFilter: ({ name, onChange }) => ((
+    <button type="button" onClick={() => onChange()}>change facet {name}</button>
+  )),
+}));
+jest.unmock('@folio/stripes/components');
 
 const activeFilters = {
   shared: ['true'],
@@ -84,75 +92,75 @@ describe('InstanceFilters', () => {
     });
 
     it('Should Clear selected filters for shared', () => {
-      const clearShared = document.querySelector('[data-testid="clear-shared"]');
+      const clearShared = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.filters.shared"' });
       fireEvent.click(clearShared);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for effective Location', () => {
-      const cleareffectiveLocation = document.querySelector('[data-testid="clear-effectiveLocation"]');
+      const cleareffectiveLocation = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.filters.effectiveLocation"' });
       fireEvent.click(cleareffectiveLocation);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for language', () => {
-      const clearlanguage = document.querySelector('[data-testid="clear-language"]');
+      const clearlanguage = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.instances.language"' });
       fireEvent.click(clearlanguage);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for resource', () => {
-      const clearresource = document.querySelector('[data-testid="clear-resource"]');
+      const clearresource = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.instances.resourceType"' });
       fireEvent.click(clearresource);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for format', () => {
-      const clearformat = document.querySelector('[data-testid="clear-format"]');
+      const clearformat = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.instanceFormat"' });
       fireEvent.click(clearformat);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for mode', () => {
-      const clearmode = document.querySelector('[data-testid="clear-mode"]');
+      const clearmode = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.modeOfIssuance"' });
       fireEvent.click(clearmode);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for natureOfContent', () => {
-      const clearnatureOfContent = document.querySelector('[data-testid="clear-natureOfContent"]');
+      const clearnatureOfContent = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.natureOfContentTerms"' });
       fireEvent.click(clearnatureOfContent);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for staffSuppress', () => {
-      const clearstaffSuppress = document.querySelector('[data-testid="clear-staffSuppress"]');
+      const clearstaffSuppress = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.staffSuppress"' });
       fireEvent.click(clearstaffSuppress);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for discoverySuppress', () => {
-      const cleardiscoverySuppress = document.querySelector('[data-testid="clear-discoverySuppress"]');
+      const cleardiscoverySuppress = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.discoverySuppress"' });
       fireEvent.click(cleardiscoverySuppress);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for createdDate', () => {
-      const clearcreatedDate = document.querySelector('[data-testid="clear-createdDate"]');
+      const clearcreatedDate = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.createdDate"' });
       fireEvent.click(clearcreatedDate);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for updatedDate', () => {
-      const clearupdatedDate = document.querySelector('[data-testid="clear-updatedDate"]');
+      const clearupdatedDate = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.updatedDate"' });
       fireEvent.click(clearupdatedDate);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('Should Clear selected filters for source', () => {
-      const clearsource = document.querySelector('[data-testid="clear-source"]');
+      const clearsource = screen.getByRole('button', { name: 'Clear selected filters for "ui-plugin-find-instance.source"' });
       fireEvent.click(clearsource);
-      expect(mockClear).toBeCalled();
+      expect(mockClear).toHaveBeenCalled();
     });
 
     it('should render Shared filter', () => {
@@ -160,18 +168,23 @@ describe('InstanceFilters', () => {
     });
   });
 
-  describe('when filters are empty', () => {
+  describe('when user selects staff suppress options', () => {
+    const mockSetItem = jest.fn();
     beforeEach(() => {
-      renderInstanceFilters({
-        activeFilters: {},
-      });
+      global.Storage.prototype.setItem = mockSetItem;
     });
 
-    it('should disable clear buttons', () => {
-      const clearButtons = screen.getAllByRole('button', { name: 'Clear' });
-      clearButtons.forEach((button) => {
-        expect(button).toBeDisabled();
-      });
+    afterEach(() => {
+      global.Storage.prototype.setItem.mockReset();
+    });
+
+    it('should set a flag that user selected some option', async () => {
+      renderInstanceFilters();
+      const staffSuppressFacet = screen.queryByRole('button', { name: 'ui-plugin-find-instance.staffSuppress filter list' });
+      await fireEvent.click(staffSuppressFacet);
+      await fireEvent.click(screen.getByText('change facet staffSuppress'));
+
+      expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
     });
   });
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -27,6 +27,7 @@ import TagsFilter from '../TagsFilter';
 import SharedFilter from '../SharedFilter';
 import TenantIdFilter from '../TenantIdFilter';
 import { LocationFilter } from '../LocationFilter';
+import { USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../constants';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -108,6 +109,22 @@ const InstanceFilters = ({
     },
   ];
 
+  const setStaffSuppressStorageFlag = useCallback(() => {
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
+  }, []);
+
+  const handleChange = useCallback((...args) => {
+    setStaffSuppressStorageFlag();
+    onChange(...args);
+  }, [onChange]);
+
+  const handleClearFilter = useCallback((name) => {
+    setStaffSuppressStorageFlag();
+    onClear(name);
+  }, [onClear]);
+
+  const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
+
   return (
     <>
       {isUserInMemberTenant && (
@@ -136,7 +153,7 @@ const InstanceFilters = ({
         onClear={onClear}
       />
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.instances.language" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.instances.language' })}
         id="language"
         name="language"
         separator={false}
@@ -153,7 +170,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.instances.resourceType" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.instances.resourceType' })}
         id="resource"
         name="resource"
         closedByDefault
@@ -170,7 +187,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.instanceFormat" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.instanceFormat' })}
         id="format"
         name="format"
         closedByDefault
@@ -187,7 +204,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.modeOfIssuance" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.modeOfIssuance' })}
         id="mode"
         name="mode"
         closedByDefault
@@ -204,7 +221,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.natureOfContentTerms" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.natureOfContentTerms' })}
         id="natureOfContent"
         name="natureOfContent"
         closedByDefault
@@ -220,25 +237,27 @@ const InstanceFilters = ({
           onChange={onChange}
         />
       </Accordion>
-      <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.staffSuppress" />}
-        id="staffSuppress"
-        name="staffSuppress"
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={staffSuppress.length > 0}
-        onClearFilter={() => onClear('staffSuppress')}
-      >
-        <CheckboxFilter
-          data-test-filter-instance-staff-suppress
+      {isStaffSuppressFilterAvailable && (
+        <Accordion
+          label={intl.formatMessage({ id: 'ui-plugin-find-instance.staffSuppress' })}
+          id="staffSuppress"
           name="staffSuppress"
-          dataOptions={suppressedOptions}
-          selectedValues={staffSuppress}
-          onChange={onChange}
-        />
-      </Accordion>
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={staffSuppress.length > 0}
+          onClearFilter={() => handleClearFilter('staffSuppress')}
+        >
+          <CheckboxFilter
+            data-test-filter-instance-staff-suppress
+            name="staffSuppress"
+            dataOptions={suppressedOptions}
+            selectedValues={staffSuppress}
+            onChange={handleChange}
+          />
+        </Accordion>
+      )}
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.discoverySuppress" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.discoverySuppress' })}
         id="discoverySuppress"
         name="discoverySuppress"
         closedByDefault
@@ -255,7 +274,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.createdDate" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.createdDate' })}
         id="createdDate"
         name="createdDate"
         closedByDefault
@@ -272,7 +291,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.updatedDate" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.updatedDate' })}
         id="updatedDate"
         name="updatedDate"
         closedByDefault
@@ -289,7 +308,7 @@ const InstanceFilters = ({
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-plugin-find-instance.source" />}
+        label={intl.formatMessage({ id: 'ui-plugin-find-instance.source' })}
         id="source"
         name="source"
         closedByDefault

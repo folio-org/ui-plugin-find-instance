@@ -145,7 +145,7 @@ jest.mock('@folio/stripes/components', () => ({
       </div>
     );
   }),
-  languageOptions: jest.fn(() => <div>languageOptions</div>),
+  languageOptions: jest.fn(() => []),
   PaneMenu: jest.fn(({ children }) => <div>{children}</div>),
   Paneset: jest.fn(({ children }) => <div>{children}</div>),
   SearchField: jest.fn(({

@@ -3,12 +3,14 @@ import {
   screen,
   fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
-import {
-  makeQueryFunction,
-  StripesConnectedSource,
-} from '@folio/stripes/smart-components';
+import { StripesConnectedSource } from '@folio/stripes/smart-components';
 
 import FindInstanceContainer, { buildQuery } from './FindInstanceContainer';
+
+jest.mock('@folio/stripes/smart-components', () => ({
+  ...jest.requireActual('@folio/stripes/smart-components'),
+  StripesConnectedSource: jest.fn(),
+}));
 
 const mockStripesConnectedSourceValues = {
   fetchMore: jest.fn(),
@@ -19,6 +21,7 @@ const mockStripesConnectedSourceValues = {
 StripesConnectedSource.mockImplementation(jest.fn(() => mockStripesConnectedSourceValues));
 
 const defaultProps = {
+  segment: 'instances',
   mutator: {
     query: {
       replace: jest.fn(),
@@ -126,36 +129,90 @@ const renderFindInstanceContainer = (prop) => render(
 describe('FindInstanceContainer', () => {
   beforeEach(() => renderFindInstanceContainer(defaultProps));
   afterEach(() => jest.clearAllMocks());
+
   it('Component should render correctly', () => {
     expect(screen.getByTestId('total-records')).toBeInTheDocument();
   });
+
   it('should call soure.fetchMore on onNeedMoreData', () => {
     fireEvent.click(screen.getByText('onNeedMoreData'));
-    expect(mockStripesConnectedSourceValues.fetchMore).toBeCalled();
+    expect(mockStripesConnectedSourceValues.fetchMore).toHaveBeenCalled();
   });
+
   it('query.update function to be called when changeType value is not reset', () => {
     fireEvent.click(screen.getByText('querySetterForUpdate'));
-    expect(defaultProps.mutator.query.update).toBeCalledWith({ qindex: '' });
+    expect(defaultProps.mutator.query.update).toHaveBeenCalledWith({ qindex: '' });
   });
+
   it('query.replace function to be called when changeType value is reset', () => {
     fireEvent.click(screen.getByText('querySetterForReset'));
-    expect(defaultProps.mutator.query.replace).toBeCalledWith({ qindex: '' });
+    expect(defaultProps.mutator.query.replace).toHaveBeenCalledWith({ qindex: '' });
   });
-  describe('buildQuery', () => {
-    it('makeQueryFunction to be called', () => {
-      const queryParams = 'queryParams';
-      const pathComponents = 'pathComponents';
-      const resourceData = {
-        identifier_types: {
-          records: []
-        },
-        query: {
-          sort: ''
-        }
-      };
-      const logger = 'logger';
-      buildQuery(queryParams, pathComponents, resourceData, logger, defaultProps);
-      expect(makeQueryFunction).toBeCalled();
+
+  describe.only('buildQuery', () => {
+    describe('when query is empty', () => {
+      it('should return empty query parameters', () => {
+        const queryParams = 'queryParams';
+        const pathComponents = 'pathComponents';
+        const resourceData = {
+          identifier_types: {
+            records: []
+          },
+          query: {
+            sort: '',
+            query: '',
+            filters: 'staffSuppress.false',
+          },
+        };
+        const logger = { log: jest.fn() };
+        const result = buildQuery(queryParams, pathComponents, resourceData, logger, defaultProps);
+        expect(result).toBeNull();
+      });
+    });
+
+    describe('when query is not empty', () => {
+      it('should return correct query parameters', () => {
+        const queryParams = 'queryParams';
+        const pathComponents = 'pathComponents';
+        const resourceData = {
+          identifier_types: {
+            records: []
+          },
+          query: {
+            sort: '',
+            query: 'test',
+            filters: 'staffSuppress.false',
+          },
+        };
+        const logger = { log: jest.fn() };
+        const result = buildQuery(queryParams, pathComponents, resourceData, logger, defaultProps);
+        expect(result).toEqual('((isbn="test") and staffSuppress=="false") sortby title');
+      });
+    });
+
+    describe('when user did touch staff suppress', () => {
+      beforeEach(() => {
+        global.Storage.prototype.getItem = jest.fn().mockReturnValue('true');
+      });
+
+      it('should return cql string with staff suppress filter', () => {
+        const queryParams = 'queryParams';
+        const pathComponents = 'pathComponents';
+        const resourceData = {
+          identifier_types: {
+            records: []
+          },
+          query: {
+            sort: '',
+            query: '',
+            filters: 'staffSuppress.false',
+          },
+        };
+
+        const logger = { log: jest.fn() };
+        const result = buildQuery(queryParams, pathComponents, resourceData, logger, defaultProps);
+        expect(result).toEqual('(staffSuppress=="false") sortby title');
+      });
     });
   });
 });
