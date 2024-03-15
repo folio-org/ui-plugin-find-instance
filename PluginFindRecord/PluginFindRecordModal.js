@@ -175,8 +175,16 @@ class PluginFindRecordModal extends React.Component {
   are.
   */
   queryStateReducer = (state, nextState) => {
-    if (nextState.filterChanged) {
-      let newFilterFields = state.filterFields; // Begin with filters from previous state
+    /* nextState.filterChanged only tells us that next filter state is different from initial filter state so we can enable/disable resetAll button etc
+      we can't rely on nextState.filterChanged to check if some filter values changed because it's calculated by comparing full next state and default values.
+      but we don't know the full next state until this function returns.
+
+      what we need is a way to tell if filters from previous state are different from filters in next state.
+      that is be the case when nextState.filterFields is not undefined so we can use that property instead
+    */
+    if (nextState.filterFields) {
+      // make sure to create a copy of state.filterFields to not mutate actual component state.
+      let newFilterFields = { ...state.filterFields }; // Begin with filters from previous state
       const changedFilters = Object.keys(nextState.filterFields);
       if (changedFilters.length === 0) { return nextState; }
 
