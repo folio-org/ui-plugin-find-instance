@@ -175,6 +175,10 @@ class PluginFindRecordModal extends React.Component {
   are.
   */
   queryStateReducer = (state, nextState) => {
+    if (nextState.changeType === 'reset.all') {
+      return nextState;
+    }
+
     /* nextState.filterChanged only tells us that next filter state is different from initial filter state so we can enable/disable resetAll button etc
       we can't rely on nextState.filterChanged to check if some filter values changed because it's calculated by comparing full next state and default values.
       but we don't know the full next state until this function returns.
