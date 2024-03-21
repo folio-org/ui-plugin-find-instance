@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## [7.1.0] (IN PROGRESS)
+## [7.1.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.0) (2024-03-21)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.0.3...v7.1.0)
 
 * Remove eslint deps that are already listed in eslint-config-stripes. Refs UIPFI-124.
 * Remove the translation dependency from ui-inventory. Refs UIPFI-24.
