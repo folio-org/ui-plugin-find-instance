@@ -149,7 +149,7 @@ describe('FindInstanceContainer', () => {
     expect(defaultProps.mutator.query.replace).toHaveBeenCalledWith({ qindex: '' });
   });
 
-  describe.only('buildQuery', () => {
+  describe('buildQuery', () => {
     describe('when query is empty', () => {
       it('should return empty query parameters', () => {
         const queryParams = 'queryParams';
