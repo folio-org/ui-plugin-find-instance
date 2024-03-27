@@ -91,9 +91,11 @@ const publishersData = {
 };
 const renderFindInstanceContainer = (prop) => render(
   <FindInstanceContainer {...prop}>
-    {({ data, onNeedMoreData, querySetter, resultsFormatter, setSearchIndex }) => {
+    {({ data, onNeedMoreData, querySetter, resultsFormatter }) => {
       const querySetterValues = {
-        nsValues: {},
+        nsValues: {
+          qindex: '',
+        },
         state: {
           changeType: 'update'
         }
@@ -108,7 +110,6 @@ const renderFindInstanceContainer = (prop) => render(
         resultsFormatter.title({ title: 'title' });
         resultsFormatter.contributors(contributorsData);
         resultsFormatter.publishers(publishersData);
-        setSearchIndex({ target: { value: 'isbn' } });
       };
       return (
         <div
@@ -146,10 +147,14 @@ describe('FindInstanceContainer', () => {
 
   it('query.replace function to be called when changeType value is reset', () => {
     fireEvent.click(screen.getByText('querySetterForReset'));
-    expect(defaultProps.mutator.query.replace).toHaveBeenCalledWith({ qindex: '' });
+    expect(defaultProps.mutator.query.replace).toHaveBeenCalledWith({
+      qindex: '',
+      query: '',
+      filters: 'staffSuppress.false',
+    });
   });
 
-  describe.only('buildQuery', () => {
+  describe('buildQuery', () => {
     describe('when query is empty', () => {
       it('should return empty query parameters', () => {
         const queryParams = 'queryParams';
