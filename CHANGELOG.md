@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## [7.1.1] (IN PROGRESS)
+## [7.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.1) (2024-04-01)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.1.0...v7.1.1)
 
 * Use `SearchAndSortQuery` `qindex` instead of what is stored in state. Fixes UIPFI-147.
 
