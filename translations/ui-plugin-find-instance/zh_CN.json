@@ -74,5 +74,5 @@
     "instances.columns.contributors": "贡献者",
     "instances.columns.publishers": "出版者",
     "communicationProblem": "服务器通信问题。请再试",
-    "lccn": "LCCN, normalized"
+    "lccn": "LCCN，标准化"
 }
