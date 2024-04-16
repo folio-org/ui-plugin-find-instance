@@ -98,6 +98,7 @@ export const instanceIndexes = [
   { label: 'ui-plugin-find-instance.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
   { label: 'ui-plugin-find-instance.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
   { label: 'ui-plugin-find-instance.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"' },
+  { label: 'ui-plugin-find-instance.normalizedClassificationNumber', value: 'normalizedClassificationNumber', queryTemplate: 'normalizedClassificationNumber=="%{query.query}"' },
   { label: 'ui-plugin-find-instance.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-plugin-find-instance.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-plugin-find-instance.lccn', value: 'lccn', queryTemplate: 'lccn="%{query.query}"' },

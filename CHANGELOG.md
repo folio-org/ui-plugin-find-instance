@@ -1,5 +1,9 @@
 # Change history for ui-plugin-find-instance
 
+## [7.2.0] IN PROGRESS
+
+* Add new Instance search option `Classification, normalized` for the `Instance` toggle. Refs UIPFI-149.
+
 ## [7.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.1) (2024-04-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.1.0...v7.1.1)
 

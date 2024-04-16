@@ -57,6 +57,7 @@
   "contributor": "Contributor",
   "title": "Title (all)",
   "identifierAll": "Identifier (all)",
+  "normalizedClassificationNumber": "Classification, normalized",
   "issn": "ISSN",
   "lccn": "LCCN, normalized",
   "isbn": "ISBN",
