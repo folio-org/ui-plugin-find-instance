@@ -100,5 +100,7 @@ jest.mock('@folio/stripes/core', () => {
     })),
 
     checkIfUserInMemberTenant: () => true,
+
+    checkIfUserInCentralTenant: jest.fn(() => false),
   };
 }, { virtual: true });

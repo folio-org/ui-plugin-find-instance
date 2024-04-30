@@ -30,22 +30,22 @@ const locationsWithDuplicates = [
   {
     id: '53cf956f-c1df-410b-8bea-27f712cca7c0',
     name: 'Annex',
-    _tenantId: 'cs00000int_0001',
+    tenantId: 'cs00000int_0001',
   },
   {
     id: '53cf956f-c1df-410b-8bea-27f712cca7c0',
     name: 'Annex',
-    _tenantId: 'cs00000int',
+    tenantId: 'cs00000int',
   },
   {
     id: '184aae84-a5bf-4c6a-85ba-4a7c73026cd5',
     name: 'Online',
-    _tenantId: 'cs00000int_0003',
+    tenantId: 'cs00000int_0003',
   },
   {
     id: '8e9f7ced-d720-4cd4-b098-0f7c1f7c3ceb',
     name: 'Annex',
-    _tenantId: 'cs00000int_0005',
+    tenantId: 'cs00000int_0005',
   },
 ];
 

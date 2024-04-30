@@ -3,6 +3,7 @@
 ## [7.2.0] IN PROGRESS
 
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle. Refs UIPFI-149.
+* Use consolidated locations endpoint to fetch all locations when in central tenant context. Refs UIPFI-146.
 
 ## [7.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.1) (2024-04-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.1.0...v7.1.1)
