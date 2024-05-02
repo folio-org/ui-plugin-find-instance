@@ -20,7 +20,7 @@ const activeFilters = {
 const data = {
   locations: [
     {
-      _tenantId: 'cs00000int_0001',
+      tenantId: 'cs00000int_0001',
       name: 'location1',
       id: 'locationid1'
     }

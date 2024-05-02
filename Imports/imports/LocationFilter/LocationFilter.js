@@ -50,9 +50,9 @@ export const LocationFilter = ({
 
   const getOptions = () => {
     if (isUserInConsortiumMode(stripes)) {
-      return uniqueLocations.map(({ name: locationName, id: locationId, _tenantId }) => {
+      return uniqueLocations.map(({ name: locationName, id: locationId, tenantId }) => {
         const isDuplicate = groupedLocations[locationName].length > 1;
-        const tenantName = groupedConsortiaTenants[_tenantId][0].name;
+        const tenantName = groupedConsortiaTenants[tenantId][0].name;
 
         return {
           label: isDuplicate ? `${locationName} (${tenantName})` : locationName,

@@ -1,5 +1,6 @@
 import keyBy from 'lodash/keyBy';
 import {
+  useEffect,
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -21,6 +22,7 @@ import { isUserInConsortiumMode } from './utils';
 const DataProvider = ({
   children,
   resources,
+  mutator,
 }) => {
   const stripes = useStripes();
   const { manifest } = DataProvider;
@@ -31,6 +33,14 @@ const DataProvider = ({
   } = useConsortiaTenants();
 
   const tenantIds = consortiaTenants?.map(tenant => tenant.id);
+
+  useEffect(() => {
+    if (isUserInConsortiumMode(stripes)) {
+      return;
+    }
+
+    mutator.locations.GET({ tenant: stripes.okapi.tenant });
+  }, [stripes.okapi.tenant]);
 
   const {
     data: locationsOfAllTenants,
@@ -90,6 +100,7 @@ const DataProvider = ({
 
 DataProvider.propTypes = {
   resources: PropTypes.object.isRequired,
+  mutator: PropTypes.object.isRequired,
   children: PropTypes.object,
 };
 
@@ -112,6 +123,7 @@ DataProvider.manifest = {
       limit: (q, p, r, l, props) => props?.stripes?.config?.maxUnpagedResourceCount || 1000,
       query: 'cql.allRecords=1 sortby name',
     },
+    accumulate: true,
   },
   modesOfIssuance: {
     type: 'okapi',

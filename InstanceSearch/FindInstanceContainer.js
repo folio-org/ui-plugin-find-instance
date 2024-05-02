@@ -148,12 +148,6 @@ class FindInstanceContainer extends React.Component {
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
-    locations: {
-      throwErrors: false,
-      type: 'okapi',
-      records: 'locations',
-      path: 'locations?limit=1000&query=cql.allRecords=1 sortby name',
-    },
     instanceTypes: {
       throwErrors: false,
       type: 'okapi',
