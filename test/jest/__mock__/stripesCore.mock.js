@@ -1,12 +1,11 @@
-import React from 'react';
 
-export const buildStripes = (otherProperties = {}) => ({
+const buildStripes = (otherProperties = {}) => ({
   actionNames: [],
   clone: buildStripes,
   connect: Comp => Comp,
   config: {},
   currency: 'USD',
-  hasInterface: () => true,
+  hasInterface: jest.fn().mockReturnValue(true),
   hasPerm: jest.fn().mockReturnValue(true),
   locale: 'en-US',
   logger: {
@@ -35,72 +34,95 @@ export const buildStripes = (otherProperties = {}) => ({
     user: {
       id: 'b1add99d-530b-5912-94f3-4091b4d87e2c',
       username: 'diku_admin',
+      consortium: {
+        centralTenantId: 'consortia',
+      },
     },
   },
   withOkapi: true,
   ...otherProperties,
 });
 
-jest.mock('@folio/stripes/core', () => {
-  const STRIPES = buildStripes();
+const STRIPES = buildStripes();
 
-  return {
-    AppIcon: jest.fn(({ children }) => <span>{children}</span>),
-    stripesConnect: Component => ({ mutator, resources, stripes, ...rest }) => {
-      const fakeMutator = mutator || Object.keys(Component.manifest).reduce((acc, mutatorName) => {
-        const returnValue = Component.manifest[mutatorName].records ? [] : {};
+const mockStripesCore = {
+  stripesConnect: Component => ({ mutator, resources, stripes, ...rest }) => {
+    const fakeMutator = mutator || Object.keys(Component.manifest || {}).reduce((acc, mutatorName) => {
+      const returnValue = Component.manifest[mutatorName].records ? [] : {};
 
-        acc[mutatorName] = {
-          GET: jest.fn().mockReturnValue(Promise.resolve(returnValue)),
-          PUT: jest.fn().mockReturnValue(Promise.resolve()),
-          POST: jest.fn().mockReturnValue(Promise.resolve()),
-          DELETE: jest.fn().mockReturnValue(Promise.resolve()),
-          reset: jest.fn(),
-          update: jest.fn(),
-          replace: jest.fn(),
-        };
+      acc[mutatorName] = {
+        GET: jest.fn().mockReturnValue(Promise.resolve(returnValue)),
+        PUT: jest.fn().mockReturnValue(Promise.resolve()),
+        POST: jest.fn().mockReturnValue(Promise.resolve()),
+        DELETE: jest.fn().mockReturnValue(Promise.resolve()),
+        reset: jest.fn(),
+        update: jest.fn(),
+        replace: jest.fn(),
+      };
 
-        return acc;
-      }, {});
+      return acc;
+    }, {});
 
-      const fakeResources = resources || Object.keys(Component.manifest).reduce((acc, resourceName) => {
-        acc[resourceName] = {
-          records: [],
-        };
+    const fakeResources = resources || Object.keys(Component.manifest || {}).reduce((acc, resourceName) => {
+      acc[resourceName] = {
+        records: [],
+      };
 
-        return acc;
-      }, {});
+      return acc;
+    }, {});
 
-      const fakeStripes = stripes || STRIPES;
+    const fakeStripes = stripes || STRIPES;
 
-      return <Component {...rest} mutator={fakeMutator} resources={fakeResources} stripes={fakeStripes} />;
-    },
+    return <Component {...rest} mutator={fakeMutator} resources={fakeResources} stripes={fakeStripes} />;
+  },
 
-    useOkapiKy: jest.fn(),
+  useOkapiKy: jest.fn().mockReturnValue({
+    get: jest.fn().mockReturnValue({ json: jest.fn().mockResolvedValue({}) }),
+    post: jest.fn(),
+    put: jest.fn(),
+    delete: jest.fn(),
+    extend: jest.fn().mockReturnValue(this),
+  }),
 
-    useStripes: jest.fn(() => STRIPES),
+  useStripes: jest.fn(() => STRIPES),
 
-    withStripes: Component => ({ stripes, ...rest }) => {
-      const fakeStripes = stripes || STRIPES;
+  withStripes: Component => ({ stripes, ...rest }) => {
+    const fakeStripes = stripes || STRIPES;
 
-      return <Component {...rest} stripes={fakeStripes} />;
-    },
+    return <Component {...rest} stripes={fakeStripes} />;
+  },
 
-    // eslint-disable-next-line react/prop-types
-    Pluggable: props => <>{props.children}</>,
+  // eslint-disable-next-line react/prop-types
+  Pluggable: props => <>{props.children}</>,
 
-    // eslint-disable-next-line react/prop-types
-    IfPermission: props => <>{props.children}</>,
-    IfInterface: props => <>{props.children}</>,
+  // eslint-disable-next-line react/prop-types
+  IfPermission: jest.fn(props => <>{props.children}</>),
 
-    useNamespace: () => ['@folio/inventory'],
+  withOkapiKy: jest.fn((Component) => (props) => <Component {...props} />),
 
-    useCallout: jest.fn(() => ({
-      sendCallout: jest.fn(() => {})
-    })),
+  // eslint-disable-next-line react/prop-types
+  IfInterface: jest.fn(props => <>{props.children}</>),
 
-    checkIfUserInMemberTenant: () => true,
+  useNamespace: () => ['@folio/plugin-find-instance'],
 
-    checkIfUserInCentralTenant: jest.fn(() => false),
-  };
-}, { virtual: true });
+  useCallout: jest.fn(() => ({
+    sendCallout: jest.fn(() => {})
+  })),
+
+  TitleManager: ({ children }) => <>{children}</>,
+
+  checkIfUserInMemberTenant: jest.fn(() => true),
+
+  checkIfUserInCentralTenant: jest.fn(() => false),
+
+  updateTenant: jest.fn(() => {}),
+
+  validateUser: jest.fn(() => {}),
+};
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  ...mockStripesCore
+}), { virtual: true });
+
+export default buildStripes;
