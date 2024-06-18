@@ -6,8 +6,10 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 import IntlProvider from './intl';
-import DataContext from '../../../Imports/imports/DataContext';
-import DataProvider from '../../../Imports/imports/DataProvider';
+import {
+  DataProvider,
+  DataContext,
+} from '../../../src/contexts';
 
 const queryClient = new QueryClient();
 const defaultHistory = createMemoryHistory();
