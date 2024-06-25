@@ -104,6 +104,7 @@ const mockStripesCore = {
   IfInterface: jest.fn(props => <>{props.children}</>),
 
   useNamespace: () => ['@folio/plugin-find-instance'],
+  withNamespace: (Component) => (props) => <Component {...props} namespace="'@folio/plugin-find-instance'" />,
 
   useCallout: jest.fn(() => ({
     sendCallout: jest.fn(() => {})

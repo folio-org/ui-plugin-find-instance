@@ -11,9 +11,8 @@ import { Icon } from '@folio/stripes/components';
 import { useCallout } from '@folio/stripes/core';
 import {
   filterConfig,
-  HoldingsRecordFilters,
-  InstanceFilters,
-  ItemFilters,
+  queryIndexes,
+  renderFilters,
   segments,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
@@ -27,12 +26,6 @@ import {
 import { CONFIG_TYPES } from './constants';
 import { useInstancesQuery } from './hooks';
 import { parseHttpError } from './utils';
-
-const filterComponents = {
-  [segments.instances]: InstanceFilters,
-  [segments.holdings]: HoldingsRecordFilters,
-  [segments.items]: ItemFilters,
-};
 
 const FindInstance = ({
   config,
@@ -49,26 +42,13 @@ const FindInstance = ({
   const [instances, setInstances] = useState([]);
 
   const { indexes } = filterConfig[segment];
+  const searchIndexes = indexes.filter(queryIndex => queryIndex.value !== queryIndexes.ADVANCED_SEARCH);
 
   const { isLoading, isError, error = {}, data: instancesData = {} } = useInstancesQuery(instances);
 
-  /* eslint-disable react/prop-types */
-  const renderFilters = useCallback(({ data, query }) => ({ activeFilters, getFilterHandlers }) => {
-    const FiltersComponent = filterComponents[segment];
-
-    const handleChange = ({ name, values }) => {
-      getFilterHandlers().state({ [name]: values });
-    };
-
-    return (
-      <FiltersComponent
-        activeFilters={activeFilters.state}
-        data={data}
-        query={query}
-        onChange={handleChange}
-      />
-    );
-  }, [segment]);
+  const handleFilterChange = useCallback((onChange) => ({ name, values }) => {
+    onChange({ [name]: values });
+  }, []);
 
   useEffect(() => {
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
@@ -122,14 +102,13 @@ const FindInstance = ({
                   renderNewBtn={renderNewBtn}
                   renderFilters={renderFilters({
                     data: contextData,
-                    query: {
-                      segment,
-                      ...viewProps.queryGetter(),
-                    },
+                    query: viewProps.queryGetter(),
+                    segment,
+                    onFilterChange: handleFilterChange,
                   })}
                   segment={segment}
                   setSegment={setSegment}
-                  searchIndexes={indexes}
+                  searchIndexes={searchIndexes}
                 />
               )}
             </FindInstanceContainer>
