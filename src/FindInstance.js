@@ -11,6 +11,7 @@ import { Icon } from '@folio/stripes/components';
 import { useCallout } from '@folio/stripes/core';
 import {
   filterConfig,
+  queryIndexes,
   renderFilters,
   segments,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
@@ -41,6 +42,7 @@ const FindInstance = ({
   const [instances, setInstances] = useState([]);
 
   const { indexes } = filterConfig[segment];
+  const searchIndexes = indexes.filter(queryIndex => queryIndex.value !== queryIndexes.ADVANCED_SEARCH);
 
   const { isLoading, isError, error = {}, data: instancesData = {} } = useInstancesQuery(instances);
 
@@ -106,7 +108,7 @@ const FindInstance = ({
                   })}
                   segment={segment}
                   setSegment={setSegment}
-                  searchIndexes={indexes}
+                  searchIndexes={searchIndexes}
                 />
               )}
             </FindInstanceContainer>
