@@ -4,12 +4,14 @@ import {
   noop,
   omit,
   pickBy,
+  flowRight,
 } from 'lodash';
 import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
 
+import { withNamespace } from '@folio/stripes/core';
 import {
   Button,
   Checkbox,
@@ -213,15 +215,20 @@ class PluginFindRecordModal extends React.Component {
   }
 
   handleResetAll = (cb) => () => {
-    resetFacetStates();
+    const { namespace } = this.props;
+
+    resetFacetStates({ namespace });
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     cb();
   }
 
   handleSearchSegmentChange = (resetAll) => (name) => {
-    const { setSegment } = this.props;
+    const {
+      setSegment,
+      namespace,
+    } = this.props;
 
-    deleteFacetStates();
+    deleteFacetStates(namespace);
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     setSegment(name);
     resetAll();
@@ -450,7 +457,7 @@ class PluginFindRecordModal extends React.Component {
                               </Icon>
                             </Button>
                           </div>
-                          {renderFilters({ activeFilters, getFilterHandlers })}
+                          {renderFilters(getFilterHandlers().state)}
                         </form>
                       </Pane>
                     }
@@ -512,6 +519,7 @@ PluginFindRecordModal.propTypes = {
   intl: PropTypes.object.isRequired,
   isMultiSelect: PropTypes.bool.isRequired,
   modalLabel: PropTypes.node,
+  namespace: PropTypes.string.isRequired,
   onComponentWillUnmount: PropTypes.func,
   onNeedMoreData: PropTypes.func,
   onSaveMultiple: PropTypes.func,
@@ -546,4 +554,7 @@ PluginFindRecordModal.defaultProps = {
   },
 };
 
-export default injectIntl(PluginFindRecordModal);
+export default flowRight(
+  withNamespace,
+  injectIntl,
+)(PluginFindRecordModal);
