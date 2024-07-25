@@ -30,7 +30,10 @@ const defaultProps = {
     },
     resultOffset: {
       replace: jest.fn()
-    }
+    },
+    requestUrlQuery: {
+      replace: jest.fn(),
+    },
   },
   resources: {
     contributorTypes: {
@@ -178,7 +181,9 @@ describe('FindInstanceContainer', () => {
 
     describe('when query is not empty', () => {
       it('should return correct query parameters', () => {
-        const queryParams = 'queryParams';
+        const queryParams = {
+          qindex: 'isbn',
+        };
         const pathComponents = 'pathComponents';
         const resourceData = {
           identifier_types: {

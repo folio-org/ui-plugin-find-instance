@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import flowRight from 'lodash/flowRight';
 import classnames from 'classnames';
 
 import { Icon } from '@folio/stripes/components';
@@ -12,7 +13,8 @@ import {
 } from '@folio/stripes/core';
 import {
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
-  buildSearchQuery,
+  withSearchErrors,
+  buildRecordsManifest,
 } from '@folio/stripes-inventory-components';
 
 import css from './FindInstanceContainer.css';
@@ -71,24 +73,8 @@ class FindInstanceContainer extends React.Component {
         filters: staffSuppressFalse,
       },
     },
-    records: {
-      accumulate: 'true',
-      throwErrors: false,
-      type: 'okapi',
-      records: 'instances',
-      resultDensity: 'sparse',
-      path: 'search/instances',
-      recordsRequired: '%{resultCount}',
-      resultOffset: '%{resultOffset}',
-      perRequest: RESULT_COUNT_INCREMENT,
-      GET: {
-        params: {
-          expandAll: true,
-          query: buildSearchQuery(applyDefaultStaffSuppressFilter),
-        },
-        staticFallback: { params: {} },
-      },
-    },
+    requestUrlQuery: { initialValue: '' },
+    records: buildRecordsManifest(applyDefaultStaffSuppressFilter),
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
     contributorTypes: {
@@ -238,4 +224,7 @@ FindInstanceContainer.propTypes = {
   resources: PropTypes.object.isRequired,
 };
 
-export default stripesConnect(FindInstanceContainer, { dataKey: 'find_instance' });
+export default flowRight(
+  (Component) => stripesConnect(Component, { dataKey: 'find_instance' }),
+  withSearchErrors,
+)(FindInstanceContainer);
