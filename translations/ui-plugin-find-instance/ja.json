@@ -66,7 +66,7 @@
     "callNumberEyeReadable": "Call number, eye readable",
     "callNumberNormalized": "Call number, normalized",
     "holdingsHrid": "Holdings HRID",
-    "barcode": "Barcode",
+    "barcode": "バーコード",
     "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
     "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
     "itemHrid": "Item HRID",
