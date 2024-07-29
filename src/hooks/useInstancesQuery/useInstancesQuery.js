@@ -17,7 +17,7 @@ const useInstancesQuery = (instances = [], options = {}) => {
 
   const res = useQuery(
     {
-      queryKey: [namespace, 'instances', instanceIdsQuery],
+      queryKey: [namespace, 'instances', instanceIdsQuery, tenantId],
       queryFn: () => ky.get(`search/instances?query=(${instanceIdsQuery})&expandAll=true`).json(),
       enabled: enabled && Boolean(instanceIdsQuery),
       ...otherOptions,
