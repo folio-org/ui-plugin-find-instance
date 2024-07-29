@@ -6,9 +6,10 @@ import {
 } from '@folio/stripes/core';
 
 // Fetches and returns multiple instances for given instance ids
-const useInstancesQuery = (instances = []) => {
+const useInstancesQuery = (instances = [], options = {}) => {
+  const { enabled = true, tenantId, ...otherOptions } = options;
   const [namespace] = useNamespace();
-  const ky = useOkapiKy();
+  const ky = useOkapiKy({ tenant: tenantId });
 
   const instanceIdsQuery = instances
     .map(({ id }) => `id==${id}`)
@@ -18,7 +19,8 @@ const useInstancesQuery = (instances = []) => {
     {
       queryKey: [namespace, 'instances', instanceIdsQuery],
       queryFn: () => ky.get(`search/instances?query=(${instanceIdsQuery})&expandAll=true`).json(),
-      enabled: Boolean(instanceIdsQuery),
+      enabled: enabled && Boolean(instanceIdsQuery),
+      ...otherOptions,
     },
   );
 
