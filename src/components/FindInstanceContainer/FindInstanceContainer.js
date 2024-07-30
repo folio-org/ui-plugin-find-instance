@@ -78,6 +78,7 @@ class FindInstanceContainer extends React.Component {
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
     contributorTypes: {
+      tenant: '!{tenantId}',
       throwErrors: false,
       type: 'okapi',
       records: 'contributorTypes',
@@ -162,6 +163,7 @@ class FindInstanceContainer extends React.Component {
     const {
       resources,
       children,
+      tenantId,
     } = this.props;
     const contributorTypes = get(resources, 'contributorTypes.records') || [];
 
@@ -208,6 +210,7 @@ class FindInstanceContainer extends React.Component {
       visibleColumns,
       index: this.state.index,
       pageSize: RESULT_COUNT_INCREMENT,
+      tenantId,
       data: {
         records: get(resources, 'records.records', []),
         totalRecords: get(resources, 'records.other.totalRecords', 0),
@@ -222,6 +225,7 @@ FindInstanceContainer.propTypes = {
   children: PropTypes.func,
   mutator: PropTypes.object.isRequired,
   resources: PropTypes.object.isRequired,
+  tenantId: PropTypes.string,
 };
 
 export default flowRight(

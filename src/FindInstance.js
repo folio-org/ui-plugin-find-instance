@@ -93,12 +93,16 @@ const FindInstance = ({
     <PluginFindRecord
       {...rest}
       onClose={onClose}
+      tenantId={tenantId}
       selectRecordsCb={list => setInstances(list)}
     >
       {(modalProps) => (
         <DataContext.Consumer>
           {contextData => (
-            <FindInstanceContainer segment={segment}>
+            <FindInstanceContainer
+              segment={segment}
+              tenantId={tenantId}
+            >
               {(viewProps) => (
                 <PluginFindRecordModal
                   {...viewProps}
@@ -110,6 +114,7 @@ const FindInstance = ({
                     data: contextData,
                     query: viewProps.queryGetter(),
                     segment,
+                    tenantId,
                     onFilterChange: handleFilterChange,
                   })}
                   segment={segment}

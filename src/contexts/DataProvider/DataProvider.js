@@ -4,10 +4,8 @@ import { useCommonData } from '@folio/stripes-inventory-components';
 
 import { DataContext } from './DataContext';
 
-const DataProvider = ({
-  children,
-}) => {
-  const { commonData, isCommonDataLoading } = useCommonData();
+const DataProvider = ({ children, tenantId }) => {
+  const { commonData, isCommonDataLoading } = useCommonData(tenantId);
 
   if (isCommonDataLoading) {
     return null;
@@ -22,6 +20,7 @@ const DataProvider = ({
 
 DataProvider.propTypes = {
   children: PropTypes.object,
+  tenantId: PropTypes.string,
 };
 
 export { DataProvider };
