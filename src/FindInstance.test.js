@@ -57,6 +57,7 @@ const instances = [
     ],
   }
 ];
+const mockTenantId = 'tenant-id';
 
 jest.mock('./components', () => ({
   ...jest.requireActual('./components'),
@@ -99,6 +100,7 @@ const getInstanceSearch = (props = {}) => (
       selectInstance={mockSelectInstance}
       isMultiSelect={false}
       onClose={mockOnClose}
+      tenantId={mockTenantId}
       {...props}
     />
   </Harness>
@@ -139,10 +141,13 @@ describe('FindInstance', () => {
 
       expect(queryByTestId('data-test-find-records-modal')).toBeNull();
 
-      expect(useInstancesQuery).toHaveBeenCalledWith([{
-        ...instances[0],
-        rowIndex: 0,
-      }]);
+      expect(useInstancesQuery).toHaveBeenCalledWith(
+        [{
+          ...instances[0],
+          rowIndex: 0,
+        }],
+        { tenantId: mockTenantId }
+      );
     });
   });
 
@@ -168,7 +173,7 @@ describe('FindInstance', () => {
 
       expect(mockSelectInstance).toHaveBeenCalledWith(data.instances);
       expect(mockOnClose).toHaveBeenCalled();
-      expect(useInstancesQuery).toHaveBeenCalledWith([]);
+      expect(useInstancesQuery).toHaveBeenCalledWith([], { tenantId: mockTenantId });
     });
   });
 
@@ -190,7 +195,7 @@ describe('FindInstance', () => {
 
       expect(mockSelectInstance).toHaveBeenCalledWith(data.instances[0]);
       expect(mockOnClose).toHaveBeenCalled();
-      expect(useInstancesQuery).toHaveBeenCalledWith([]);
+      expect(useInstancesQuery).toHaveBeenCalledWith([], { tenantId: mockTenantId });
     });
   });
 

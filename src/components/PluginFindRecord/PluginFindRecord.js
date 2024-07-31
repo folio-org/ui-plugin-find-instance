@@ -82,14 +82,14 @@ class PluginFindRecord extends React.Component {
   }
 
   render() {
-    const { children, withTrigger } = this.props;
+    const { children, withTrigger, tenantId } = this.props;
 
     return (
       <div className={this.getStyle()}>
         {withTrigger && this.renderTriggerButton()}
         {
           this.state.openModal &&
-          <DataProvider>
+          <DataProvider tenantId={tenantId}>
             {
               children({
                 onSaveMultiple: this.passRecordsOut,
@@ -115,6 +115,7 @@ PluginFindRecord.propTypes = {
   searchLabel: PropTypes.node,
   selectRecordsCb: PropTypes.func,
   onClose: PropTypes.func,
+  tenantId: PropTypes.string,
 };
 
 PluginFindRecord.defaultProps = {

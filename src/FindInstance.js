@@ -29,10 +29,11 @@ import { parseHttpError } from './utils';
 
 const FindInstance = ({
   config,
-  selectInstance,
   isMultiSelect,
-  renderNewBtn,
   onClose,
+  selectInstance,
+  renderNewBtn,
+  tenantId,
   ...rest
 }) => {
   const callout = useCallout();
@@ -44,7 +45,12 @@ const FindInstance = ({
   const { indexes } = filterConfig[segment];
   const searchIndexes = indexes.filter(queryIndex => queryIndex.value !== queryIndexes.ADVANCED_SEARCH);
 
-  const { isLoading, isError, error = {}, data: instancesData = {} } = useInstancesQuery(instances);
+  const {
+    isLoading,
+    isError,
+    error = {},
+    data: instancesData = {},
+  } = useInstancesQuery(instances, { tenantId });
 
   const handleFilterChange = useCallback((onChange) => ({ name, values }) => {
     onChange({ [name]: values });
@@ -87,12 +93,16 @@ const FindInstance = ({
     <PluginFindRecord
       {...rest}
       onClose={onClose}
+      tenantId={tenantId}
       selectRecordsCb={list => setInstances(list)}
     >
       {(modalProps) => (
         <DataContext.Consumer>
           {contextData => (
-            <FindInstanceContainer segment={segment}>
+            <FindInstanceContainer
+              segment={segment}
+              tenantId={tenantId}
+            >
               {(viewProps) => (
                 <PluginFindRecordModal
                   {...viewProps}
@@ -104,6 +114,7 @@ const FindInstance = ({
                     data: contextData,
                     query: viewProps.queryGetter(),
                     segment,
+                    tenantId,
                     onFilterChange: handleFilterChange,
                   })}
                   segment={segment}
@@ -135,6 +146,7 @@ FindInstance.propTypes = {
   marginTop0: PropTypes.bool,
   selectInstance: PropTypes.func,
   renderNewBtn: PropTypes.func,
+  tenantId: PropTypes.string,
   isMultiSelect: PropTypes.bool,
   onClose: PropTypes.func,
   config: CONFIG_TYPES,
