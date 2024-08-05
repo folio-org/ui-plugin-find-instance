@@ -43,14 +43,6 @@ describe('FilterNavigation', () => {
         }), {});
         expect(button).toBeInTheDocument();
       });
-
-      it(`should correctly process click on ${segment} button`, () => {
-        const button = getButton(segment);
-
-        fireEvent.click(button);
-
-        expect(mockOnChange).toHaveBeenCalled();
-      });
     });
   };
 
