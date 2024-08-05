@@ -12,7 +12,10 @@ import {
   ButtonGroup,
   Button,
 } from '@folio/stripes/components';
-import { segments } from '@folio/stripes-inventory-components';
+import {
+  handleSegmentChange,
+  segments,
+} from '@folio/stripes-inventory-components';
 
 import { AVAILABLE_SEGMENTS_TYPES } from '../../constants';
 
@@ -46,7 +49,7 @@ const FilterNavigation = ({
         segmentsForRender.map(name => (
           <Button
             key={`${name}`}
-            onClick={() => onChange(name)}
+            onClick={() => handleSegmentChange(name, segment, onChange)}
             buttonStyle={`${segment === name ? 'primary' : 'default'}`}
             id={`segment-navigation-${name}`}
           >
