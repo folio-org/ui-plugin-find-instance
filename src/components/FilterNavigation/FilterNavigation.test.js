@@ -20,6 +20,16 @@ describe('FilterNavigation', () => {
     onChange: mockOnChange,
     setSegment: mockedSetSegment,
   };
+
+  const renderFilterNavigation = (props = {}) => render(
+    <FilterNavigation
+      segment={segments.instances}
+      onChange={mockOnChange}
+      setSegment={mockedSetSegment}
+      {...props}
+    />
+  );
+
   const getButton = (segment) => within(screen.getByTestId(buttonGroupTestId)).getByText(`ui-plugin-find-instance.filters.${segment}`);
   const testSegments = (segmentsForTest, activeSegment) => {
     segmentsForTest.forEach((segment, index) => {
@@ -117,6 +127,28 @@ describe('FilterNavigation', () => {
       });
 
       testSegments(segmentsForTest, segments.holdings);
+    });
+  });
+
+  describe('when pressing the current segment', () => {
+    it('should not fire onChange', () => {
+      const { getByRole } = renderFilterNavigation();
+
+      const instanceSegment = getByRole('button', { name: 'ui-plugin-find-instance.filters.instances' });
+      fireEvent.click(instanceSegment);
+
+      expect(mockOnChange).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('when clicking another segment', () => {
+    it('should fire onChange', () => {
+      const { getByRole } = renderFilterNavigation();
+
+      const holdingsSegment = getByRole('button', { name: 'ui-plugin-find-instance.filters.holdings' });
+      fireEvent.click(holdingsSegment);
+
+      expect(mockOnChange).toHaveBeenCalled();
     });
   });
 });
