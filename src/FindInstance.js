@@ -8,7 +8,10 @@ import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 
 import { Icon } from '@folio/stripes/components';
-import { useCallout } from '@folio/stripes/core';
+import {
+  useCallout,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   filterConfig,
   queryIndexes,
@@ -36,6 +39,8 @@ const FindInstance = ({
   tenantId,
   ...rest
 }) => {
+  const stripes = useStripes();
+  const currentTenantId = tenantId || stripes.okapi?.tenant;
   const callout = useCallout();
   const intl = useIntl();
 
@@ -101,7 +106,7 @@ const FindInstance = ({
           {contextData => (
             <FindInstanceContainer
               segment={segment}
-              tenantId={tenantId}
+              tenantId={currentTenantId}
             >
               {(viewProps) => (
                 <PluginFindRecordModal
