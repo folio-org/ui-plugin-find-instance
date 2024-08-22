@@ -7,6 +7,10 @@ import {
   fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
 
+import stripesComponents from '@folio/stripes/components';
+import smartComponents from '@folio/stripes/smart-components';
+import { SORT_OPTIONS } from '@folio/stripes-inventory-components';
+
 import PluginFindRecordModal from './PluginFindRecordModal';
 import css from './PluginFindRecordModal.css';
 
@@ -21,6 +25,12 @@ const config = [{
   cql: 'location.name',
   values: [{ name: 'Main Library', cql: 'main' }, 'Annex Library'],
 }];
+
+const contextData = {
+  displaySettings: {
+    defaultSort: SORT_OPTIONS.CONTRIBUTORS,
+  },
+};
 
 const renderPluginFindRecordModal = ({
   closeModal = jest.fn(),
@@ -46,9 +56,10 @@ const renderPluginFindRecordModal = ({
     value: 'contributors',
   }],
   filterConfig = [],
-}) => render(
+} = {}) => render(
   <MemoryRouter>
     <PluginFindRecordModal
+      contextData={contextData}
       className={css.pluginModalContent}
       idPrefix={idPrefix}
       isMultiSelect={isMultiSelect}
@@ -72,6 +83,56 @@ const renderPluginFindRecordModal = ({
 );
 
 describe('Plugin find record modal', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should apply default query parameters on mount', () => {
+    jest.spyOn(smartComponents, 'SearchAndSortQuery');
+
+    renderPluginFindRecordModal();
+
+    const expectedProps = {
+      setQueryOnMount: true,
+      initialSortState: { sort: contextData.displaySettings.defaultSort },
+      initialSearchState: { qindex: '', query: '' },
+      initialFilterState: { staffSuppress: ['false'] },
+      initialSearch: '',
+    };
+
+    expect(smartComponents.SearchAndSortQuery).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
+  });
+
+  it('should display default sorting from contextData', () => {
+    jest.spyOn(stripesComponents, 'MultiColumnList');
+
+    renderPluginFindRecordModal();
+
+    const expectedProps = {
+      sortOrder: contextData.displaySettings.defaultSort,
+    };
+
+    expect(stripesComponents.MultiColumnList).toHaveBeenLastCalledWith(expect.objectContaining(expectedProps), {});
+  });
+
+  it('should display sorting from queryGetter', () => {
+    jest.spyOn(stripesComponents, 'MultiColumnList');
+
+    const query = {
+      sort: SORT_OPTIONS.CONTRIBUTORS,
+    };
+
+    renderPluginFindRecordModal({
+      queryGetter: () => query,
+    });
+
+    const expectedProps = {
+      sortOrder: query.sort,
+    };
+
+    expect(stripesComponents.MultiColumnList).toHaveBeenLastCalledWith(expect.objectContaining(expectedProps), {});
+  });
+
   describe('With default props', () => {
     let pluginFindRecordModal;
 

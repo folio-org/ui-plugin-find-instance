@@ -8,6 +8,7 @@
 * Use `withSearchErrors` HOC and `buildRecordsManifest` to display an error when the request URL is exceeded. Refs UIPFI-158.
 * ECS - Accept `tenantId` prop to search entries in the specified tenant. Refs UIPFI-157.
 * Prevent `onChange` from being triggered when clicking on the current segment tab. Refs UIPFI-159.
+* Add `setQueryOnMount` and `initialSortState` props for `SearchAndSortQuery` to apply initial sort state from Inventory settings. Refs UIPFI-161.
 
 ## [7.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.1) (2024-04-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.1.0...v7.1.1)
