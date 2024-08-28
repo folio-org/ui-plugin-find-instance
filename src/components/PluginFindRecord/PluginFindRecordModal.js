@@ -239,6 +239,7 @@ class PluginFindRecordModal extends React.Component {
       closeModal,
       columnMapping,
       columnWidths,
+      contextData,
       data,
       idPrefix,
       initialSearch,
@@ -272,7 +273,8 @@ class PluginFindRecordModal extends React.Component {
 
     const query = queryGetter ? queryGetter() || {} : {};
     const count = source ? source.totalCount() : 0;
-    const sortOrder = query.sort || 'title';
+    const defaultSort = contextData.displaySettings.defaultSort;
+    const sortOrder = query.sort || defaultSort;
     const resultsStatusMessage = source
       ? (
         <div data-test-find-records-no-results-message>
@@ -366,9 +368,10 @@ class PluginFindRecordModal extends React.Component {
         >
           <SearchAndSortQuery
             data-testid="data-test-search-and-sort"
+            setQueryOnMount
             initialSearch={initialSearch}
             initialSearchState={{ qindex: '', query: '' }}
-            initialSortState={{ sort: 'title' }}
+            initialSortState={{ sort: defaultSort }}
             initialFilterState={{
               staffSuppress: ['false'],
             }}
@@ -513,6 +516,7 @@ PluginFindRecordModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   columnMapping: PropTypes.object,
   columnWidths: PropTypes.object,
+  contextData: PropTypes.object.isRequired,
   data: PropTypes.object,
   idPrefix: PropTypes.string.isRequired,
   initialSearch: PropTypes.string,

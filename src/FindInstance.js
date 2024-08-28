@@ -113,6 +113,7 @@ const FindInstance = ({
                   {...viewProps}
                   {...modalProps}
                   config={config}
+                  contextData={contextData}
                   isMultiSelect={isMultiSelect}
                   renderNewBtn={renderNewBtn}
                   renderFilters={renderFilters({

@@ -12,10 +12,19 @@ jest.mock('@folio/stripes-inventory-components', () => ({
     isLoading: false,
   }),
   useCommonData: jest.fn().mockReturnValue({
-    commonData: [],
+    commonData: {
+      displaySettings: {
+        defaultSort: 'title',
+      },
+    },
     isCommonDataLoading: false,
   }),
   InstanceFilters: jest.fn(() => <div>InstanceFilters</div>),
   HoldingsRecordFilters: jest.fn(() => <div>HoldingsRecordFilters</div>),
   ItemFilters: jest.fn(() => <div>ItemFilters</div>),
+  SORT_OPTIONS: {
+    TITLE: 'title',
+    CONTRIBUTORS: 'contributors',
+    RELEVANCE: 'relevance',
+  },
 }));
