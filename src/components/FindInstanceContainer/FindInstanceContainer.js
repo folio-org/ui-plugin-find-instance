@@ -17,21 +17,27 @@ import {
   buildRecordsManifest,
 } from '@folio/stripes-inventory-components';
 
+import { SEARCH_RESULTS_COLUMNS } from '../../constants';
+
 import css from './FindInstanceContainer.css';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 const columnWidths = {
-  isChecked: '8%',
-  title: '40%',
-  contributors: '32%',
-  publishers: '20%',
+  [SEARCH_RESULTS_COLUMNS.IS_CHECKED]: '8%',
+  [SEARCH_RESULTS_COLUMNS.TITLE]: '40%',
+  [SEARCH_RESULTS_COLUMNS.CONTRIBUTORS]: '32%',
+  [SEARCH_RESULTS_COLUMNS.PUBLISHERS]: '20%',
 };
-const visibleColumns = ['title', 'contributors', 'publishers'];
+const visibleColumns = [
+  SEARCH_RESULTS_COLUMNS.TITLE,
+  SEARCH_RESULTS_COLUMNS.CONTRIBUTORS,
+  SEARCH_RESULTS_COLUMNS.PUBLISHERS,
+];
 const columnMapping = {
-  title: <FormattedMessage id="ui-plugin-find-instance.instances.columns.title" />,
-  contributors: <FormattedMessage id="ui-plugin-find-instance.instances.columns.contributors" />,
-  publishers: <FormattedMessage id="ui-plugin-find-instance.instances.columns.publishers" />,
+  [SEARCH_RESULTS_COLUMNS.TITLE]: <FormattedMessage id="ui-plugin-find-instance.instances.columns.title" />,
+  [SEARCH_RESULTS_COLUMNS.CONTRIBUTORS]: <FormattedMessage id="ui-plugin-find-instance.instances.columns.contributors" />,
+  [SEARCH_RESULTS_COLUMNS.PUBLISHERS]: <FormattedMessage id="ui-plugin-find-instance.instances.columns.publishers" />,
 };
 
 const idPrefix = 'uiPluginFindInstance-';
@@ -168,7 +174,7 @@ class FindInstanceContainer extends React.Component {
     const contributorTypes = get(resources, 'contributorTypes.records') || [];
 
     const resultsFormatter = {
-      title: ({ title, shared }) => (
+      [SEARCH_RESULTS_COLUMNS.TITLE]: ({ title, shared }) => (
         <div className={css.titleContainer}>
           <AppIcon
             size="small"
@@ -189,8 +195,8 @@ class FindInstanceContainer extends React.Component {
           }
         </div>
       ),
-      contributors: r => contributorsFormatter(r, contributorTypes),
-      publishers: r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
+      [SEARCH_RESULTS_COLUMNS.CONTRIBUTORS]: r => contributorsFormatter(r, contributorTypes),
+      [SEARCH_RESULTS_COLUMNS.PUBLISHERS]: r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
     };
 
     if (this.source) {

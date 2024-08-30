@@ -133,6 +133,19 @@ describe('Plugin find record modal', () => {
     expect(stripesComponents.MultiColumnList).toHaveBeenLastCalledWith(expect.objectContaining(expectedProps), {});
   });
 
+  it('should have a sort indicator in MCL', () => {
+    jest.spyOn(stripesComponents, 'MultiColumnList');
+
+    const expectedProps = {
+      showSortIndicator: true,
+      nonInteractiveHeaders: ['publishers', 'isChecked'],
+    };
+
+    renderPluginFindRecordModal();
+
+    expect(stripesComponents.MultiColumnList).toHaveBeenLastCalledWith(expect.objectContaining(expectedProps), {});
+  });
+
   describe('With default props', () => {
     let pluginFindRecordModal;
 
