@@ -32,15 +32,21 @@ import {
 import {
   deleteFacetStates,
   resetFacetStates,
+  SORT_OPTIONS,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
 
 import { FilterNavigation } from '../FilterNavigation';
-import { CONFIG_TYPES } from '../../constants';
+import {
+  CONFIG_TYPES,
+  SEARCH_RESULTS_COLUMNS,
+} from '../../constants';
 
 import css from './PluginFindRecordModal.css';
 
 const RESULTS_HEADER = <FormattedMessage id="ui-plugin-find-instance.resultsHeader" />;
+const SORTABLE_COLUMNS = Object.values(SORT_OPTIONS).filter(option => option !== SORT_OPTIONS.RELEVANCE);
+const NON_INTERACTIVE_HEADERS = Object.values(SEARCH_RESULTS_COLUMNS).filter(column => !SORTABLE_COLUMNS.includes(column));
 
 const reduceCheckedRecords = (records, isChecked = false) => {
   const recordsReducer = (accumulator, record) => {
@@ -267,7 +273,7 @@ class PluginFindRecordModal extends React.Component {
     } = config;
     const { totalRecords } = data;
     const checkedRecordsLength = Object.keys(checkedMap).length;
-    const builtVisibleColumns = isMultiSelect ? ['isChecked', ...visibleColumns] : visibleColumns;
+    const builtVisibleColumns = isMultiSelect ? [SEARCH_RESULTS_COLUMNS.IS_CHECKED, ...visibleColumns] : visibleColumns;
 
     const records = source?.recordsObj?.records || [];
 
@@ -303,7 +309,7 @@ class PluginFindRecordModal extends React.Component {
     });
 
     const mixedResultsFormatter = {
-      isChecked: record => (
+      [SEARCH_RESULTS_COLUMNS.IS_CHECKED]: record => (
         <Checkbox
           type="checkbox"
           checked={Boolean(checkedMap[record.id])}
@@ -473,7 +479,7 @@ class PluginFindRecordModal extends React.Component {
                     >
                       <MultiColumnList
                         columnMapping={{
-                          isChecked: (
+                          [SEARCH_RESULTS_COLUMNS.IS_CHECKED]: (
                             <Checkbox
                               checked={isAllChecked}
                               data-test-find-records-modal-select-all
@@ -493,6 +499,8 @@ class PluginFindRecordModal extends React.Component {
                         onHeaderClick={onSort}
                         onNeedMoreData={onNeedMoreData}
                         onRowClick={this.onRowClick}
+                        showSortIndicator
+                        nonInteractiveHeaders={NON_INTERACTIVE_HEADERS}
                         sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                         sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                         totalCount={totalRecords}
