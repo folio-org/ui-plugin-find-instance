@@ -107,6 +107,7 @@ const FindInstance = ({
             <FindInstanceContainer
               segment={segment}
               tenantId={currentTenantId}
+              contextData={contextData}
             >
               {(viewProps) => (
                 <PluginFindRecordModal

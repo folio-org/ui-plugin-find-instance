@@ -15,6 +15,9 @@ import {
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   withSearchErrors,
   buildRecordsManifest,
+  SEARCH_COLUMN_MAPPINGS,
+  SEARCH_VISIBLE_COLUMNS,
+  getSearchResultsFormatter,
 } from '@folio/stripes-inventory-components';
 
 import { SEARCH_RESULTS_COLUMNS } from '../../constants';
@@ -28,16 +31,6 @@ const columnWidths = {
   [SEARCH_RESULTS_COLUMNS.TITLE]: '40%',
   [SEARCH_RESULTS_COLUMNS.CONTRIBUTORS]: '32%',
   [SEARCH_RESULTS_COLUMNS.PUBLISHERS]: '20%',
-};
-const visibleColumns = [
-  SEARCH_RESULTS_COLUMNS.TITLE,
-  SEARCH_RESULTS_COLUMNS.CONTRIBUTORS,
-  SEARCH_RESULTS_COLUMNS.PUBLISHERS,
-];
-const columnMapping = {
-  [SEARCH_RESULTS_COLUMNS.TITLE]: <FormattedMessage id="ui-plugin-find-instance.instances.columns.title" />,
-  [SEARCH_RESULTS_COLUMNS.CONTRIBUTORS]: <FormattedMessage id="ui-plugin-find-instance.instances.columns.contributors" />,
-  [SEARCH_RESULTS_COLUMNS.PUBLISHERS]: <FormattedMessage id="ui-plugin-find-instance.instances.columns.publishers" />,
 };
 
 const idPrefix = 'uiPluginFindInstance-';
@@ -170,10 +163,12 @@ class FindInstanceContainer extends React.Component {
       resources,
       children,
       tenantId,
+      contextData,
     } = this.props;
     const contributorTypes = get(resources, 'contributorTypes.records') || [];
 
     const resultsFormatter = {
+      ...getSearchResultsFormatter(contextData),
       [SEARCH_RESULTS_COLUMNS.TITLE]: ({ title, shared }) => (
         <div className={css.titleContainer}>
           <AppIcon
@@ -204,7 +199,7 @@ class FindInstanceContainer extends React.Component {
     }
 
     return children({
-      columnMapping,
+      columnMapping: SEARCH_COLUMN_MAPPINGS,
       columnWidths,
       idPrefix,
       modalLabel,
@@ -213,7 +208,7 @@ class FindInstanceContainer extends React.Component {
       querySetter: this.querySetter,
       resultsFormatter,
       source: this.source,
-      visibleColumns,
+      visibleColumns: SEARCH_VISIBLE_COLUMNS,
       index: this.state.index,
       pageSize: RESULT_COUNT_INCREMENT,
       tenantId,
@@ -227,6 +222,7 @@ class FindInstanceContainer extends React.Component {
 }
 
 FindInstanceContainer.propTypes = {
+  contextData: PropTypes.object.isRequired,
   stripes: PropTypes.object.isRequired,
   children: PropTypes.func,
   mutator: PropTypes.object.isRequired,

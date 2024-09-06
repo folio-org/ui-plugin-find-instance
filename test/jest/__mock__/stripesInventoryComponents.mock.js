@@ -16,6 +16,7 @@ jest.mock('@folio/stripes-inventory-components', () => ({
       displaySettings: {
         defaultSort: 'title',
       },
+      instanceDateTypes: [],
     },
     isCommonDataLoading: false,
   }),

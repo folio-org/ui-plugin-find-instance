@@ -30,6 +30,7 @@ const contextData = {
   displaySettings: {
     defaultSort: SORT_OPTIONS.CONTRIBUTORS,
   },
+  instanceDateTypes: [],
 };
 
 const renderPluginFindRecordModal = ({
