@@ -70,9 +70,6 @@
     "itemEffectiveCallNumberEyeReadable": "有效索书号（单件），肉眼可读",
     "itemEffectiveCallNumberNormalized": "有效索书号（单件），已标准化",
     "itemHrid": "单件HRID",
-    "instances.columns.title": "题名",
-    "instances.columns.contributors": "贡献者",
-    "instances.columns.publishers": "出版者",
     "communicationProblem": "服务器通信问题。请再试",
     "lccn": "LCCN，标准化",
     "normalizedClassificationNumber": "分类，标准化"
