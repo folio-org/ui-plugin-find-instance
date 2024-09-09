@@ -75,7 +75,10 @@ const defaultProps = {
     logger: {
       log: jest.fn()
     }
-  }
+  },
+  contextData: {
+    instanceDateTypes: [],
+  },
 };
 const contributorsData = {
   contributors: [

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import {
   segments,
-  SORT_OPTIONS,
+  SEARCH_COLUMN_NAMES,
 } from '@folio/stripes-inventory-components';
 
 export const AVAILABLE_SEGMENTS_TYPES = PropTypes.arrayOf(
@@ -16,8 +16,6 @@ export const CONFIG_TYPES = PropTypes.shape({
 });
 
 export const SEARCH_RESULTS_COLUMNS = {
-  TITLE: SORT_OPTIONS.TITLE,
-  CONTRIBUTORS: SORT_OPTIONS.CONTRIBUTORS,
-  PUBLISHERS: 'publishers',
+  ...SEARCH_COLUMN_NAMES,
   IS_CHECKED: 'isChecked',
 };
