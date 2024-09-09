@@ -70,9 +70,6 @@
     "itemEffectiveCallNumberEyeReadable": "Aktualna sygnatura (egzemplarz), kompletna",
     "itemEffectiveCallNumberNormalized": "Aktualna sygnatura (egzemplarz), znormalizowana",
     "itemHrid": "HRID egzemplarza",
-    "instances.columns.title": "Tytuł",
-    "instances.columns.contributors": "Współtwórcy",
-    "instances.columns.publishers": "Wydawcy",
     "communicationProblem": "Server communication problem. Please try again",
     "lccn": "LCCN, znormalizowany",
     "normalizedClassificationNumber": "Klasyfikacja, znormalizowane"

@@ -70,9 +70,6 @@
     "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
     "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
     "itemHrid": "Item HRID",
-    "instances.columns.title": "Title",
-    "instances.columns.contributors": "Contributors",
-    "instances.columns.publishers": "Publishers",
     "communicationProblem": "Server communication problem. Please try again",
     "lccn": "LCCN, normalized",
     "normalizedClassificationNumber": "Clasificación, normalizada"

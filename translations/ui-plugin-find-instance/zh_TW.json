@@ -70,9 +70,6 @@
     "itemEffectiveCallNumberEyeReadable": "有效的索書號(館藏)，可判讀",
     "itemEffectiveCallNumberNormalized": "有效索書號（館藏），標準化",
     "itemHrid": "館藏 HRID",
-    "instances.columns.title": "題名",
-    "instances.columns.contributors": "貢獻者",
-    "instances.columns.publishers": "出版商",
     "communicationProblem": "伺服器連線問題。請再試一次",
     "lccn": "LCCN，標準化",
     "normalizedClassificationNumber": "分類法，標準化"

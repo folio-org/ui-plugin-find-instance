@@ -70,9 +70,6 @@
     "itemEffectiveCallNumberEyeReadable": "Cote intégrale (exemplaire), lisible à l'oeil nu",
     "itemEffectiveCallNumberNormalized": "Cote intégrale (exemplaire), normalisée",
     "itemHrid": "Item HRID",
-    "instances.columns.title": "Titre",
-    "instances.columns.contributors": "Contributors",
-    "instances.columns.publishers": "Éditeurs",
     "communicationProblem": "Server communication problem. Please try again",
     "lccn": "LCCN, normalized",
     "normalizedClassificationNumber": "Classification, normalized"

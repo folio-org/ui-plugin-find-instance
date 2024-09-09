@@ -70,9 +70,6 @@
     "itemEffectiveCallNumberEyeReadable": "Effektive Signatur (Exemplar), lesbar",
     "itemEffectiveCallNumberNormalized": "Effektive Signatur (Exemplar), normalisiert",
     "itemHrid": "Exemplar-HRID",
-    "instances.columns.title": "Titel",
-    "instances.columns.contributors": "Mitwirkende",
-    "instances.columns.publishers": "Verlage",
     "communicationProblem": "Server-Kommunikationsproblem. Bitte versuchen Sie es erneut",
     "lccn": "LCCN, normalisiert",
     "normalizedClassificationNumber": "Klassifikation, normalisiert"
