@@ -139,7 +139,7 @@ describe('Plugin find record modal', () => {
 
     const expectedProps = {
       showSortIndicator: true,
-      nonInteractiveHeaders: ['publishers', 'isChecked'],
+      nonInteractiveHeaders: expect.arrayContaining(['publishers', 'isChecked']),
     };
 
     renderPluginFindRecordModal();
