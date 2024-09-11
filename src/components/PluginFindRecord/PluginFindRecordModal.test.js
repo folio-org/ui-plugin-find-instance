@@ -139,7 +139,7 @@ describe('Plugin find record modal', () => {
 
     const expectedProps = {
       showSortIndicator: true,
-      nonInteractiveHeaders: expect.arrayContaining(['publishers', 'isChecked']),
+      sortableFields: Object.values(SORT_OPTIONS).filter(option => option !== SORT_OPTIONS.RELEVANCE),
     };
 
     renderPluginFindRecordModal();

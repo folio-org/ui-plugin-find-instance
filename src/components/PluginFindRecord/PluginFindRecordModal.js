@@ -46,7 +46,6 @@ import css from './PluginFindRecordModal.css';
 
 const RESULTS_HEADER = <FormattedMessage id="ui-plugin-find-instance.resultsHeader" />;
 const SORTABLE_COLUMNS = Object.values(SORT_OPTIONS).filter(option => option !== SORT_OPTIONS.RELEVANCE);
-const NON_INTERACTIVE_HEADERS = Object.values(SEARCH_RESULTS_COLUMNS).filter(column => !SORTABLE_COLUMNS.includes(column));
 
 const reduceCheckedRecords = (records, isChecked = false) => {
   const recordsReducer = (accumulator, record) => {
@@ -500,7 +499,7 @@ class PluginFindRecordModal extends React.Component {
                         onNeedMoreData={onNeedMoreData}
                         onRowClick={this.onRowClick}
                         showSortIndicator
-                        nonInteractiveHeaders={NON_INTERACTIVE_HEADERS}
+                        sortableFields={SORTABLE_COLUMNS}
                         sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                         sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                         totalCount={totalRecords}
