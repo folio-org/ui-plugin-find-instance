@@ -407,6 +407,14 @@ class PluginFindRecordModal extends React.Component {
                   return true;
                 };
 
+                const handleSort = (e, meta) => {
+                  if (!SORTABLE_COLUMNS.includes(meta.name)) {
+                    return;
+                  }
+
+                  onSort(e, meta);
+                }
+
                 return (
                   <Paneset
                     id={`${idPrefix}-paneset`}
@@ -495,7 +503,7 @@ class PluginFindRecordModal extends React.Component {
                         id="list-plugin-find-records"
                         isEmptyMessage={resultsStatusMessage}
                         key={`checkedRecordsLength_${checkedRecordsLength}`}
-                        onHeaderClick={onSort}
+                        onHeaderClick={handleSort}
                         onNeedMoreData={onNeedMoreData}
                         onRowClick={this.onRowClick}
                         showSortIndicator
