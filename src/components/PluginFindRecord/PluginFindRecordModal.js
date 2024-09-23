@@ -435,6 +435,7 @@ class PluginFindRecordModal extends React.Component {
                         <form onSubmit={onSubmitSearch}>
                           <div className={css.searchGroupWrap}>
                             <SearchField
+                              ariaLabel={intl.formatMessage({ id: 'stripes-smart-components.search' })}
                               autoFocus
                               className={css.searchField}
                               data-test-plugin-search-input

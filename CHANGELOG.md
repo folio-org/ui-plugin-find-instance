@@ -11,6 +11,7 @@
 * Add `setQueryOnMount` and `initialSortState` props for `SearchAndSortQuery` to apply initial sort state from Inventory settings. Refs UIPFI-161.
 * Add a sort indicator next to the sortable search headers of search results. Refs UIPFI-160.
 * Add Date column to Inventory results list. Refs UIPFI-162.
+* Add a label to search input. Fixes UIPFI-142.
 
 ## [7.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.1) (2024-04-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.1.0...v7.1.1)
