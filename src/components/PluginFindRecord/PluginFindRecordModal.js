@@ -30,8 +30,6 @@ import {
   SearchAndSortSearchButton as FilterPaneToggle,
 } from '@folio/stripes/smart-components';
 import {
-  deleteFacetStates,
-  resetFacetStates,
   SORT_OPTIONS,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
@@ -220,9 +218,6 @@ class PluginFindRecordModal extends React.Component {
   }
 
   handleResetAll = (cb) => () => {
-    const { namespace } = this.props;
-
-    resetFacetStates({ namespace });
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     cb();
   }
@@ -230,10 +225,8 @@ class PluginFindRecordModal extends React.Component {
   handleSearchSegmentChange = (resetAll) => (name) => {
     const {
       setSegment,
-      namespace,
     } = this.props;
 
-    deleteFacetStates(namespace);
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     setSegment(name);
     resetAll();
@@ -413,7 +406,7 @@ class PluginFindRecordModal extends React.Component {
                   }
 
                   onSort(e, meta);
-                }
+                };
 
                 return (
                   <Paneset
@@ -539,7 +532,6 @@ PluginFindRecordModal.propTypes = {
   intl: PropTypes.object.isRequired,
   isMultiSelect: PropTypes.bool.isRequired,
   modalLabel: PropTypes.node,
-  namespace: PropTypes.string.isRequired,
   onComponentWillUnmount: PropTypes.func,
   onNeedMoreData: PropTypes.func,
   onSaveMultiple: PropTypes.func,
