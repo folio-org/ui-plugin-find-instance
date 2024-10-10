@@ -12,6 +12,7 @@
 * Add a sort indicator next to the sortable search headers of search results. Refs UIPFI-160.
 * Add Date column to Inventory results list. Refs UIPFI-162.
 * Add a label to search input. Fixes UIPFI-142.
+* Remove callbacks that reset facets states. Fixes UIPFI-163.
 
 ## [7.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.1) (2024-04-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.1.0...v7.1.1)
