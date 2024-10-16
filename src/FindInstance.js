@@ -34,6 +34,7 @@ const FindInstance = ({
   selectInstance,
   renderNewBtn,
   tenantId,
+  isSharedFacetVisible,
   ...rest
 }) => {
   const callout = useCallout();
@@ -116,6 +117,7 @@ const FindInstance = ({
                     segment,
                     tenantId,
                     onFilterChange: handleFilterChange,
+                    isSharedFacetVisible,
                   })}
                   segment={segment}
                   setSegment={setSegment}
@@ -137,6 +139,7 @@ FindInstance.defaultProps = {
   renderNewBtn: noop,
   isMultiSelect: false,
   config: {},
+  isSharedFacetVisible: false,
 };
 
 FindInstance.propTypes = {
@@ -150,6 +153,7 @@ FindInstance.propTypes = {
   isMultiSelect: PropTypes.bool,
   onClose: PropTypes.func,
   config: CONFIG_TYPES,
+  isSharedFacetVisible: PropTypes.bool,
 };
 
 export default FindInstance;
