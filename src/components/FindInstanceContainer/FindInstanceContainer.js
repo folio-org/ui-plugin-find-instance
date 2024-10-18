@@ -35,7 +35,7 @@ const columnMapping = {
 };
 
 const idPrefix = 'uiPluginFindInstance-';
-const staffSuppressFalse = 'staffSuppress.false'; /* ,shared.false */
+const staffSuppressFalse = 'staffSuppress.false,shared.false'; /* ,shared.false */
 const modalLabel = <FormattedMessage id="ui-plugin-find-instance.modal.title" />;
 
 const contributorsFormatter = (r, contributorTypes) => {
