@@ -30,6 +30,8 @@ jest.mock('@folio/stripes-inventory-components', () => ({
       publishOnReset={mockPublishOnReset}
     />
   ),
+  resetFacetStates: jest.fn(),
+  resetFacetSearchValue: jest.fn(),
 }));
 
 const config = [{
