@@ -12,6 +12,7 @@
 * Add a sort indicator next to the sortable search headers of search results. Refs UIPFI-160.
 * Add Date column to Inventory results list. Refs UIPFI-162.
 * Add a label to search input. Fixes UIPFI-142.
+* Use `ResetProvider` to subscribe and publish the reset event and unsubscribe from it after a segment switch. Refs UIPFI-164.
 * Suppress "Shared" facet when user moves holdings/items to another instance. Refs UIPFI-166.
 
 ## [7.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.1) (2024-04-01)

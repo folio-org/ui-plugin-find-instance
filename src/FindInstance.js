@@ -16,6 +16,7 @@ import {
   filterConfig,
   queryIndexes,
   renderFilters,
+  ResetProvider,
   segments,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
@@ -96,48 +97,50 @@ const FindInstance = ({
   }, [isError, error]);
 
   return (
-    <PluginFindRecord
-      {...rest}
-      onClose={onClose}
-      tenantId={tenantId}
-      selectRecordsCb={list => setInstances(list)}
-    >
-      {(modalProps) => (
-        <DataContext.Consumer>
-          {contextData => (
-            <FindInstanceContainer
-              segment={segment}
-              tenantId={currentTenantId}
-              contextData={contextData}
-              isSharedDefaultFilter={suppressSharedFacet}
-            >
-              {(viewProps) => (
-                <PluginFindRecordModal
-                  {...viewProps}
-                  {...modalProps}
-                  config={config}
-                  contextData={contextData}
-                  isMultiSelect={isMultiSelect}
-                  renderNewBtn={renderNewBtn}
-                  renderFilters={renderFilters({
-                    data: contextData,
-                    query: viewProps.queryGetter(),
-                    segment,
-                    tenantId,
-                    onFilterChange: handleFilterChange,
-                    suppressSharedFacet,
-                  })}
-                  segment={segment}
-                  setSegment={setSegment}
-                  searchIndexes={searchIndexes}
-                  isSharedDefaultFilter={suppressSharedFacet}
-                />
-              )}
-            </FindInstanceContainer>
-          )}
-        </DataContext.Consumer>
-      )}
-    </PluginFindRecord>
+    <ResetProvider>
+      <PluginFindRecord
+        {...rest}
+        onClose={onClose}
+        tenantId={tenantId}
+        selectRecordsCb={list => setInstances(list)}
+      >
+        {(modalProps) => (
+          <DataContext.Consumer>
+            {contextData => (
+              <FindInstanceContainer
+                segment={segment}
+                tenantId={currentTenantId}
+                contextData={contextData}
+                isSharedDefaultFilter={suppressSharedFacet}
+              >
+                {(viewProps) => (
+                  <PluginFindRecordModal
+                    {...viewProps}
+                    {...modalProps}
+                    config={config}
+                    contextData={contextData}
+                    isMultiSelect={isMultiSelect}
+                    renderNewBtn={renderNewBtn}
+                    renderFilters={renderFilters({
+                      data: contextData,
+                      query: viewProps.queryGetter(),
+                      segment,
+                      tenantId,
+                      onFilterChange: handleFilterChange,
+                      suppressSharedFacet,
+                    })}
+                    segment={segment}
+                    setSegment={setSegment}
+                    searchIndexes={searchIndexes}
+                    isSharedDefaultFilter={suppressSharedFacet}
+                  />
+                )}
+              </FindInstanceContainer>
+            )}
+          </DataContext.Consumer>
+        )}
+      </PluginFindRecord>
+    </ResetProvider>
   );
 };
 
