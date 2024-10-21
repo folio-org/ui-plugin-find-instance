@@ -264,7 +264,8 @@ class PluginFindRecordModal extends React.Component {
       source,
       visibleColumns,
       config,
-      pageSize
+      pageSize,
+      isSharedDefaultFilter,
     } = this.props;
     const { checkedMap, isAllChecked } = this.state;
     const {
@@ -306,6 +307,11 @@ class PluginFindRecordModal extends React.Component {
 
       return { ...index, label };
     });
+
+    const defaultFilters = {
+      staffSuppress: ['false'],
+      ...(isSharedDefaultFilter ? { shared: ['false'] } : {})
+    };
 
     const mixedResultsFormatter = {
       [SEARCH_RESULTS_COLUMNS.IS_CHECKED]: record => (
@@ -377,9 +383,7 @@ class PluginFindRecordModal extends React.Component {
             initialSearch={initialSearch}
             initialSearchState={{ qindex: '', query: '' }}
             initialSortState={{ sort: defaultSort }}
-            initialFilterState={{
-              staffSuppress: ['false'],
-            }}
+            initialFilterState={defaultFilters}
             onComponentWillUnmount={onComponentWillUnmount}
             queryGetter={queryGetter}
             querySetter={querySetter}
@@ -413,7 +417,7 @@ class PluginFindRecordModal extends React.Component {
                   }
 
                   onSort(e, meta);
-                }
+                };
 
                 return (
                   <Paneset
@@ -556,6 +560,7 @@ PluginFindRecordModal.propTypes = {
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   config: CONFIG_TYPES,
   pageSize: PropTypes.number,
+  isSharedDefaultFilter: PropTypes.bool,
 };
 
 PluginFindRecordModal.defaultProps = {

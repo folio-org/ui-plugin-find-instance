@@ -37,6 +37,7 @@ const FindInstance = ({
   selectInstance,
   renderNewBtn,
   tenantId,
+  suppressSharedFacet,
   ...rest
 }) => {
   const stripes = useStripes();
@@ -108,6 +109,7 @@ const FindInstance = ({
               segment={segment}
               tenantId={currentTenantId}
               contextData={contextData}
+              isSharedDefaultFilter={suppressSharedFacet}
             >
               {(viewProps) => (
                 <PluginFindRecordModal
@@ -123,10 +125,12 @@ const FindInstance = ({
                     segment,
                     tenantId,
                     onFilterChange: handleFilterChange,
+                    suppressSharedFacet,
                   })}
                   segment={segment}
                   setSegment={setSegment}
                   searchIndexes={searchIndexes}
+                  isSharedDefaultFilter={suppressSharedFacet}
                 />
               )}
             </FindInstanceContainer>
@@ -144,6 +148,7 @@ FindInstance.defaultProps = {
   renderNewBtn: noop,
   isMultiSelect: false,
   config: {},
+  suppressSharedFacet: false,
 };
 
 FindInstance.propTypes = {
@@ -157,6 +162,7 @@ FindInstance.propTypes = {
   isMultiSelect: PropTypes.bool,
   onClose: PropTypes.func,
   config: CONFIG_TYPES,
+  suppressSharedFacet: PropTypes.bool,
 };
 
 export default FindInstance;
