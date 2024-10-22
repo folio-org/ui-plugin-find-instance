@@ -6,7 +6,7 @@ import {
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
 import { buildSearchQuery } from '@folio/stripes-inventory-components';
 
-import FindInstanceContainer, { applyDefaultStaffSuppressFilter } from './FindInstanceContainer';
+import FindInstanceContainer, { applyDefaultFilters } from './FindInstanceContainer';
 
 jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
@@ -177,7 +177,7 @@ describe('FindInstanceContainer', () => {
           },
         };
         const logger = { log: jest.fn() };
-        const result = buildSearchQuery(applyDefaultStaffSuppressFilter)(queryParams, pathComponents, resourceData, logger, defaultProps);
+        const result = buildSearchQuery(applyDefaultFilters)(queryParams, pathComponents, resourceData, logger, defaultProps);
         expect(result).toBeNull();
       });
     });
@@ -199,7 +199,7 @@ describe('FindInstanceContainer', () => {
           },
         };
         const logger = { log: jest.fn() };
-        const result = buildSearchQuery(applyDefaultStaffSuppressFilter)(queryParams, pathComponents, resourceData, logger, defaultProps);
+        const result = buildSearchQuery(applyDefaultFilters)(queryParams, pathComponents, resourceData, logger, defaultProps);
         expect(result).toEqual('((isbn="test") and staffSuppress=="false") sortby title');
       });
     });
@@ -224,7 +224,7 @@ describe('FindInstanceContainer', () => {
         };
 
         const logger = { log: jest.fn() };
-        const result = buildSearchQuery(applyDefaultStaffSuppressFilter)(queryParams, pathComponents, resourceData, logger, defaultProps);
+        const result = buildSearchQuery(applyDefaultFilters)(queryParams, pathComponents, resourceData, logger, defaultProps);
         expect(result).toEqual('(staffSuppress=="false") sortby title');
       });
     });

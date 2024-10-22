@@ -35,6 +35,7 @@ const columnWidths = {
 
 const idPrefix = 'uiPluginFindInstance-';
 const staffSuppressFalse = 'staffSuppress.false';
+const sharedFalse = 'shared.false';
 const modalLabel = <FormattedMessage id="ui-plugin-find-instance.modal.title" />;
 
 const contributorsFormatter = (r, contributorTypes) => {
@@ -54,10 +55,11 @@ const contributorsFormatter = (r, contributorTypes) => {
   return formatted;
 };
 
-export const applyDefaultStaffSuppressFilter = (query) => {
+export const applyDefaultFilters = (query, _s, isSharedDefaultFilter) => {
   const isUserTouchedStaffSuppress = JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY));
+  const defaultFilter = isSharedDefaultFilter ? `${staffSuppressFalse},${sharedFalse}` : staffSuppressFalse;
 
-  if (!query.query && query.filters === staffSuppressFalse && !isUserTouchedStaffSuppress) {
+  if (!query.query && query.filters === defaultFilter && !isUserTouchedStaffSuppress) {
     // if query is empty and the only filter value is staffSuppress.false and search was not initiated by user action
     // then we need to clear the query.filters here to not automatically search when Inventory search is opened
     query.filters = undefined;
@@ -73,7 +75,7 @@ class FindInstanceContainer extends React.Component {
       },
     },
     requestUrlQuery: { initialValue: '' },
-    records: buildRecordsManifest(applyDefaultStaffSuppressFilter),
+    records: buildRecordsManifest(applyDefaultFilters),
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
     contributorTypes: {
