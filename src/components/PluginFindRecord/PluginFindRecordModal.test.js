@@ -6,13 +6,33 @@ import {
   screen,
   fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import stripesComponents from '@folio/stripes/components';
 import smartComponents from '@folio/stripes/smart-components';
-import { SORT_OPTIONS } from '@folio/stripes-inventory-components';
+import {
+  ResetProvider,
+  SORT_OPTIONS,
+} from '@folio/stripes-inventory-components';
 
 import PluginFindRecordModal from './PluginFindRecordModal';
 import css from './PluginFindRecordModal.css';
+
+const mockUnsubscribeFromReset = jest.fn();
+const mockPublishOnReset = jest.fn();
+
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
+  withReset: (Comp) => (props) => (
+    <Comp
+      {...props}
+      unsubscribeFromReset={mockUnsubscribeFromReset}
+      publishOnReset={mockPublishOnReset}
+    />
+  ),
+  resetFacetStates: jest.fn(),
+  resetFacetSearchValue: jest.fn(),
+}));
 
 const config = [{
   label: 'Item Types',
@@ -59,27 +79,29 @@ const renderPluginFindRecordModal = ({
   filterConfig = [],
 } = {}) => render(
   <MemoryRouter>
-    <PluginFindRecordModal
-      contextData={contextData}
-      className={css.pluginModalContent}
-      idPrefix={idPrefix}
-      isMultiSelect={isMultiSelect}
-      filterConfig={filterConfig}
-      setSegment={setSegment}
-      visibleColumns={visibleColumns}
-      closeModal={closeModal}
-      modalLabel={label}
-      intl={intl}
-      onComponentWillUnmount={onComponentWillUnmount}
-      onNeedMoreData={onNeedMoreData}
-      onSelectRow={onSelectRow}
-      queryGetter={queryGetter}
-      renderFilters={renderFilters}
-      renderNewBtn={renderNewBtn}
-      querySetter={querySetter}
-      source={source}
-      searchIndexes={searchIndexes}
-    />
+    <ResetProvider>
+      <PluginFindRecordModal
+        contextData={contextData}
+        className={css.pluginModalContent}
+        idPrefix={idPrefix}
+        isMultiSelect={isMultiSelect}
+        filterConfig={filterConfig}
+        setSegment={setSegment}
+        visibleColumns={visibleColumns}
+        closeModal={closeModal}
+        modalLabel={label}
+        intl={intl}
+        onComponentWillUnmount={onComponentWillUnmount}
+        onNeedMoreData={onNeedMoreData}
+        onSelectRow={onSelectRow}
+        queryGetter={queryGetter}
+        renderFilters={renderFilters}
+        renderNewBtn={renderNewBtn}
+        querySetter={querySetter}
+        source={source}
+        searchIndexes={searchIndexes}
+      />
+    </ResetProvider>
   </MemoryRouter>
 );
 
@@ -132,6 +154,27 @@ describe('Plugin find record modal', () => {
     };
 
     expect(stripesComponents.MultiColumnList).toHaveBeenLastCalledWith(expect.objectContaining(expectedProps), {});
+  });
+
+  describe('when hitting the reset button', () => {
+    it('should publish the reset event', async () => {
+      const { getByText, getByRole } = renderPluginFindRecordModal();
+
+      await userEvent.type(getByRole('searchbox', { name: /stripes-smart-components.search/i }), 'foo');
+      await userEvent.click(getByText('stripes-smart-components.resetAll'));
+
+      expect(mockPublishOnReset).toHaveBeenCalled();
+    });
+  });
+
+  describe('when changing a segment', () => {
+    it('should unsubscribe from the reset event', async () => {
+      const { getByText } = renderPluginFindRecordModal();
+
+      await userEvent.click(getByText('ui-plugin-find-instance.filters.holdings'));
+
+      expect(mockUnsubscribeFromReset).toHaveBeenCalled();
+    });
   });
 
   it('should have a sort indicator in MCL', () => {

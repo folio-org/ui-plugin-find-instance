@@ -32,6 +32,7 @@ import {
 import {
   SORT_OPTIONS,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+  withReset,
 } from '@folio/stripes-inventory-components';
 
 import { FilterNavigation } from '../FilterNavigation';
@@ -218,18 +219,25 @@ class PluginFindRecordModal extends React.Component {
   }
 
   handleResetAll = (cb) => () => {
+    const {
+      publishOnReset,
+    } = this.props;
+
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     cb();
+    publishOnReset();
   }
 
   handleSearchSegmentChange = (resetAll) => (name) => {
     const {
       setSegment,
+      unsubscribeFromReset,
     } = this.props;
 
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     setSegment(name);
     resetAll();
+    unsubscribeFromReset();
   }
 
   render() {
@@ -536,6 +544,7 @@ PluginFindRecordModal.propTypes = {
   onNeedMoreData: PropTypes.func,
   onSaveMultiple: PropTypes.func,
   onSelectRow: PropTypes.func,
+  publishOnReset: PropTypes.func.isRequired,
   queryGetter: PropTypes.func,
   querySetter: PropTypes.func,
   renderFilters: PropTypes.func,
@@ -545,6 +554,7 @@ PluginFindRecordModal.propTypes = {
   segment: PropTypes.string,
   setSegment: PropTypes.func.isRequired,
   source: PropTypes.object,
+  unsubscribeFromReset: PropTypes.func.isRequired,
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   config: CONFIG_TYPES,
   pageSize: PropTypes.number,
@@ -569,4 +579,5 @@ PluginFindRecordModal.defaultProps = {
 export default flowRight(
   withNamespace,
   injectIntl,
+  withReset,
 )(PluginFindRecordModal);
