@@ -1,6 +1,11 @@
 # Change history for ui-plugin-find-instance
 
-## [8.0.0] IN PROGRESS
+## [9.0.0] IN PROGRESS
+
+* Remove callbacks that reset facets states. Fixes UIPFI-163.
+
+## [8.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v8.0.0) (2024-10-31)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.1.1...v8.0.0)
 
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle. Refs UIPFI-149.
 * Use consolidated locations endpoint to fetch all locations when in central tenant context. Refs UIPFI-146.
@@ -12,7 +17,8 @@
 * Add a sort indicator next to the sortable search headers of search results. Refs UIPFI-160.
 * Add Date column to Inventory results list. Refs UIPFI-162.
 * Add a label to search input. Fixes UIPFI-142.
-* Remove callbacks that reset facets states. Fixes UIPFI-163.
+* Use `ResetProvider` to subscribe and publish the reset event and unsubscribe from it after a segment switch. Refs UIPFI-164.
+* Suppress "Shared" facet when user moves holdings/items to another instance. Refs UIPFI-166.
 
 ## [7.1.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v7.1.1) (2024-04-01)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v7.1.0...v7.1.1)
