@@ -156,6 +156,27 @@ describe('Plugin find record modal', () => {
     expect(stripesComponents.MultiColumnList).toHaveBeenLastCalledWith(expect.objectContaining(expectedProps), {});
   });
 
+  describe('when hitting the reset button', () => {
+    it('should publish the reset event', async () => {
+      const { getByText, getByRole } = renderPluginFindRecordModal();
+
+      await userEvent.type(getByRole('searchbox', { name: /stripes-smart-components.search/i }), 'foo');
+      await userEvent.click(getByText('stripes-smart-components.resetAll'));
+
+      expect(mockPublishOnReset).toHaveBeenCalled();
+    });
+  });
+
+  describe('when changing a segment', () => {
+    it('should unsubscribe from the reset event', async () => {
+      const { getByText } = renderPluginFindRecordModal();
+
+      await userEvent.click(getByText('ui-plugin-find-instance.filters.holdings'));
+
+      expect(mockUnsubscribeFromReset).toHaveBeenCalled();
+    });
+  });
+
   it('should have a sort indicator in MCL', () => {
     jest.spyOn(stripesComponents, 'MultiColumnList');
 
