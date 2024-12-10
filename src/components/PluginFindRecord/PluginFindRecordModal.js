@@ -279,6 +279,7 @@ class PluginFindRecordModal extends React.Component {
       availableSegments,
     } = config;
     const { totalRecords } = data;
+    const { displaySettings } = contextData;
     const checkedRecordsLength = Object.keys(checkedMap).length;
     const builtVisibleColumns = isMultiSelect ? [SEARCH_RESULTS_COLUMNS.IS_CHECKED, ...visibleColumns] : visibleColumns;
 
@@ -286,7 +287,11 @@ class PluginFindRecordModal extends React.Component {
 
     const query = queryGetter ? queryGetter() || {} : {};
     const count = source ? source.totalCount() : 0;
-    const defaultSort = contextData.displaySettings.defaultSort;
+
+    // mod-search only allows sorting by actual Instance fields
+    // since 'relevance' is not a real field using it causes a BE error
+    // if a default sort is 'relevance' we need to use an empty string, which is treated as relevance sort on BE side
+    const defaultSort = displaySettings.defaultSort === SORT_OPTIONS.RELEVANCE ? '' : displaySettings.defaultSort;
     const sortOrder = query.sort || defaultSort;
     const resultsStatusMessage = source
       ? (
