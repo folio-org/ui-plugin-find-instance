@@ -53,7 +53,7 @@
     "item.status.unavailable": "不可用",
     "item.status.unknown": "未知",
     "item.status.withdrawn": "註銷",
-    "search.all": "關鍵字（題名、貢獻者、識別碼、HRID、UUID）",
+    "search.all": "關鍵字 ( 題名、貢獻者、識別碼、HRID、UUID )",
     "contributor": "貢獻者",
     "title": "題名（全部）",
     "identifierAll": "標識號（全部）",
