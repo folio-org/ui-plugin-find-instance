@@ -4,7 +4,8 @@
 
 * Remove callbacks that reset facets states. Fixes UIPFI-163.
 
-## [8.0.1] IN PROGRESS
+## [8.0.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v8.0.1) (2024-12-13)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v8.0.0...v8.0.1)
 
 * Use an empty string as a default sort parameter when Display Settings has `relevance` as a default sort. Fixes UIPFI-169.
 
