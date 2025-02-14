@@ -25,17 +25,16 @@
     "test": "yarn run test:jest",
     "test:jest": "jest --ci --coverage --colors --silent",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
-    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-plugin-find-instance ./translations/ui-plugin-find-instance/compiled"
+    "formatjs-compile": "stripes translate compile"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^7.0.0",
-    "@folio/jest-config-stripes": "^2.0.0",
-    "@folio/stripes": "^9.0.0",
-    "@folio/stripes-cli": "^3.0.0",
-    "@folio/stripes-components": "^12.0.0",
+    "@folio/eslint-config-stripes": "^8.0.0",
+    "@folio/jest-config-stripes": "^3.0.0",
+    "@folio/stripes": "^10.0.0",
+    "@folio/stripes-cli": "^4.0.0",
+    "@folio/stripes-components": "^13.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
-    "@folio/stripes-testing": "^4.2.0",
-    "@formatjs/cli": "^6.1.3",
+    "@folio/stripes-testing": "^5.0.0",
     "babel-eslint": "^10.0.1",
     "core-js": "^3.6.1",
     "eslint-plugin-filenames": "^1.3.2",
@@ -43,7 +42,7 @@
     "identity-obj-proxy": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-intl": "^6.4.4",
+    "react-intl": "^7.1.5",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.3"
   },
@@ -54,12 +53,12 @@
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {
-    "@folio/stripes": "^9.0.0",
+    "@folio/stripes": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "moment": "^2.29.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-intl": "^6.4.4",
+    "react-intl": "^7.1.5",
     "react-query": "^3.6.0"
   }
 }
