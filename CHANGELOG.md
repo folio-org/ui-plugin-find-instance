@@ -6,6 +6,7 @@
 * Migrate to shared GA workflows. Refs UIPFI-173.
 * *BREAKING* migrate stripes dependencies to their Sunflower versions. Refs UIPFI-174.
 * *BREAKING* migrate react-intl to v7. Refs UIPFI-175.
+* React v19: refactor away from default props for functional components. Refs UIPFI-150.
 
 ## [8.0.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v8.0.1) (2024-12-13)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v8.0.0...v8.0.1)
