@@ -8,7 +8,7 @@
     "showMoreOptions": "Show more options",
     "filters.instances": "Instance",
     "filters.holdings": "Holdings",
-    "filters.items": "Exemplár",
+    "filters.items": "Item",
     "filters.shared": "Shared",
     "filters.tenantId": "Held by",
     "filters.effectiveLocation": "Effective location (item)",
