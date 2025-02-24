@@ -20,8 +20,8 @@ import {
 import { AVAILABLE_SEGMENTS_TYPES } from '../../constants';
 
 const FilterNavigation = ({
-  availableSegments,
-  segment,
+  availableSegments = [],
+  segment = segments.instances,
   setSegment,
   onChange,
 }) => {
@@ -66,11 +66,6 @@ FilterNavigation.propTypes = {
   setSegment: PropTypes.func.isRequired,
   availableSegments: AVAILABLE_SEGMENTS_TYPES,
   onChange: PropTypes.func.isRequired,
-};
-
-FilterNavigation.defaultProps = {
-  segment: segments.instances,
-  availableSegments: [],
 };
 
 export default FilterNavigation;

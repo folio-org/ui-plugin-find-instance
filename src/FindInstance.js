@@ -32,13 +32,15 @@ import { useInstancesQuery } from './hooks';
 import { parseHttpError } from './utils';
 
 const FindInstance = ({
-  config,
-  isMultiSelect,
+  config = {},
+  isMultiSelect = false,
   onClose,
-  selectInstance,
-  renderNewBtn,
+  selectInstance = noop,
+  renderNewBtn = noop,
   tenantId,
-  suppressSharedFacet,
+  suppressSharedFacet = false,
+  searchButtonStyle = 'primary noRightRadius',
+  searchLabel = <Icon icon="search" color="#fff" />,
   ...rest
 }) => {
   const stripes = useStripes();
@@ -100,6 +102,8 @@ const FindInstance = ({
     <ResetProvider>
       <PluginFindRecord
         {...rest}
+        searchButtonStyle={searchButtonStyle}
+        searchLabel={searchLabel}
         onClose={onClose}
         tenantId={tenantId}
         selectRecordsCb={list => setInstances(list)}
@@ -142,16 +146,6 @@ const FindInstance = ({
       </PluginFindRecord>
     </ResetProvider>
   );
-};
-
-FindInstance.defaultProps = {
-  searchButtonStyle: 'primary noRightRadius',
-  searchLabel: <Icon icon="search" color="#fff" />,
-  selectInstance: noop,
-  renderNewBtn: noop,
-  isMultiSelect: false,
-  config: {},
-  suppressSharedFacet: false,
 };
 
 FindInstance.propTypes = {
