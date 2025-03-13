@@ -1,6 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## [9.0.0] IN PROGRESS
+## [9.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.0) (2024-03-13)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v8.0.1...v9.0.0)
 
 * Remove callbacks that reset facets states. Fixes UIPFI-163.
 * Migrate to shared GA workflows. Refs UIPFI-173.
