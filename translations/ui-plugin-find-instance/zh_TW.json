@@ -1,7 +1,7 @@
 {
     "meta.title": "實例查找器 ( 外掛程式 )",
     "modal.title": "選擇實例",
-    "totalSelected": "已選總數：{count}",
+    "totalSelected": "已選總數 : {count}",
     "noSourceYet": "尚無來源",
     "resultsHeader": "查詢結果",
     "noMatchingOptions": "沒有符合的選項",
