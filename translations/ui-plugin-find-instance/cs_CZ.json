@@ -12,7 +12,7 @@
     "filters.shared": "Sdíleno",
     "filters.tenantId": "Držen",
     "filters.effectiveLocation": "Efektivní lokace (jednotka)",
-    "filters.nameType": "Typ jména",
+    "filters.nameType": "Typ autority",
     "yes": "Ano",
     "no": "Ne",
     "holdings.permanentLocation": "Trvalá lokace holdingů",
