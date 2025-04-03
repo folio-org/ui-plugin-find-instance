@@ -157,7 +157,7 @@ describe('FindInstanceContainer', () => {
     expect(defaultProps.mutator.query.replace).toHaveBeenCalledWith({
       qindex: '',
       query: '',
-      filters: 'staffSuppress.false',
+      filters: '',
     });
   });
 
@@ -173,7 +173,7 @@ describe('FindInstanceContainer', () => {
           query: {
             sort: '',
             query: '',
-            filters: 'staffSuppress.false',
+            filters: '',
           },
         };
         const logger = { log: jest.fn() };
@@ -195,37 +195,12 @@ describe('FindInstanceContainer', () => {
           query: {
             sort: '',
             query: 'test',
-            filters: 'staffSuppress.false',
+            filters: '',
           },
         };
         const logger = { log: jest.fn() };
         const result = buildSearchQuery(applyDefaultFilters)(queryParams, pathComponents, resourceData, logger, defaultProps);
-        expect(result).toEqual('((isbn="test") and staffSuppress=="false") sortby title');
-      });
-    });
-
-    describe('when user did touch staff suppress', () => {
-      beforeEach(() => {
-        global.Storage.prototype.getItem = jest.fn().mockReturnValue('true');
-      });
-
-      it('should return cql string with staff suppress filter', () => {
-        const queryParams = 'queryParams';
-        const pathComponents = 'pathComponents';
-        const resourceData = {
-          identifier_types: {
-            records: []
-          },
-          query: {
-            sort: '',
-            query: '',
-            filters: 'staffSuppress.false',
-          },
-        };
-
-        const logger = { log: jest.fn() };
-        const result = buildSearchQuery(applyDefaultFilters)(queryParams, pathComponents, resourceData, logger, defaultProps);
-        expect(result).toEqual('(staffSuppress=="false") sortby title');
+        expect(result).toEqual('(isbn="test") sortby title');
       });
     });
   });

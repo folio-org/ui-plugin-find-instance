@@ -31,7 +31,6 @@ import {
 } from '@folio/stripes/smart-components';
 import {
   SORT_OPTIONS,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   withReset,
 } from '@folio/stripes-inventory-components';
 
@@ -223,7 +222,6 @@ class PluginFindRecordModal extends React.Component {
       publishOnReset,
     } = this.props;
 
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     cb();
     publishOnReset();
   }
@@ -234,7 +232,6 @@ class PluginFindRecordModal extends React.Component {
       unsubscribeFromReset,
     } = this.props;
 
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     setSegment(name);
     resetAll();
     unsubscribeFromReset();
@@ -315,7 +312,6 @@ class PluginFindRecordModal extends React.Component {
     });
 
     const defaultFilters = {
-      staffSuppress: ['false'],
       ...(isSharedDefaultFilter ? { shared: ['false'] } : {})
     };
 
