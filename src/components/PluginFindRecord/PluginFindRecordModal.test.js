@@ -119,7 +119,7 @@ describe('Plugin find record modal', () => {
       setQueryOnMount: true,
       initialSortState: { sort: contextData.displaySettings.defaultSort },
       initialSearchState: { qindex: '', query: '' },
-      initialFilterState: { staffSuppress: ['false'] },
+      initialFilterState: {},
       initialSearch: '',
     };
 
