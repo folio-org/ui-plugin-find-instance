@@ -12,7 +12,6 @@ import {
   stripesConnect,
 } from '@folio/stripes/core';
 import {
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   withSearchErrors,
   buildRecordsManifest,
   SEARCH_COLUMN_MAPPINGS,
@@ -34,7 +33,6 @@ const columnWidths = {
 };
 
 const idPrefix = 'uiPluginFindInstance-';
-const staffSuppressFalse = 'staffSuppress.false';
 const sharedFalse = 'shared.false';
 const modalLabel = <FormattedMessage id="ui-plugin-find-instance.modal.title" />;
 
@@ -56,11 +54,10 @@ const contributorsFormatter = (r, contributorTypes) => {
 };
 
 export const applyDefaultFilters = (query, _s, isSharedDefaultFilter) => {
-  const isUserTouchedStaffSuppress = JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY));
-  const defaultFilter = isSharedDefaultFilter ? `${staffSuppressFalse},${sharedFalse}` : staffSuppressFalse;
+  const defaultFilter = isSharedDefaultFilter ? sharedFalse : '';
 
-  if (!query.query && query.filters === defaultFilter && !isUserTouchedStaffSuppress) {
-    // if query is empty and the only filter value is staffSuppress.false and search was not initiated by user action
+  if (!query.query && query.filters === defaultFilter) {
+    // if query is empty and search was not initiated by user action
     // then we need to clear the query.filters here to not automatically search when Inventory search is opened
     query.filters = undefined;
   }
@@ -71,7 +68,7 @@ class FindInstanceContainer extends React.Component {
     query: {
       initialValue: {
         query: '',
-        filters: staffSuppressFalse,
+        filters: '',
       },
     },
     requestUrlQuery: { initialValue: '' },
@@ -103,22 +100,12 @@ class FindInstanceContainer extends React.Component {
     this.props.mutator.query.replace({
       qindex: '',
       query: '',
-      filters: staffSuppressFalse,
+      filters: '',
     });
-    window.addEventListener('beforeunload', this.clearStaffSuppressStorageFlag);
   }
 
   componentDidUpdate() {
     this.source.update(this.props);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.clearStaffSuppressStorageFlag);
-    this.clearStaffSuppressStorageFlag();
-  }
-
-  clearStaffSuppressStorageFlag = () => {
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 
   fetchMore = () => {

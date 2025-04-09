@@ -18,7 +18,6 @@ import {
   renderFilters,
   ResetProvider,
   segments,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
 
 import { DataContext } from './contexts';
@@ -64,10 +63,6 @@ const FindInstance = ({
   const handleFilterChange = useCallback((onChange) => ({ name, values }) => {
     onChange({ [name]: values });
   }, []);
-
-  useEffect(() => {
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
-  }, [segment]);
 
   useEffect(() => {
     if (!isLoading && !isError && instancesData.instances?.length) {
