@@ -33,7 +33,7 @@
     "filter.tags": "Mots-clés",
     "item.status": "Item status",
     "item.status.agedToLost": "Considéré comme perdu",
-    "item.status.available": "Available",
+    "item.status.available": "Disponible",
     "item.status.awaitingPickup": "En attente de retrait",
     "item.status.awaitingDelivery": "En attente de livraison",
     "item.status.checkedOut": "Emprunté",
