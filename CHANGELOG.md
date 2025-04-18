@@ -1,10 +1,11 @@
 # Change history for ui-plugin-find-instance
 
-## [9.1.0] (IN PROGRESS)
+## [9.0.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.1) (2025-04-11)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.0...v9.0.1)
 
 * Find instance plugin: Remove default Staff suppress facet settings. Refs UIPFI-178.
 
-## [9.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.0) (2024-03-13)
+## [9.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.0) (2025-03-13)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v8.0.1...v9.0.0)
 
 * Remove callbacks that reset facets states. Fixes UIPFI-163.
