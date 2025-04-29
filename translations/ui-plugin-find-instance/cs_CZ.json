@@ -61,7 +61,7 @@
     "isbn": "ISBN",
     "subject": "Předmět",
     "instanceHrid": "HRID titulu",
-    "instanceId": "UUID titulu",
+    "instanceId": "Titul (UUID)",
     "querySearch": "Vyhledávání dotazů",
     "callNumberEyeReadable": "Signatura, čitelna okem",
     "callNumberNormalized": "Signatura, normalizovaná",
