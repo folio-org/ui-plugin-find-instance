@@ -71,6 +71,6 @@
     "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
     "itemHrid": "Item HRID",
     "communicationProblem": "Server communication problem. Please try again",
-    "lccn": "LCCN, normalized",
+    "lccn": "LCCN, нормалізований",
     "normalizedClassificationNumber": "Класифікація, нормалізована"
 }
