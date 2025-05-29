@@ -51,7 +51,7 @@
     "item.status.paged": "Réservé",
     "item.status.restricted": "Restricted",
     "item.status.unavailable": "Unavailable",
-    "item.status.unknown": "Unknown",
+    "item.status.unknown": "Inconnu",
     "item.status.withdrawn": "Retiré des collections",
     "search.all": "Keyword (title, contributor, identifier, HRID, UUID)",
     "contributor": "Contributor",
