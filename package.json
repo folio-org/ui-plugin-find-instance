@@ -17,7 +17,8 @@
       "contributor-types": "2.0",
       "instance-types": "2.0",
       "locations": "3.0",
-      "search": "0.5 1.0"
+      "search-inventory": "1.0",
+      "search-facets": "1.0"
     }
   },
   "scripts": {
