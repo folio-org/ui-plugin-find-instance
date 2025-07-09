@@ -1,5 +1,10 @@
 # Change history for ui-plugin-find-instance
 
+## [10.0.0] (IN PROGRESS)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.1...v9.1.0)
+
+* *BREAKING* Update for Split Search & Browse APIs. Refs UIPFI-182.
+
 ## [9.0.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.1) (2025-04-11)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.0...v9.0.1)
 
