@@ -60,7 +60,7 @@
     "issn": "ISSN",
     "isbn": "ISBN",
     "subject": "Předmět",
-    "instanceHrid": "HRID titulu",
+    "instanceHrid": "Titul (HRID)",
     "instanceId": "Titul (UUID)",
     "querySearch": "Vyhledávání dotazů",
     "callNumberEyeReadable": "Signatura, čitelna okem",
