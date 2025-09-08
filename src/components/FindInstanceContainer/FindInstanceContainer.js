@@ -17,6 +17,7 @@ import {
   SEARCH_COLUMN_MAPPINGS,
   SEARCH_VISIBLE_COLUMNS,
   getSearchResultsFormatter,
+  FACETS,
 } from '@folio/stripes-inventory-components';
 
 import { SEARCH_RESULTS_COLUMNS } from '../../constants';
@@ -53,13 +54,29 @@ const contributorsFormatter = (r, contributorTypes) => {
   return formatted;
 };
 
-export const applyDefaultFilters = (query, _s, isSharedDefaultFilter) => {
+export const applyDefaultFilters = (query, stripes, isSharedDefaultFilter) => {
   const defaultFilter = isSharedDefaultFilter ? sharedFalse : '';
 
   if (!query.query && query.filters === defaultFilter) {
     // if query is empty and search was not initiated by user action
     // then we need to clear the query.filters here to not automatically search when Inventory search is opened
     query.filters = undefined;
+  }
+
+  const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.staff-suppressed-records.view');
+
+  // if a user doesn't have view staff suppress facet permission - we need to hide staff suppressed records by default
+  if (!isStaffSuppressFilterAvailable) {
+    const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
+
+    if (!query.query && (!query.filters || query.filters === staffSuppressFalse)) {
+      // if query is empty and the only filter value is staffSuppress.false or it's empty
+      // then we know that this function call was not initiated by a user performing search
+      // so we need to clear filters to avoid unnecessary search on page load
+      query.filters = undefined;
+    } else {
+      query.filters = [query.filters, staffSuppressFalse].filter(Boolean).join(',');
+    }
   }
 };
 
