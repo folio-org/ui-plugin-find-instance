@@ -21,6 +21,7 @@ const mockStripesConnectedSourceValues = {
 
 StripesConnectedSource.mockImplementation(jest.fn(() => mockStripesConnectedSourceValues));
 
+const mockHasPerm = jest.fn().mockReturnValue(true);
 const defaultProps = {
   segment: 'instances',
   mutator: {
@@ -74,7 +75,8 @@ const defaultProps = {
   stripes: {
     logger: {
       log: jest.fn()
-    }
+    },
+    hasPerm: mockHasPerm,
   },
   contextData: {
     instanceDateTypes: [],
@@ -135,7 +137,10 @@ const renderFindInstanceContainer = (prop) => render(
   </FindInstanceContainer>
 );
 describe('FindInstanceContainer', () => {
-  beforeEach(() => renderFindInstanceContainer(defaultProps));
+  beforeEach(() => {
+    mockHasPerm.mockClear();
+    renderFindInstanceContainer(defaultProps);
+  });
   afterEach(() => jest.clearAllMocks());
 
   it('Component should render correctly', () => {
@@ -201,6 +206,32 @@ describe('FindInstanceContainer', () => {
         const logger = { log: jest.fn() };
         const result = buildSearchQuery(applyDefaultFilters)(queryParams, pathComponents, resourceData, logger, defaultProps);
         expect(result).toEqual('(isbn="test") sortby title');
+      });
+
+      describe('when a user does not have staff suppress permissions', () => {
+        beforeEach(() => {
+          mockHasPerm.mockReturnValue(false);
+        });
+
+        it('should apply staffSuppress=false filter', () => {
+          const queryParams = {
+            qindex: 'isbn',
+          };
+          const pathComponents = 'pathComponents';
+          const resourceData = {
+            identifier_types: {
+              records: []
+            },
+            query: {
+              sort: '',
+              query: 'test',
+              filters: '',
+            },
+          };
+          const logger = { log: jest.fn() };
+          const result = buildSearchQuery(applyDefaultFilters)(queryParams, pathComponents, resourceData, logger, defaultProps);
+          expect(result).toEqual('((isbn="test") and staffSuppress=="false") sortby title');
+        });
       });
     });
   });
