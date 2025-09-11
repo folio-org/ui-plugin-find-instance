@@ -69,12 +69,14 @@ export const applyDefaultFilters = (query, stripes, isSharedDefaultFilter) => {
   if (!isStaffSuppressFilterAvailable) {
     const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
 
-    if (!query.query && (!query.filters || query.filters === staffSuppressFalse)) {
-      // if query is empty and the only filter value is staffSuppress.false or it's empty
+    if (!query.query && query.filters === staffSuppressFalse) {
+      // if query is empty and the only filter value is staffSuppress.false
       // then we know that this function call was not initiated by a user performing search
       // so we need to clear filters to avoid unnecessary search on page load
       query.filters = undefined;
-    } else {
+    } else if (query.query || query.filters) {
+      // if there's a search query or some filter values - then the search was initiated by the user
+      // so we need to add staffSuppress.false to the filters
       query.filters = [query.filters, staffSuppressFalse].filter(Boolean).join(',');
     }
   }
