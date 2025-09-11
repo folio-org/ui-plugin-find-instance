@@ -1,6 +1,10 @@
 # Change history for ui-plugin-find-instance
 
-## [9.1.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.1) (2025-04-11)
+## [9.0.2] (IN PROGRESS)
+
+* Hide staff suppressed Instances based on existing permission for Staff suppress facet. Refs UIPFI-185.
+
+## [9.0.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.1) (2025-04-11)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.0...v9.0.1)
 
 * Find instance plugin: Remove default Staff suppress facet settings. Refs UIPFI-178.
