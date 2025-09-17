@@ -6,6 +6,11 @@
 * *BREAKING* Update for Split Search & Browse APIs. Refs UIPFI-182.
 * Hide staff suppressed Instances based on existing permission for Staff suppress facet. Refs UIPFI-185.
 
+## [9.0.2](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.2) (2025-09-17)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.1...v9.0.2)
+
+* Hide staff suppressed Instances based on existing permission for Staff suppress facet. Refs UIPFI-185.
+
 ## [9.0.1](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.1) (2025-04-11)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.0...v9.0.1)
 
