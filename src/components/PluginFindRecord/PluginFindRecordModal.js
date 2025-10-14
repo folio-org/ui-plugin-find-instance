@@ -11,7 +11,11 @@ import {
   injectIntl,
 } from 'react-intl';
 
-import { withNamespace } from '@folio/stripes/core';
+import {
+  withNamespace,
+  withStripes,
+  checkIfUserInMemberTenant,
+} from '@folio/stripes/core';
 import {
   Button,
   Checkbox,
@@ -264,6 +268,7 @@ class PluginFindRecordModal extends React.Component {
       config,
       pageSize,
       isSharedDefaultFilter,
+      stripes,
     } = this.props;
     const { checkedMap, isAllChecked } = this.state;
     const {
@@ -311,8 +316,11 @@ class PluginFindRecordModal extends React.Component {
       return { ...index, label };
     });
 
+    const isDefaultHeldByFacetSet = checkIfUserInMemberTenant(stripes);
+
     const defaultFilters = {
-      ...(isSharedDefaultFilter ? { shared: ['false'] } : {})
+      ...(isSharedDefaultFilter ? { shared: ['false'] } : {}),
+      ...(isDefaultHeldByFacetSet ? { tenantId: [stripes.okapi.tenant] } : {}),
     };
 
     const mixedResultsFormatter = {
@@ -392,6 +400,7 @@ class PluginFindRecordModal extends React.Component {
             queryStateReducer={this.queryStateReducer}
             syncToLocationSearch={false}
             filtersToParams={this.convertFilters}
+            addIsInitialParameterToQuery
           >
             {
               ({
@@ -559,6 +568,12 @@ PluginFindRecordModal.propTypes = {
   segment: PropTypes.string,
   setSegment: PropTypes.func.isRequired,
   source: PropTypes.object,
+  stripes: PropTypes.shape({
+    hasInterface: PropTypes.func.isRequired,
+    okapi: PropTypes.shape({
+      tenant: PropTypes.string.isRequired,
+    }),
+  }),
   unsubscribeFromReset: PropTypes.func.isRequired,
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   config: CONFIG_TYPES,
@@ -584,6 +599,7 @@ PluginFindRecordModal.defaultProps = {
 
 export default flowRight(
   withNamespace,
+  withStripes,
   injectIntl,
   withReset,
 )(PluginFindRecordModal);

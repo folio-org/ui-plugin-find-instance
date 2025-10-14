@@ -8,6 +8,7 @@ import {
 } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
+import { checkIfUserInMemberTenant } from '@folio/stripes/core';
 import stripesComponents from '@folio/stripes/components';
 import smartComponents from '@folio/stripes/smart-components';
 import {
@@ -108,6 +109,8 @@ const renderPluginFindRecordModal = ({
 describe('Plugin find record modal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+
+    checkIfUserInMemberTenant.mockClear().mockReturnValue(false);
   });
 
   it('should apply default query parameters on mount', () => {
@@ -124,6 +127,30 @@ describe('Plugin find record modal', () => {
     };
 
     expect(smartComponents.SearchAndSortQuery).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
+  });
+
+  describe('when in a member tenant', () => {
+    beforeEach(() => {
+      checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+    });
+
+    it('should apply default held by facet', () => {
+      jest.spyOn(smartComponents, 'SearchAndSortQuery');
+
+      renderPluginFindRecordModal();
+
+      const expectedProps = {
+        setQueryOnMount: true,
+        initialSortState: { sort: contextData.displaySettings.defaultSort },
+        initialSearchState: { qindex: '', query: '' },
+        initialFilterState: {
+          tenantId: ['diku'],
+        },
+        initialSearch: '',
+      };
+
+      expect(smartComponents.SearchAndSortQuery).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
+    });
   });
 
   it('should display default sorting from contextData', () => {
