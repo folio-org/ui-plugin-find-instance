@@ -6,6 +6,7 @@
 * *BREAKING* Update for Split Search & Browse APIs. Refs UIPFI-182.
 * Hide staff suppressed Instances based on existing permission for Staff suppress facet. Refs UIPFI-185.
 * ECS: Set Held by facet default to current tenant context in find instance plugin. Refs UIPFI-184.
+* Remove `expandAll=true` parameter from requests to mod-search. Refs UIPFI-190.
 
 ## [9.0.2](https://github.com/folio-org/ui-plugin-find-instance/tree/v9.0.2) (2025-09-17)
 [Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.1...v9.0.2)

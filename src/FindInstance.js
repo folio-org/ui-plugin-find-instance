@@ -32,6 +32,7 @@ import { parseHttpError } from './utils';
 
 const FindInstance = ({
   config = {},
+  include = [],
   isMultiSelect = false,
   onClose,
   selectInstance = noop,
@@ -58,7 +59,7 @@ const FindInstance = ({
     isError,
     error = {},
     data: instancesData = {},
-  } = useInstancesQuery(instances, { tenantId });
+  } = useInstancesQuery(instances, { tenantId, include });
 
   const handleFilterChange = useCallback((onChange) => ({ name, values }) => {
     onChange({ [name]: values });
@@ -152,6 +153,7 @@ FindInstance.propTypes = {
   renderNewBtn: PropTypes.func,
   tenantId: PropTypes.string,
   isMultiSelect: PropTypes.bool,
+  include: PropTypes.arrayOf(PropTypes.string),
   onClose: PropTypes.func,
   config: CONFIG_TYPES,
   suppressSharedFacet: PropTypes.bool,

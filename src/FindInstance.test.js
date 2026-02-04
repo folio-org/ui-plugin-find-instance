@@ -146,7 +146,7 @@ describe('FindInstance', () => {
           ...instances[0],
           rowIndex: 0,
         }],
-        { tenantId: mockTenantId }
+        { tenantId: mockTenantId, include: [] }
       );
     });
   });
@@ -173,7 +173,7 @@ describe('FindInstance', () => {
 
       expect(mockSelectInstance).toHaveBeenCalledWith(data.instances);
       expect(mockOnClose).toHaveBeenCalled();
-      expect(useInstancesQuery).toHaveBeenCalledWith([], { tenantId: mockTenantId });
+      expect(useInstancesQuery).toHaveBeenCalledWith([], { tenantId: mockTenantId, include: [] });
     });
   });
 
@@ -195,7 +195,7 @@ describe('FindInstance', () => {
 
       expect(mockSelectInstance).toHaveBeenCalledWith(data.instances[0]);
       expect(mockOnClose).toHaveBeenCalled();
-      expect(useInstancesQuery).toHaveBeenCalledWith([], { tenantId: mockTenantId });
+      expect(useInstancesQuery).toHaveBeenCalledWith([], { tenantId: mockTenantId, include: [] });
     });
   });
 
