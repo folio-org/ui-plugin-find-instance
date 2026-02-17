@@ -29,7 +29,7 @@
     "createdDate": "作成日",
     "updatedDate": "更新日",
     "materialType": "資料種別",
-    "source": "Source",
+    "source": "ソース",
     "filter.tags": "タグ",
     "item.status": "資料ステータス",
     "item.status.agedToLost": "Aged to lost",
