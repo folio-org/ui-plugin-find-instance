@@ -24,6 +24,7 @@ of the Module Developer's Guide.
 | `selectInstance` | function | Callback with selected array of instances | No |
 | `renderNewBtn` | function | Render function for button `New` | No |
 | `config` | object | Allows to pass some options to the plugin components | No |
+| `include` | array | List of instance properties to pass as `include` parameter to mod-search. | No |
 
 ## Config
 
