@@ -20,7 +20,7 @@
     "folio": "FOLIO",
     "marc": "MARC",
     "discoverySuppress": "Suppress from discovery",
-    "instances.resourceType": "Resource Type",
+    "instances.resourceType": "リソースタイプ",
     "instances.language": "言語",
     "instanceFormat": "フォーマット",
     "modeOfIssuance": "Mode of issuance",
