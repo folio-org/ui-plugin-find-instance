@@ -34,7 +34,7 @@
 
 .pluginModalContent {
   min-height: 400px;
-  padding: 0;
+  padding: 0 !important;
   position: relative;
 
   & [class^="paneset--"] {
