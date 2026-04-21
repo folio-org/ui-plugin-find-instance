@@ -1,7 +1,7 @@
 # Change history for ui-plugin-find-instance
 
-## [10.0.0] (IN PROGRESS)
-[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.1...v9.1.0)
+## [10.0.0](https://github.com/folio-org/ui-plugin-find-instance/tree/v10.0.0) (2026-04-17)
+[Full Changelog](https://github.com/folio-org/ui-plugin-find-instance/compare/v9.0.2...v10.0.0)
 
 * *BREAKING* Update for Split Search & Browse APIs. Refs UIPFI-182.
 * Hide staff suppressed Instances based on existing permission for Staff suppress facet. Refs UIPFI-185.

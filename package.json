@@ -1,6 +1,6 @@
 {
   "name": "@folio/plugin-find-instance",
-  "version": "9.1.0",
+  "version": "10.0.0",
   "description": "Instance-finder for Stripes",
   "repository": "folio-org/ui-plugin-find-instance",
   "publishConfig": {
@@ -31,10 +31,10 @@
   "devDependencies": {
     "@folio/eslint-config-stripes": "^8.0.0",
     "@folio/jest-config-stripes": "^3.0.0",
-    "@folio/stripes": "^10.0.0",
+    "@folio/stripes": "^10.1.0",
     "@folio/stripes-cli": "^4.0.0",
-    "@folio/stripes-components": "^13.0.0",
-    "@folio/stripes-inventory-components": "^2.0.0",
+    "@folio/stripes-components": "^13.1.0",
+    "@folio/stripes-inventory-components": "^2.1.0",
     "@folio/stripes-testing": "^5.0.0",
     "babel-eslint": "^10.0.1",
     "core-js": "^3.6.1",
@@ -54,8 +54,8 @@
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {
-    "@folio/stripes": "^10.0.0",
-    "@folio/stripes-inventory-components": "^2.0.0",
+    "@folio/stripes": "^10.1.0",
+    "@folio/stripes-inventory-components": "^2.1.0",
     "moment": "^2.29.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
